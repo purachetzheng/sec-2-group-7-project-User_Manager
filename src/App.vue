@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, reactive, nextTick } from 'vue'
+import NavBar from './components/NavBar.vue';
 // const newEmail = reactive([])
 const inputTagList = reactive([])
 const hasTagInput = reactive([])
@@ -130,15 +131,15 @@ const num = ref(1)
 </script>
 
 <template>
-  <NumUpdate :currentNum="num" />
   <!-- แก้ error ที่ func autoSetLocalStorage() ไม่มีใครเรียก -->
   <!-- <input type="hidden" @click="autoSetLocalStorage"> -->
   <div class="bg-gray-700 min-h-screen">
     <!-- Header -->
-    <div class="bg-teal-600 h-16 flex justify-center items-center">
+    <NavBar :amountUsers="amountUsers" />
+    <!-- <div class="bg-teal-600 h-16 flex justify-center items-center">
       <h2 class="text-3xl text-white">User Manager</h2>
       <div class="bg-teal-600 text-white absolute right-6">Amount of Users : {{ amountUsers }}</div>
-    </div>
+    </div> -->
 
     <!-- Content Table -->
     <div class="flex flex-col">
