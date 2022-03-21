@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn-del {
+        @apply p-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-900 transition duration-100;
+    }
+    .btn-edit {
+        @apply p-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-900 transition duration-100;
+    }
+}
