@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, reactive, nextTick } from 'vue'
-import NumUpdate from './components/NumUpdate.vue'
 // const newEmail = reactive([])
 const inputTagList = reactive([])
 const hasTagInput = reactive([])
@@ -239,14 +238,8 @@ const num = ref(1)
                     v-for="(tag, j) in user.tag"
                     :key="j"
                     class="px-2 mx-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-blue-800"
-                    @mouseenter="
-  hasMouseTag.x = i;
-hasMouseTag.y = j;
-                    "
-                    @mouseleave="
-  hasMouseTag.x = -1;
-hasMouseTag.y = -1;
-                    "
+                    @mouseenter="hasMouseTag.x = i; hasMouseTag.y = j;"
+                    @mouseleave="hasMouseTag.x = -1; hasMouseTag.y = -1;"
                   >
                     {{ tag }}
                     <svg
