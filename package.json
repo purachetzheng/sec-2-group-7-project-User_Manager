@@ -1,14 +1,14 @@
 {
   "name": "sec-2-group-7-project-user-manager",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "lint": "vue-cli-service lint",
+    "backend": "npx json-server --watch ./data/db.json --port 5000",
+    "dev": "vite",
     "format": "prettier .  --write",
-    "backend": "npx json-server --watch ./data/db.json --port 5000"
+    "preview": "vite preview"
   },
   "dependencies": {
     "json-server": "^0.17.0",
@@ -16,9 +16,12 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",
+    "@vue/cli-plugin-eslint": "~4.5.13",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "autoprefixer": "^10.4.2",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^8.5.0",
     "postcss": "^8.4.6",
     "prettier": "2.5.1",
