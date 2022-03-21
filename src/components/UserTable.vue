@@ -32,6 +32,22 @@ const prop = defineProps({
 //   }
 // };
 
+const submit = () => {
+  const isNameEmpty = newUsers.name.length === 0;
+  const isEmailEmpty = newUsers.email.length === 0;
+  const isEmailCorrect = checkEmailPattern(newUsers.email);
+  if (isNameEmpty) {
+    alert(`Please enter at least your name.`);
+  } else if (isEmailCorrect || isEmailEmpty) {
+    Users.addUser(newUsers);
+    newUsers.name = '';
+    newUsers.email = '';
+  } else if (!isEmailCorrect) {
+    alert(`Please enter a valid email`);
+    newUsers.email = '';
+  }
+};
+
 const showTagInput = (index) => {
   hasTagInput[index] = '';
   nextTick(() => inputTagList[index].focus());

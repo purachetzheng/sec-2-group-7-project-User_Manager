@@ -1,9 +1,63 @@
 {
-    "posts": [
-      { "id": 1, "title": "json-server", "author": "typicode" }
-    ],
-    "comments": [
-      { "id": 1, "body": "some comment", "postId": 1 }
-    ],
-    "profile": { "name": "typicode" }
-  }
+  "table": [
+    {
+      "id": 1,
+      "name": "test1",
+      "email": "t1@t1.t",
+      "date": "10/10/2020",
+      "tags": [
+        "test",
+        "Hello"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "test2",
+      "email": "t2@t2.t",
+      "date": "10/10/2020",
+      "tags": []
+    },
+    {
+      "name": "test3",
+      "email": "",
+      "date": "11/11/2020",
+      "tags": [],
+      "id": 3
+    },
+    {
+      "name": "fsf",
+      "email": "",
+      "date": "11/11/2020",
+      "tags": [],
+      "id": 4
+    }
+  ],
+  "account": [
+    {
+      "id": 1,
+      "user-name": "user1",
+      "tables": [
+        {
+          "table-name": "table1",
+          "data": [
+            {
+              "id": 1,
+              "name": "test1",
+              "email": "t1@t1.t"
+            },
+            {
+              "id": 2,
+              "name": "test2",
+              "email": "t2@t2.t"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "user-name": "user2",
+      "tables": []
+    }
+  ]
+}
