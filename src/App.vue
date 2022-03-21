@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, reactive, nextTick } from 'vue'
 import NavBar from './components/NavBar.vue';
+import UserTable from './components/UserTable.vue';
 // const newEmail = reactive([])
 const inputTagList = reactive([])
 const hasTagInput = reactive([])
@@ -127,7 +128,7 @@ const checkDate = (user) => {
   const today = new Date().toLocaleDateString('th-TH')
   return userDate === today ? userTime : userDate;
 }
-const num = ref(1)
+
 </script>
 
 <template>
@@ -136,12 +137,9 @@ const num = ref(1)
   <div class="bg-gray-700 min-h-screen">
     <!-- Header -->
     <NavBar :amountUsers="amountUsers" />
-    <!-- <div class="bg-teal-600 h-16 flex justify-center items-center">
-      <h2 class="text-3xl text-white">User Manager</h2>
-      <div class="bg-teal-600 text-white absolute right-6">Amount of Users : {{ amountUsers }}</div>
-    </div> -->
 
     <!-- Content Table -->
+
     <div class="flex flex-col">
       <div class="overflow-x-auto">
         <div class="overflow-auto rounded-lg m-5">
@@ -346,6 +344,8 @@ const num = ref(1)
         </div>
       </div>
     </div>
+    
+    <UserTable :Users="Users" />
   </div>
 </template>
 
