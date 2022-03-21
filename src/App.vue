@@ -22,12 +22,12 @@ let Users = reactive({
       tag: [],
       date: new Date().toLocaleString('th-TH')
     });
-    // this.setLocalStorage();
+    this.setLocalStorage();
   },
   removeUser(index) {
     // this.users.splice(this.users.findIndex((ele) => ele == user),1);
     this.users.splice(index, 1);
-    // this.setLocalStorage();
+    this.setLocalStorage();
   },
   checkUser(user) {
     const isNameEmpty = user.name.length === 0;
@@ -45,11 +45,11 @@ let Users = reactive({
   addTag(event, user) {
     user.tag.push(event.target.value);
     event.target.value = '';
-    // this.setLocalStorage();
+    this.setLocalStorage();
   },
   removeTag(user, index) {
     user.tag.splice(index, 1);
-    // this.setLocalStorage();
+    this.setLocalStorage();
   },
   setLocalStorage() {
     localStorage.setItem('users', JSON.stringify(this.users));
@@ -60,7 +60,7 @@ let Users = reactive({
     if(!isNameEmpty){
       user.name = inputName;
       hasEditName[index] = false; 
-      // this.setLocalStorage()
+      this.setLocalStorage()
     }
   },
   setUserEmail(event, user, index){
@@ -76,7 +76,8 @@ let Users = reactive({
 });
 
 const amountUsers = computed(() => Users.users.length);
-const autoSetLocalStorage = computed(()=> Users.setLocalStorage())
+// ตอนนี้ใช้ไม่ได้แล้ว ไม่รู้ทำไม
+// const autoSetLocalStorage = computed(()=> Users.setLocalStorage())
 
 const submit = () => {
   const isNameEmpty = newUsers.name.length === 0;
@@ -129,11 +130,11 @@ const checkDate = (user) => {
 
 <template>
   <!-- แก้ error ที่ func autoSetLocalStorage() ไม่มีใครเรียก -->
-  <input type="hidden" @click="autoSetLocalStorage">
+  <!-- <input type="hidden" @click="autoSetLocalStorage"> -->
   <div class="bg-gray-700 min-h-screen">
     <!-- Header -->
     <div class="bg-teal-600 h-16 flex justify-center items-center">
-      <h2 class="text-3xl text-white">User Management</h2>
+      <h2 class="text-3xl text-white">User Manager</h2>
       <div class="bg-teal-600 text-white absolute right-6">Amount of Users : {{ amountUsers }}</div>
     </div>
 
