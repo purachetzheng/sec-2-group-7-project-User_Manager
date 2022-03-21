@@ -1,5 +1,5 @@
 <script setup>
-import { ref,computed, reactive, nextTick } from 'vue'
+import { ref, computed, reactive, nextTick } from 'vue'
 import NumUpdate from './components/NumUpdate.vue'
 // const newEmail = reactive([])
 const inputTagList = reactive([])
@@ -56,19 +56,19 @@ let Users = reactive({
   setLocalStorage() {
     localStorage.setItem('users', JSON.stringify(this.users));
   },
-  setUserName(event, user, index){
+  setUserName(event, user, index) {
     const inputName = event.target.value;
     const isNameEmpty = inputName.length === 0;
-    if(!isNameEmpty){
+    if (!isNameEmpty) {
       user.name = inputName;
-      hasEditName[index] = false; 
+      hasEditName[index] = false;
       this.setLocalStorage()
     }
   },
-  setUserEmail(event, user, index){
+  setUserEmail(event, user, index) {
     const inputEmail = event.target.value;
     const isEmailCorrect = checkEmailPattern(inputEmail);
-    if(isEmailCorrect){
+    if (isEmailCorrect) {
       user.email = inputEmail;
       hasEditEmail[index] = false;
       this.checkUser(user);
@@ -101,7 +101,7 @@ const checkEmailPattern = (email, mode) => {
   if (/\S+@\S+\.\S+/i.test(email)) {
     return true;
   } else {
-    if(mode) alert('Please enter a valid email')
+    if (mode) alert('Please enter a valid email')
     return false;
   }
 };
@@ -148,17 +148,39 @@ const num = ref(1)
           <table class="md:table-fixed md:w-full sm:min-w-full sm:table-fixed">
             <thead class="bg-teal-500 uppercase">
               <tr>
-                <th scope="col" class="w-1/5 px-6 py-3 text-left text-xs tracking-wider text-white">Name</th>
-                <th scope="col" class="w-1/5 px-6 py-3 text-left text-xs tracking-wider text-white">Email</th>
-                <th scope="col" class="w-auto px-6 py-3 text-left text-xs tracking-wider text-white">Tag</th>
-                <th scope="col" class="w-28 px-6 py-3 text-left text-xs tracking-wider text-white">Status</th>
-                <th scope="col" class="w-40 px-6 py-3 text-left text-xs tracking-wider text-white">Add Date</th>
-                <th scope="col" class="w-40 px-6 py-3 text-left text-xs tracking-wider text-white">Edit</th>
+                <th
+                  scope="col"
+                  class="w-1/5 px-6 py-3 text-left text-xs tracking-wider text-white"
+                >Name</th>
+                <th
+                  scope="col"
+                  class="w-1/5 px-6 py-3 text-left text-xs tracking-wider text-white"
+                >Email</th>
+                <th
+                  scope="col"
+                  class="w-auto px-6 py-3 text-left text-xs tracking-wider text-white"
+                >Tag</th>
+                <th
+                  scope="col"
+                  class="w-28 px-6 py-3 text-left text-xs tracking-wider text-white"
+                >Status</th>
+                <th
+                  scope="col"
+                  class="w-40 px-6 py-3 text-left text-xs tracking-wider text-white"
+                >Add Date</th>
+                <th
+                  scope="col"
+                  class="w-40 px-6 py-3 text-left text-xs tracking-wider text-white"
+                >Edit</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <!-- Name -->
-              <tr v-for="(user, i) in Users.users" :key="i" class="transition ease-in-out duration-300 hover:bg-gray-200 text-black">
+              <tr
+                v-for="(user, i) in Users.users"
+                :key="i"
+                class="transition ease-in-out duration-300 hover:bg-gray-200 text-black"
+              >
                 <td class="px-6 py-2">
                   <div class="flex items-center">
                     <!-- <div class="flex-shrink-0 h-10 w-10"></div> -->
@@ -180,14 +202,14 @@ const num = ref(1)
                 <!-- v-if="user.email.length !== 0 && !hasEditEmail[i]" @dblclick="hasEditEmail[i] = true" -->
                 <td class="px-6 py-2" @dblclick="showEmailInput(user, i)">
                   <span v-show="user.email.length !== 0 && !hasEditEmail[i]">{{ user.email }}</span>
-                  <input 
+                  <input
                     v-show="user.email.length === 0 || hasEditEmail[i]"
-                    :ref="el => editEmailList[i] = el" 
+                    :ref="el => editEmailList[i] = el"
                     type="text"
                     class="bg-gray-300 rounded-md p-1 pl-3 w-full"
                     placeholder="Input Email"
                     @keyup.enter="Users.setUserEmail($event, user, i)"
-                  >
+                  />
                 </td>
                 <!-- หลังจาก dblclick จะขึ้น input สำหรับแก้ไข -->
                 <!-- <td v-else-if="hasEditEmail[i]" class="px-6 py-2">
@@ -210,7 +232,7 @@ const num = ref(1)
                     @keydown.enter="Users.setEmail($event, user)"
                   />
                 </td>
-                 -->
+                -->
                 <!-- Tag -->
                 <td class="px-6 py-2">
                   <button
@@ -218,12 +240,12 @@ const num = ref(1)
                     :key="j"
                     class="px-2 mx-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-blue-800"
                     @mouseenter="
-                      hasMouseTag.x = i;
-                      hasMouseTag.y = j;
+  hasMouseTag.x = i;
+hasMouseTag.y = j;
                     "
                     @mouseleave="
-                      hasMouseTag.x = -1;
-                      hasMouseTag.y = -1;
+  hasMouseTag.x = -1;
+hasMouseTag.y = -1;
                     "
                   >
                     {{ tag }}
@@ -250,9 +272,7 @@ const num = ref(1)
                     v-if="hasTagInput[i] === undefined"
                     class="btn px-2 mx-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-blue-800"
                     @click="showTagInput(i)"
-                  >
-                    +
-                  </button>
+                  >+</button>
                   <input
                     v-else
                     :ref="(el) => (inputTagList[i] = el)"
@@ -270,8 +290,7 @@ const num = ref(1)
                         ? ['px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800']
                         : ['px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800'],
                     ]"
-                    >{{ user.status }}</span
-                  >
+                  >{{ user.status }}</span>
                 </td>
 
                 <!-- Date -->
@@ -288,9 +307,14 @@ const num = ref(1)
                         clip-rule="evenodd"
                       />
                     </svg>
-                  </button> -->
+                  </button>-->
                   <button class="btn-del" @click="Users.removeUser(i)">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
                       <path
                         fill-rule="evenodd"
                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
