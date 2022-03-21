@@ -1,5 +1,6 @@
 <script setup>
-import { computed, reactive, nextTick } from 'vue';
+import { ref,computed, reactive, nextTick } from 'vue'
+import NumUpdate from './components/NumUpdate.vue'
 // const newEmail = reactive([])
 const inputTagList = reactive([])
 const hasTagInput = reactive([])
@@ -9,6 +10,7 @@ const hasEditEmail = reactive([])
 const newUsers = reactive({ name: '', email: '', status: '' })
 const hasMouseTag = reactive({ x: -1, y: -1 })
 const editEmailList = reactive([])
+
 
 if (JSON.parse(localStorage.getItem('users')) == null) localStorage.setItem('users', JSON.stringify([]));
 
@@ -125,10 +127,11 @@ const checkDate = (user) => {
   const today = new Date().toLocaleDateString('th-TH')
   return userDate === today ? userTime : userDate;
 }
-
+const num = ref(1)
 </script>
 
 <template>
+  <NumUpdate :currentNum="num" />
   <!-- แก้ error ที่ func autoSetLocalStorage() ไม่มีใครเรียก -->
   <!-- <input type="hidden" @click="autoSetLocalStorage"> -->
   <div class="bg-gray-700 min-h-screen">
