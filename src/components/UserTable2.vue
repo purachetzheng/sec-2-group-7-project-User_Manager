@@ -1,7 +1,6 @@
 <script setup>
 import { reactive } from 'vue'
 import TextRow from './table-rows/TextRow.vue'
-import EmailRow from './table-rows/EmailRow.vue';
 import TagRow from './table-rows/TagsRow.vue';
 import DateRow from './table-rows/DateRow.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
@@ -13,10 +12,14 @@ const prop = defineProps({
         require: true,
     },
 })
+
+const testt = ``
 const newUsers = reactive({ name: '', email: '' })
 const test = () => {
-    this.$emit('testt', 'hello')
+    // this.$emit('testt', 'hello')
+    console.log(testt)
 }
+
 </script>
  
 <template>
@@ -32,6 +35,9 @@ const test = () => {
                         <th>Status</th>
                         <th>Add Date</th>
                         <th></th>
+                        <template v-for="num in 3">
+                            <th>{{num}}</th>
+                        </template>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-300">
@@ -41,7 +47,7 @@ const test = () => {
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                     >
                         <td>
-                            <TextRow :text="user.name" :index="index" :checker="/\w+/" alertText="Name not null!" @editText="$emit('editUser', $event, user, 'name')" />
+                            <TextRow :text="user.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editUser', $event, user, 'name')" />
                         </td>
                         <td>
                             <TextRow :text="user.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editUser', $event, user, 'email')" />
@@ -58,6 +64,9 @@ const test = () => {
                                 <CarbonTrashCan class="my-auto -mr-1 h-4 w-4 text-red-700" />
                             </button>
                         </td>
+                        <!-- <template v-for="num in 3">
+                            <td>{{num}}{{num}}{{num}}{{num}}{{num}}</td>
+                        </template> -->
                     </tr>
                     <tr
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
@@ -79,7 +88,7 @@ const test = () => {
                                 v-model="newUsers.email"
                             />
                         </td>
-                        <td colspan="4" />
+                        <td :colspan="4" />
                     </tr>
                 </tbody>
             </table>
