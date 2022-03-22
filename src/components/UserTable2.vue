@@ -1,12 +1,12 @@
 <script setup>
 import { reactive } from 'vue'
-import NameRow from './table-rows/NameRow.vue'
+import TextRow from './table-rows/TextRow.vue'
 import EmailRow from './table-rows/EmailRow.vue';
 import TagRow from './table-rows/TagsRow.vue';
 import DateRow from './table-rows/DateRow.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
 import BaseInputType from './Base/BaseInputType.vue';
-defineEmits(['createUser', 'deleteUser', 'editName'])
+defineEmits(['createUser', 'deleteUser', 'editUser', 'testt'])
 const prop = defineProps({
     users: {
         type: Array,
@@ -14,11 +14,14 @@ const prop = defineProps({
     },
 })
 const newUsers = reactive({ name: '', email: '' })
-const test = () => console.log(em.value)
+const test = () => {
+    this.$emit('testt', 'hello')
+}
 </script>
  
 <template>
     <div class="container flex justify-center mx-auto">
+        <button @click="test">Test</button>
         <div class="flex flex-col w-full border-b border-gray-200 shadow">
             <table class="border-b border-gray-200 shadow">
                 <thead class="bg-gray-50">
@@ -38,10 +41,10 @@ const test = () => console.log(em.value)
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                     >
                         <td>
-                            <NameRow :name="user.name" :index="index" @editName="$emit('editName', $event, user)" />
+                            <TextRow :text="user.name" :index="index" :checker="/\w+/" alertText="Name not null!" @editText="$emit('editUser', $event, user, 'name')" />
                         </td>
                         <td>
-                            <EmailRow :email="user.email" />
+                            <TextRow :text="user.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editUser', $event, user, 'email')" />
                         </td>
                         <td>
                             <TagRow :tags="user.tags" />

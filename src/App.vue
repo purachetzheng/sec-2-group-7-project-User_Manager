@@ -52,27 +52,36 @@ const removeNote = async (id) => {
 }
 
 //UPDATE
-// const updateUser = async (event, user) => {
+const updateUser = async (event, userP, type) => {
+  const res = await fetch(`http://localhost:5000/table/${userP.id}`, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({ 
+      name: type ==='name'? event.target.value : userP.name,
+      email: type ==='email'? event.target.value : userP.email,
+      date: userP.date,
+      tags: userP.tags
+    })
 
-//   const res = await fetch(`http://localhost:5000/table/${user.id}`, {
-//     method: 'PUT',
-//     headers: {
-//       'content-type': 'application/json'
-//     },
-//     body: JSON.stringify({ 
-//       noteDetail: editingNote.noteDetail 
-//     })
-//   })
-//   if (res.status === 200) {
-//     const modifyNote = await res.json()
-//     notes.value = notes.value.map((note) => 
-//       note.id === modifyNote.id 
-//         ? { ...note, noteDetail: modifyNote.noteDetail } 
-//         : note
-//     )
-//     console.log('edited successfully')
-//   } else console.log('error, cannot edit')
-// }
+    })
+  if (res.status === 200) {
+    const modifyNote = await res.json()
+    users.value = users.value.map((user) => 
+      user.id === modifyNote.id 
+        ? { 
+          ...user, 
+          name: modifyNote.name,
+          email: modifyNote.email,
+          date: modifyNote.date,
+          tags: modifyNote.tags
+          } 
+        : user
+    )
+    console.log('edited successfully')
+  } else console.log('error, cannot edit')
+}
 
 let Users = reactive({
   users: JSON.parse(localStorage.getItem('users')),
@@ -137,8 +146,8 @@ let Users = reactive({
   }
 });
 
-const tester = (event, id) => {
-  console.log(`id: ${id} value: ${event.target.value}`)
+const tester = (event, id, type) => {
+  console.log(`id: ${id} value: ${event.target.value} type: ${type}`)
   console.log(event.target)
 }
 </script>
@@ -149,7 +158,7 @@ const tester = (event, id) => {
 
     <!-- Content Table -->
 
-    <UserTable2 :users="users" @createUser="createUsers" @deleteUser="removeNote" @editName="tester" />
+    <UserTable2 :users="users" @createUser="createUsers" @deleteUser="removeNote" @editUser="updateUser" @testt="tester" />
   </div>
 </template>
 
