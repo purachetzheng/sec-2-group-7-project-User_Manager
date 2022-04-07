@@ -19,7 +19,9 @@ const test = () => {
     // this.$emit('testt', 'hello')
     console.log(testt)
 }
-
+const alertInput = () => {
+    alert(`Please enter at least your name.`)
+}                  
 </script>
  
 <template>
@@ -35,9 +37,9 @@ const test = () => {
                         <th>Status</th>
                         <th>Add Date</th>
                         <th></th>
-                        <template v-for="num in 3">
+                        <!-- <template v-for="num in 3">
                             <th>{{num}}</th>
-                        </template>
+                        </template> -->
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-300">
@@ -70,7 +72,7 @@ const test = () => {
                     </tr>
                     <tr
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                        @keydown.enter="$emit('createUser', newUsers)"
+                        @keydown.enter="newUsers.name.length != 0? $emit('createUser', newUsers): alertInput()"
                     >
                         <td>
                             <input
