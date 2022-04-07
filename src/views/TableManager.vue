@@ -3,7 +3,9 @@ import { ref, computed, reactive, nextTick, onBeforeMount } from 'vue'
 import NavBar from '../components/NavBar.vue';
 import UserTable from '../components/UserTable.vue';
 import UserTable2 from '../components/UserTable2.vue';
+import StatusDisplay from '../components/StatusDisplay.vue';
 
+//Get
 const users = ref([])
 const getUsers = async () => {
   const res = await fetch('http://localhost:5000/table')
@@ -83,73 +85,13 @@ const updateUser = async (event, userP, type) => {
   } else console.log('error, cannot edit')
 }
 
-let Users = reactive({
-  users: JSON.parse(localStorage.getItem('users')),
-  addUser(user) {
-    this.users.push({
-      name: user.name,
-      email: user.email,
-      status: user.email.length === 0 ? 'Incomplete' : 'Active',
-      tag: [],
-      date: new Date().toLocaleString('th-TH')
-    });
-    this.setLocalStorage();
-  },
-  removeUser(index) {
-    // this.users.splice(this.users.findIndex((ele) => ele == user),1);
-    this.users.splice(index, 1);
-    this.setLocalStorage();
-  },
-  checkUser(user) {
-    const isNameEmpty = user.name.length === 0;
-    const isEmailEmpty = user.email.length === 0;
-    user.status = isNameEmpty || isEmailEmpty ? 'incomplete' : 'Active';
-  },
-  // setEmail(event, user) {
-  //   const inputEmail = event.target.value;
-  //   const isEmailCorrect = checkEmailPattern(inputEmail);
-  //   isEmailCorrect ? (user.email = inputEmail) : alert(`Please enter a valid email`);
-  //   event.target.value = '';
-  //   this.checkUser(user);
-  //   // this.setLocalStorage();
-  // },
-  addTag(event, user) {
-    user.tag.push(event.target.value);
-    event.target.value = '';
-    this.setLocalStorage();
-  },
-  removeTag(user, index) {
-    user.tag.splice(index, 1);
-    this.setLocalStorage();
-  },
-  setLocalStorage() {
-    localStorage.setItem('users', JSON.stringify(this.users));
-  },
-  setUserName(event, user, index) {
-    const inputName = event.target.value;
-    const isNameEmpty = inputName.length === 0;
-    if (!isNameEmpty) {
-      user.name = inputName;
-      hasEditName[index] = false;
-      this.setLocalStorage()
-    }
-  },
-  setUserEmail(event, user, index) {
-    const inputEmail = event.target.value;
-    const isEmailCorrect = checkEmailPattern(inputEmail);
-    if (isEmailCorrect) {
-      user.email = inputEmail;
-      hasEditEmail[index] = false;
-      this.checkUser(user);
-    }
-    else alert(`Please enter a valid email`);
-  }
-});
-
 const tester = (event, id, type) => {
   console.log(`id: ${id} value: ${event.target.value} type: ${type}`)
   console.log(event.target)
 }
+
+//
+const amountUsers = computed(() => users.value.length);
 </script>
 
 <template>
@@ -157,8 +99,11 @@ const tester = (event, id, type) => {
     <!-- Header -->
 
     <!-- Content Table -->
-
-    <UserTable2 :users="users" @createUser="createUsers" @deleteUser="removeNote" @editUser="updateUser" @testt="tester" />
+    <div class="flex space-x-2">
+      <UserTable2 class="w-10/12" :users="users" @createUser="createUsers" @deleteUser="removeNote" @editUser="updateUser" @testt="tester" />
+      <StatusDisplay class="w-2/12" :amountUsers="amountUsers" />
+    </div>
+    
   </div>
 </template>
 

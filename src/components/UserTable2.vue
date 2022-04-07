@@ -25,8 +25,7 @@ const alertInput = () => {
 </script>
  
 <template>
-    <div class="container flex justify-center mx-auto">
-        <button @click="test">Test</button>
+    <div class="container flex justify-center">
         <div class="flex flex-col w-full border-b border-gray-200 shadow">
             <table class="border-b border-gray-200 shadow">
                 <thead class="bg-gray-50">
