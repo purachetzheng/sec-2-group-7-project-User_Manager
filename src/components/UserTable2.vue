@@ -21,7 +21,7 @@ const test = () => {
 }
 const alertInput = () => {
     alert(`Please enter at least your name.`)
-}                  
+}              
 </script>
  
 <template>

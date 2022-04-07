@@ -9,6 +9,7 @@ import StatusDisplay from '../components/StatusDisplay.vue';
 const users = ref([])
 const getUsers = async () => {
   const res = await fetch('http://localhost:5000/table')
+  // const res = await fetch('http://localhost:5000/accounts?username=' + params.username)
   if (res.status === 200) {
     users.value = await res.json()
     console.log(users.value)
@@ -92,6 +93,7 @@ const tester = (event, id, type) => {
 
 //
 const amountUsers = computed(() => users.value.length);
+console.log(users.value);
 </script>
 
 <template>
@@ -100,8 +102,8 @@ const amountUsers = computed(() => users.value.length);
 
     <!-- Content Table -->
     <div class="flex space-x-2">
-      <UserTable2 class="w-10/12" :users="users" @createUser="createUsers" @deleteUser="removeNote" @editUser="updateUser" @testt="tester" />
-      <StatusDisplay class="w-2/12" :amountUsers="amountUsers" />
+      <UserTable2 class="flex-none w-10/12" :users="users" @createUser="createUsers" @deleteUser="removeNote" @editUser="updateUser" @testt="tester" />
+      <StatusDisplay class="flex-none w-2/12" :amountUsers="amountUsers" />
     </div>
     
   </div>

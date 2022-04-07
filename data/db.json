@@ -77,42 +77,47 @@
       "id": 9
     }
   ],
-  "account": [
+  "users": [
     {
       "id": 1,
-      "user-name": "user1",
-      "tables": [
+      "username": "user1",
+      "tableList": [
         {
-          "table-name": "table1",
-          "tags":[
-            {
-              "name": "Tag1",
-              "member": [1,2]
-            },
-            {
-              "name": "Tag2",
-              "member": [1,3]
-            }
-          ]],
-          "content": [
-            {
-              "id": 1,
-              "name": "test1",
-              "email": "t1@t1.t"
-            },
-            {
-              "id": 2,
-              "name": "test2",
-              "email": "t2@t2.t"
-            }
-          ]
+        "id": 22,
+        "tableName": "table1"
         }
       ]
     },
     {
       "id": 2,
-      "user-name": "user2",
-      "tables": []
+      "username": "user2"
+    }
+  ],
+  "tables": [
+    {
+      "tableId": 22,
+      "tags":[
+        {
+          "name": "Tag1",
+          "member": [1,2]
+        },
+        {
+          "name": "Tag2",
+          "member": [1,3]
+        }
+      ],
+      "content": [
+        {
+          "id": 1,
+          "name": "test1",
+          "email": "t1@t1.t"
+        },
+        {
+          "id": 2,
+          "name": "test2",
+          "email": "t2@t2.t"
+        }
+      ]
     }
   ]
 }
