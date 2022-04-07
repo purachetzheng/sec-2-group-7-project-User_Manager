@@ -23,6 +23,7 @@ const props = defineProps({
 })
 const newText = ref(props.text)
 const hasEdit = reactive([])
+const hasMouseEnter = reactive([])
 const checking = (event) => {
     const checked = props.checker.test(event.target.value)
     checked ? hasEdit[props.index] = false : alert(props.alertText)
@@ -35,10 +36,10 @@ const cancelEdit = (index) => {
 </script>
  
 <template>
-    <div class>
+    <td class @mouseenter="hasMouseEnter[index] = true" @mouseleave="hasMouseEnter[index] = false">
         <div v-if="!hasEdit[index]">
             <span class="float-left">{{ newText }}</span>
-            <button class="float-right">
+            <button class="float-right" v-show="hasMouseEnter[index]">
                 <CarbonEdit class="h-5 w-5" @click="hasEdit[index] = 1" />
             </button>
         </div>
@@ -54,5 +55,5 @@ const cancelEdit = (index) => {
                 <CarbonCloseOutline class="h-5 w-5" @click="cancelEdit(index)" />
             </button>
         </div>
-    </div>
+    </td>
 </template>

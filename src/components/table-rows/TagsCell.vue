@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
  
 <template>
-    <div>
+    <td>
         <span v-for="(tag, index) in tags" :key="index">[{{ tag }}]</span>
-    </div>
+    </td>
 </template>

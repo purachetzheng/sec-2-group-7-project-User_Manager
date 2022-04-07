@@ -84,7 +84,16 @@
       "tables": [
         {
           "table-name": "table1",
-          "tag":[],
+          "tags":[
+            {
+              "name": "Tag1",
+              "member": [1,2]
+            },
+            {
+              "name": "Tag2",
+              "member": [1,3]
+            }
+          ]],
           "content": [
             {
               "id": 1,

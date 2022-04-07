@@ -1,8 +1,8 @@
 <script setup>
 import { reactive } from 'vue'
-import TextRow from './table-rows/TextRow.vue'
-import TagRow from './table-rows/TagsRow.vue';
-import DateRow from './table-rows/DateRow.vue';
+import TextCell from './table-rows/TextCell.vue'
+import TagsCell from './table-rows/TagsCell.vue';
+import DateCell from './table-rows/DateCell.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
 import BaseInputType from './Base/BaseInputType.vue';
 defineEmits(['createUser', 'deleteUser', 'editUser', 'testt'])
@@ -47,19 +47,11 @@ const alertInput = () => {
                         :key="index"
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                     >
-                        <td>
-                            <TextRow :text="user.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editUser', $event, user, 'name')" />
-                        </td>
-                        <td>
-                            <TextRow :text="user.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editUser', $event, user, 'email')" />
-                        </td>
-                        <td>
-                            <TagRow :tags="user.tags" />
-                        </td>
+                        <TextCell :text="user.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editUser', $event, user, 'name')" />
+                        <TextCell :text="user.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editUser', $event, user, 'email')" />
+                        <TagsCell :tags="user.tags" />
                         <td>Active</td>
-                        <td>
-                            <DateRow :date="user.date" />
-                        </td>
+                        <DateCell :date="user.date" />
                         <td>
                             <button class @click="$emit('deleteUser', user.id)">
                                 <CarbonTrashCan class="my-auto -mr-1 h-4 w-4 text-red-700" />
