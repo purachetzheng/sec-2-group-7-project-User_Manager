@@ -17,15 +17,15 @@ onBeforeMount(async () => {
   await getUsers()
 })
 
-const clickLink = (username) => {
-    router.push({ name: 'ProfileWorkbench', params: { username: username } })
+const clickLink = (id) => {
+    router.push({ name: 'ProfileWorkbench', params: { userId: id } })
 }
 </script>
  
 <template>
     <p class="text-xl">Profile</p>
     <div class="flex space-x-4">
-        <button class="bg-red-400" v-for="(user,index) in users" :key="index" @click="clickLink(user.username)">
+        <button class="bg-red-400" v-for="(user,index) in users" :key="index" @click="clickLink(user.id)">
             {{user.username}}
         </button>
     </div>

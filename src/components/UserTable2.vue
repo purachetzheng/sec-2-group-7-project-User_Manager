@@ -4,17 +4,16 @@ import TextCell from './table-rows/TextCell.vue'
 import TagsCell from './table-rows/TagsCell.vue';
 import DateCell from './table-rows/DateCell.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
-import BaseInputType from './Base/BaseInputType.vue';
-defineEmits(['createUser', 'deleteUser', 'editUser', 'testt'])
+defineEmits(['createRow', 'deleteRow', 'editRow', 'testt'])
 const prop = defineProps({
-    users: {
-        type: Array,
+    table: {
+        type: Object,
         require: true,
     },
 })
 
 const testt = ``
-const newUsers = reactive({ name: '', email: '' })
+const newRow = reactive({ name: '', email: '' })
 const test = () => {
     // this.$emit('testt', 'hello')
     console.log(testt)
@@ -43,17 +42,18 @@ const alertInput = () => {
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-300">
                     <tr
-                        v-for="(user, index) in users"
+                        v-for="(row, index) in table.rows"
                         :key="index"
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                     >
-                        <TextCell :text="user.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editUser', $event, user, 'name')" />
-                        <TextCell :text="user.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editUser', $event, user, 'email')" />
-                        <TagsCell :tags="user.tags" />
+                        <TextCell :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editRow', $event, row, 'name')" />
+                        <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
+                        <!-- <TagsCell :tags="row.tags" /> -->
+                        <TagsCell />
                         <td>Active</td>
-                        <DateCell :date="user.date" />
+                        <DateCell :date="row.date" />
                         <td>
-                            <button class @click="$emit('deleteUser', user.id)">
+                            <button class @click="$emit('deleteRow', row.id)">
                                 <CarbonTrashCan class="my-auto -mr-1 h-4 w-4 text-red-700" />
                             </button>
                         </td>
@@ -63,14 +63,14 @@ const alertInput = () => {
                     </tr>
                     <tr
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                        @keydown.enter="newUsers.name.length != 0? $emit('createUser', newUsers): alertInput()"
+                        @keydown.enter="newRow.name.length != 0? $emit('createRow', newRow): alertInput()"
                     >
                         <td>
                             <input
                                 type="text"
                                 class="bg-gray-300"
                                 placeholder="Input Email"
-                                v-model="newUsers.name"
+                                v-model="newRow.name"
                             />
                         </td>
                         <td>
@@ -78,7 +78,7 @@ const alertInput = () => {
                                 type="text"
                                 class="bg-gray-300"
                                 placeholder="Input Email"
-                                v-model="newUsers.email"
+                                v-model="newRow.email"
                             />
                         </td>
                         <td :colspan="4" />

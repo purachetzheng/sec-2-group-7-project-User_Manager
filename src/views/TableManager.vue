@@ -4,24 +4,32 @@ import NavBar from '../components/NavBar.vue';
 import UserTable from '../components/UserTable.vue';
 import UserTable2 from '../components/UserTable2.vue';
 import StatusDisplay from '../components/StatusDisplay.vue';
+//router
+import { useRoute, useRouter } from 'vue-router'
+const {params}= useRoute()
+const router = useRouter()
+
 
 //Get
-const users = ref([])
-const getUsers = async () => {
-  const res = await fetch('http://localhost:5000/table')
-  // const res = await fetch('http://localhost:5000/accounts?username=' + params.username)
+const table = ref([])
+const getTable = async () => {
+  // const res = await fetch('http://localhost:5000/table')
+  console.log(params.tableId);
+  // const res = await fetch('http://localhost:5000/tables?tableId=' + params.tableId)
+  const res = await fetch(`http://localhost:5000/tables/${params.tableId}?_embed=rows&_embed=tags`)
   if (res.status === 200) {
-    users.value = await res.json()
-    console.log(users.value)
+    table.value = await res.json()
+    console.log(table.value)
   } else console.log('error, cannot get table')
 }
 onBeforeMount(async () => {
-  await getUsers()
+  await getTable()
 })
 
 //CREATE
-const createUsers = async (newUser) => {
-  const res = await fetch(`http://localhost:5000/table`, {
+const createRow = async (newUser) => {
+  // const res = await fetch(`http://localhost:5000/table`, {
+  const res = await fetch(`http://localhost:5000/rows`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json'
@@ -30,12 +38,12 @@ const createUsers = async (newUser) => {
       name: newUser.name,
       email: newUser.email,
       date: "11/11/2020",
-      tags: []
+      tableId: Number(params.tableId)
     })
   })
   if (res.status === 201) {
     const addedUser = await res.json()
-    users.value.push(addedUser)
+    table.value.rows.push(addedUser)
     console.log('created successfully')
     newUser.name = ''
     newUser.email = ''
@@ -43,20 +51,20 @@ const createUsers = async (newUser) => {
 }
 
 //REMOVE
-const removeNote = async (id) => {
-  const res = await fetch(`http://localhost:5000/table/${id}`, {
+const removeRow = async (id) => {
+  const res = await fetch(`http://localhost:5000/rows/${id}`, {
     method: 'DELETE'
   })
   if (res.status === 200) {
-    users.value = users.value.filter((user) => user.id !== id)
+    table.value.rows = table.value.rows.filter((user) => user.id !== id)
     console.log('deleted successfully')
   }
   else console.log('error, cannot delete')
 }
 
 //UPDATE
-const updateUser = async (event, userP, type) => {
-  const res = await fetch(`http://localhost:5000/table/${userP.id}`, {
+const updateRow = async (event, userP, type) => {
+  const res = await fetch(`http://localhost:5000/rows/${userP.id}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json'
@@ -65,20 +73,20 @@ const updateUser = async (event, userP, type) => {
       name: type ==='name'? event.target.value : userP.name,
       email: type ==='email'? event.target.value : userP.email,
       date: userP.date,
-      tags: userP.tags
+      tableId: userP.tableId
     })
 
     })
   if (res.status === 200) {
     const modifyNote = await res.json()
-    users.value = users.value.map((user) => 
+    table.value.rows = table.value.rows.map((user) => 
       user.id === modifyNote.id 
         ? { 
           ...user, 
           name: modifyNote.name,
           email: modifyNote.email,
           date: modifyNote.date,
-          tags: modifyNote.tags
+          tableId: modifyNote.tableId
           } 
         : user
     )
@@ -92,8 +100,8 @@ const tester = (event, id, type) => {
 }
 
 //
-const amountUsers = computed(() => users.value.length);
-console.log(users.value);
+const amountRows = computed(() => table.value.length);
+console.log(table.value);
 </script>
 
 <template>
@@ -102,8 +110,8 @@ console.log(users.value);
 
     <!-- Content Table -->
     <div class="flex space-x-2">
-      <UserTable2 class="flex-none w-10/12" :users="users" @createUser="createUsers" @deleteUser="removeNote" @editUser="updateUser" @testt="tester" />
-      <StatusDisplay class="flex-none w-2/12" :amountUsers="amountUsers" />
+      <UserTable2 class="flex-none w-10/12" :table="table" @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @testt="tester" />
+      <StatusDisplay class="flex-none w-2/12" :amountRows="amountRows" />
     </div>
     
   </div>

@@ -17,7 +17,7 @@ const routes = [
     component: TableManager,
   },
   {
-    path: '/profile-workbench/:username',
+    path: '/profile-workbench/:userId',
     name: 'ProfileWorkbench',
     component: ProfileWorkbench,
   },

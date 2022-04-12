@@ -2,7 +2,7 @@
 const props = defineProps({
     tags: {
         type: Array,
-        default: "undefined"
+        default: ["all",2]
     }
 })
 </script>

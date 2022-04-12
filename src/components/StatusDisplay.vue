@@ -2,7 +2,7 @@
 import { ref, computed, reactive, nextTick, onBeforeMount, onMounted } from 'vue'
 defineEmits([])
 const prop = defineProps({
-        amountUsers:{
+        amountRows:{
         type: Number,
         default: 0,
         // require:true
@@ -30,7 +30,7 @@ const amountTags = computed(() => tags.value.length);
  
 <template>
     <div class="bg-red-200 p-4 space-y-2">
-        <p>Amount of Users : {{amountUsers}}</p>
+        <p>Amount of Users : {{amountRows}}</p>
         <p>Amount of Tags : {{amountTags}}</p>
         <div class="flex flex-col space-y-2">
             <button :class="[color[1],'text-xl italic']" v-for="(tag,index) in tags" :key="index">
