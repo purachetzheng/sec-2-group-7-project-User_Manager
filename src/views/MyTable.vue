@@ -9,7 +9,8 @@ console.log(params.tableId);
 //Get
 const tables = ref({})
 const getTables = async () => {
-  const res = await fetch('http://localhost:5000/tables?tableId=' + params.tableId)
+  console.log(params.userId);
+  const res = await fetch('http://localhost:5000/tables?userId=' + params.userId)
   if (res.status === 200) {
     tables.value = await res.json()
     console.log(tables.value)

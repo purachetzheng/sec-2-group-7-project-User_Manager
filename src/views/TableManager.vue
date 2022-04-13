@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed, reactive, nextTick, onBeforeMount,toRefs,toRef } from 'vue'
 import NavBar from '../components/NavBar.vue';
-import UserTable from '../components/UserTable.vue';
 import Table from '../components/Table.vue';
 import StatusDisplay from '../components/StatusDisplay.vue';
 //router
@@ -108,11 +107,8 @@ const amountTags = computed(() => table.value.tags.length);
 
     <!-- Content Table -->
     <div class="flex space-x-2">
-      <span class="text-white" v-text="table.rows.length"></span>
       <Table class="flex-none w-10/12" :table="table" @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @testt="tester" />
       <StatusDisplay class="flex-none w-2/12"  :tableId="tableId" :amountRows="amountRows" :amountTags="amountTags" />
-      <!-- :amountRows="amountRows" -->
-      
     </div>
     
   </div>

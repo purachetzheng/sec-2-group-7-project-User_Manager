@@ -2,7 +2,8 @@
   "users": [
     {
       "id": 1,
-      "username": "user1"
+      "username": "user1",
+      "password": "fesawrf3wefwfazf"
     },
     {
       "id": 2,

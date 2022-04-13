@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import TableManager from '../views/TableManager.vue'
-import ProfileWorkbench from '../views/ProfileWorkbench.vue'
+import MyTable from '../views/MyTable.vue'
 
 
 const history = createWebHistory()
@@ -18,8 +18,8 @@ const routes = [
   },
   {
     path: '/profile-workbench/:userId',
-    name: 'ProfileWorkbench',
-    component: ProfileWorkbench,
+    name: 'MyTable',
+    component: MyTable,
   },
 //   {
 //     path: '/:catchNotMatchPath(.*)',

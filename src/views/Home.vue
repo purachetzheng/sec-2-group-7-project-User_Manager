@@ -18,7 +18,7 @@ onBeforeMount(async () => {
 })
 
 const clickLink = (id) => {
-    router.push({ name: 'ProfileWorkbench', params: { userId: id } })
+    router.push({ name: 'MyTable', params: { userId: id } })
 }
 </script>
  
