@@ -46,7 +46,7 @@ const alertInput = () => {
                         <TextCell :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editRow', $event, row, 'name')" />
                         <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                         <!-- <TagsCell :tags="row.tags" /> -->
-                        <TagsCell />
+                        <TagsCell :rowId="row.id" />
                         <td>Active</td>
                         <DateCell :date="row.date" />
                         <td>

@@ -27,6 +27,7 @@ const getTags = async () => {
   if (res.status === 200) {
     tags.value = await res.json()
     console.log(tags.value)
+    console.log(tags.value[0].name)
   } else console.log('error, cannot get tags')
 }
 //Get Rows
@@ -53,7 +54,6 @@ onBeforeMount(async () => {
 // console.log(table);
 const amountTags = ref(computed(() => prop.amountTags))
 const amountRows = ref(computed(() => prop.amountRows))
-
 </script>
  
 <template>

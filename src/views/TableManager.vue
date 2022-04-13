@@ -24,7 +24,6 @@ onBeforeMount(async () => {
 })
 //CREATE
 const createRow = async (newUser) => {
-  // const res = await fetch(`http://localhost:5000/table`, {
   const res = await fetch(`http://localhost:5000/rows`, {
     method: 'POST',
     headers: {
