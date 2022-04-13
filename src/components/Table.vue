@@ -12,18 +12,15 @@ const prop = defineProps({
     },
 })
 
-const testt = ``
 const newRow = reactive({ name: '', email: '' })
-const test = () => {
-    // this.$emit('testt', 'hello')
-    console.log(testt)
-}
+
 const alertInput = () => {
     alert(`Please enter at least your name.`)
 }              
 </script>
  
 <template>
+    
     <div class="container flex justify-center">
         <div class="flex flex-col w-full border-b border-gray-200 shadow">
             <table class="border-b border-gray-200 shadow">

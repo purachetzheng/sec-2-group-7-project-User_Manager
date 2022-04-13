@@ -1,31 +1,28 @@
 <script setup>
-import { ref, computed, reactive, nextTick, onBeforeMount } from 'vue'
+import { ref, computed, reactive, nextTick, onBeforeMount,toRefs,toRef } from 'vue'
 import NavBar from '../components/NavBar.vue';
 import UserTable from '../components/UserTable.vue';
-import UserTable2 from '../components/UserTable2.vue';
+import Table from '../components/Table.vue';
 import StatusDisplay from '../components/StatusDisplay.vue';
 //router
 import { useRoute, useRouter } from 'vue-router'
-const {params}= useRoute()
+const { params }= useRoute()
 const router = useRouter()
-
+const tableId = params.tableId
 
 //Get
-const table = ref([])
+const table = ref({rows:[], tags:[]})
 const getTable = async () => {
-  // const res = await fetch('http://localhost:5000/table')
-  console.log(params.tableId);
-  // const res = await fetch('http://localhost:5000/tables?tableId=' + params.tableId)
-  const res = await fetch(`http://localhost:5000/tables/${params.tableId}?_embed=rows&_embed=tags`)
+  const res = await fetch(`http://localhost:5000/tables/${tableId}?_embed=rows&_embed=tags`)
   if (res.status === 200) {
     table.value = await res.json()
     console.log(table.value)
+    console.log(table.value.rows.length)
   } else console.log('error, cannot get table')
 }
 onBeforeMount(async () => {
   await getTable()
 })
-
 //CREATE
 const createRow = async (newUser) => {
   // const res = await fetch(`http://localhost:5000/table`, {
@@ -99,9 +96,10 @@ const tester = (event, id, type) => {
   console.log(event.target)
 }
 
-//
-const amountRows = computed(() => table.value.length);
-console.log(table.value);
+
+const amountRows = computed(() => table.value.rows.length);
+const amountTags = computed(() => table.value.tags.length);
+
 </script>
 
 <template>
@@ -110,8 +108,11 @@ console.log(table.value);
 
     <!-- Content Table -->
     <div class="flex space-x-2">
-      <UserTable2 class="flex-none w-10/12" :table="table" @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @testt="tester" />
-      <StatusDisplay class="flex-none w-2/12" :amountRows="amountRows" />
+      <span class="text-white" v-text="table.rows.length"></span>
+      <Table class="flex-none w-10/12" :table="table" @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @testt="tester" />
+      <StatusDisplay class="flex-none w-2/12"  :tableId="tableId" :amountRows="amountRows" :amountTags="amountTags" />
+      <!-- :amountRows="amountRows" -->
+      
     </div>
     
   </div>
