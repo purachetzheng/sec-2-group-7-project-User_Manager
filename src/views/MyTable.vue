@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router';
 const { params } = useRoute();
 const router = useRouter();
 
-console.log(params.tableId);
+console.log(params.userId);
 //Get
 const tables = ref({});
 const getTables = async () => {

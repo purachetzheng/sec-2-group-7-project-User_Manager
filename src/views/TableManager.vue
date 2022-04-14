@@ -10,13 +10,22 @@ const router = useRouter();
 const tableId = params.tableId;
 
 //Get
-const table = ref({ rows: [], tags: [] });
+const rows = ref([]);
+// const table = ref({rows:[], tags:[]})
 const getTable = async () => {
-    const res = await fetch(`http://localhost:5000/tables/${tableId}?_embed=rows&_embed=tags`);
+    const res = await fetch(`http://localhost:5000/rows?tableId=${tableId}&_embed=tagMembers`);
+    // const res = await fetch(`http://localhost:5000/tables/${tableId}?_embed=rows&_embed=tags`)
     if (res.status === 200) {
-        table.value = await res.json();
-        console.log(table.value);
-        console.log(table.value.rows.length);
+        rows.value = await res.json();
+        console.log(rows.value);
+    } else console.log('error, cannot get table');
+};
+const getTableSort = async (sortBy) => {
+    // const res = await fetch(`http://localhost:5000/rows?tableId=${tableId}&_embed=tagMembers`)
+    const res = await fetch(`http://localhost:5000/rows?tableId=${tableId}&_embed=tagMembers&_sort=${sortBy}`);
+    if (res.status === 200) {
+        rows.value = await res.json();
+        console.log(rows.value);
     } else console.log('error, cannot get table');
 };
 onBeforeMount(async () => {
@@ -33,12 +42,13 @@ const createRow = async (newUser) => {
             name: newUser.name,
             email: newUser.email,
             date: '11/11/2020',
-            tableId: Number(params.tableId),
+            tableId: Number(tableId),
         }),
     });
     if (res.status === 201) {
         const addedUser = await res.json();
-        table.value.rows.push(addedUser);
+        // table.value.rows.push(addedUser)
+        rows.value.push(addedUser);
         console.log('created successfully');
         newUser.name = '';
         newUser.email = '';
@@ -51,7 +61,8 @@ const removeRow = async (id) => {
         method: 'DELETE',
     });
     if (res.status === 200) {
-        table.value.rows = table.value.rows.filter((user) => user.id !== id);
+        rows.value = rows.value.filter((user) => user.id !== id);
+        // table.value.rows = table.value.rows.filter((user) => user.id !== id)
         console.log('deleted successfully');
     } else console.log('error, cannot delete');
 };
@@ -72,7 +83,8 @@ const updateRow = async (event, userP, type) => {
     });
     if (res.status === 200) {
         const modifyNote = await res.json();
-        table.value.rows = table.value.rows.map((user) =>
+        rows.value = rows.value.map((user) =>
+            // table.value.rows = table.value.rows.map((user) =>
             user.id === modifyNote.id
                 ? {
                       ...user,
@@ -92,8 +104,24 @@ const tester = (event, id, type) => {
     console.log(event.target);
 };
 
-const amountRows = computed(() => table.value.rows.length);
-const amountTags = computed(() => table.value.tags.length);
+const amountRows = computed(() => rows.value.length);
+// const amountRows = computed(() => table.value.rows.length);
+// const amountTags = computed(() => table.value.tags.length);
+const sortRowsBy = (sorter) => {
+    switch (sorter) {
+        case (sorter = 'id'):
+            rows.value.sort((a, b) => a.id - b.id);
+            // table.value.rows.sort((a, b) => a.id - b.id)
+            break;
+        case (sorter = 'name'):
+            rows.value.sort((a, b) => (a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1));
+            // table.value.rows.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
+            break;
+    }
+    console.log(rows.value);
+    // table.value.rows.sort((a, b) => a[sorter] - b[sorter])
+    // console.log(table.value.rows[0]['id']);
+};
 </script>
 
 <template>
@@ -104,13 +132,21 @@ const amountTags = computed(() => table.value.tags.length);
         <div class="flex space-x-2">
             <Table
                 class="flex-none w-10/12"
-                :table="table"
+                :rows="rows"
+                :tableId="tableId"
                 @createRow="createRow"
                 @deleteRow="removeRow"
                 @editRow="updateRow"
                 @testt="tester"
             />
-            <StatusDisplay class="flex-none w-2/12" :tableId="tableId" :amountRows="amountRows" :amountTags="amountTags" />
+            <StatusDisplay class="flex-none w-2/12" :tableId="tableId" :amountRows="amountRows" :amountTags="0" />
+        </div>
+
+        <div>
+            <button class="btn-primary" @click="sortRowsBy('name')">Sort Name 1</button>
+            <button class="btn-primary" @click="sortRowsBy('id')">Sort Id 1</button>
+            <button class="btn-primary" @click="getTableSort('name')">Sort Name 2</button>
+            <button class="btn-primary" @click="getTableSort('id')">Sort Id 2</button>
         </div>
     </div>
 </template>
