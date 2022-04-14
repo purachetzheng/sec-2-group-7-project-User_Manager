@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue'
+
 import TextCell from './table-rows/TextCell.vue'
 import TagsCell from './table-rows/TagsCell.vue';
 import DateCell from './table-rows/DateCell.vue';
@@ -8,15 +9,24 @@ defineEmits(['createRow', 'deleteRow', 'editRow', 'testt'])
 const prop = defineProps({
     table: {
         type: Object,
-        require: true,
+        default: {},
     },
+    rows:{
+        type: Array,
+        default: []
+    },
+    tableId: {
+        type: String,
+        require: true
+    }
 })
 
 const newRow = reactive({ name: '', email: '' })
 
 const alertInput = () => {
     alert(`Please enter at least your name.`)
-}              
+}
+
 </script>
  
 <template>
@@ -39,14 +49,14 @@ const alertInput = () => {
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-300">
                     <tr
-                        v-for="(row, index) in table.rows"
+                        v-for="(row, index) in rows"
                         :key="index"
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                     >
                         <TextCell :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editRow', $event, row, 'name')" />
                         <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                         <!-- <TagsCell :tags="row.tags" /> -->
-                        <TagsCell :rowId="row.id" />
+                        <TagsCell :rowId="row.id" :tags="row.tagMembers" :tableId="tableId" />
                         <td>Active</td>
                         <DateCell :date="row.date" />
                         <td>
