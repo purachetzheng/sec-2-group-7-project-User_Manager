@@ -2,11 +2,11 @@
 const props = defineProps({
     date: {
         type: String,
-        default: "undefined"
-    }
-})
+        default: 'undefined',
+    },
+});
 </script>
- 
+
 <template>
     <td>{{ date }}</td>
 </template>

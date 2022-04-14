@@ -2,7 +2,7 @@
 import { reactive, ref } from 'vue';
 import CarbonEdit from '../icons/CarbonEdit.vue';
 import CarbonCloseOutline from '../icons/CarbonCloseOutline.vue';
-defineEmits(['editText'])
+defineEmits(['editText']);
 const props = defineProps({
     index: {
         type: Number,
@@ -10,31 +10,31 @@ const props = defineProps({
     },
     text: {
         type: String,
-        default: "undefined"
+        default: 'undefined',
     },
     checker: {
         type: Object,
-        default: /\w+/
+        default: /\w+/,
     },
     alertText: {
         type: String,
-        default: 'error'
-    }
-})
-const newText = ref(props.text)
-const hasEdit = reactive([])
-const hasMouseEnter = reactive([])
+        default: 'error',
+    },
+});
+const newText = ref(props.text);
+const hasEdit = reactive([]);
+const hasMouseEnter = reactive([]);
 const checking = (event) => {
-    const checked = props.checker.test(event.target.value)
-    checked ? hasEdit[props.index] = false : alert(props.alertText)
-    return checked
-}
+    const checked = props.checker.test(event.target.value);
+    checked ? (hasEdit[props.index] = false) : alert(props.alertText);
+    return checked;
+};
 const cancelEdit = (index) => {
-    hasEdit[index] = 0
-    newText.value = props.text
-}
+    hasEdit[index] = 0;
+    newText.value = props.text;
+};
 </script>
- 
+
 <template>
     <td class @mouseenter="hasMouseEnter[index] = true" @mouseleave="hasMouseEnter[index] = false">
         <div v-if="!hasEdit[index]">

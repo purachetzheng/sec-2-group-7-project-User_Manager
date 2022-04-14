@@ -1,26 +1,25 @@
 <script setup>
-import { reactive } from 'vue'
-import TextCell from './table-rows/TextCell.vue'
+import { reactive } from 'vue';
+import TextCell from './table-rows/TextCell.vue';
 import TagsCell from './table-rows/TagsCell.vue';
 import DateCell from './table-rows/DateCell.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
-defineEmits(['createRow', 'deleteRow', 'editRow', 'testt'])
+defineEmits(['createRow', 'deleteRow', 'editRow', 'testt']);
 const prop = defineProps({
     table: {
         type: Object,
         require: true,
     },
-})
+});
 
-const newRow = reactive({ name: '', email: '' })
+const newRow = reactive({ name: '', email: '' });
 
 const alertInput = () => {
-    alert(`Please enter at least your name.`)
-}              
+    alert(`Please enter at least your name.`);
+};
 </script>
- 
+
 <template>
-    
     <div class="container flex justify-center">
         <div class="flex flex-col w-full border-b border-gray-200 shadow">
             <table class="border-b border-gray-200 shadow">
@@ -38,13 +37,21 @@ const alertInput = () => {
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-300">
-                    <tr
-                        v-for="(row, index) in table.rows"
-                        :key="index"
-                        class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                    >
-                        <TextCell :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editRow', $event, row, 'name')" />
-                        <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
+                    <tr v-for="(row, index) in table.rows" :key="index" class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                        <TextCell
+                            :text="row.name"
+                            :index="index"
+                            :checker="/[\w(ก-ฮ)]+/"
+                            alertText="Name not null!"
+                            @editText="$emit('editRow', $event, row, 'name')"
+                        />
+                        <TextCell
+                            :text="row.email"
+                            :index="index"
+                            :checker="/.*@.*\..*|^$/"
+                            alertText="Please enter a valid email"
+                            @editText="$emit('editRow', $event, row, 'email')"
+                        />
                         <!-- <TagsCell :tags="row.tags" /> -->
                         <TagsCell :rowId="row.id" />
                         <td>Active</td>
@@ -60,23 +67,13 @@ const alertInput = () => {
                     </tr>
                     <tr
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                        @keydown.enter="newRow.name.length != 0? $emit('createRow', newRow): alertInput()"
+                        @keydown.enter="newRow.name.length != 0 ? $emit('createRow', newRow) : alertInput()"
                     >
                         <td>
-                            <input
-                                type="text"
-                                class="bg-gray-300"
-                                placeholder="Input Email"
-                                v-model="newRow.name"
-                            />
+                            <input type="text" class="bg-gray-300" placeholder="Input Email" v-model="newRow.name" />
                         </td>
                         <td>
-                            <input
-                                type="text"
-                                class="bg-gray-300"
-                                placeholder="Input Email"
-                                v-model="newRow.email"
-                            />
+                            <input type="text" class="bg-gray-300" placeholder="Input Email" v-model="newRow.email" />
                         </td>
                         <td :colspan="4" />
                     </tr>
