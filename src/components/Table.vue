@@ -5,7 +5,9 @@ import TextCell from './table-rows/TextCell.vue'
 import TagsCell from './table-rows/TagsCell.vue';
 import DateCell from './table-rows/DateCell.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
-defineEmits(['createRow', 'deleteRow', 'editRow', 'testt'])
+import CarbonSortAscending from './icons/CarbonSortAscending.vue';
+import CarbonSortDescending from './icons/CarbonSortDescending.vue';
+defineEmits(['createRow', 'deleteRow', 'editRow', 'sortRow'])
 const prop = defineProps({
     table: {
         type: Object,
@@ -18,6 +20,10 @@ const prop = defineProps({
     tableId: {
         type: String,
         require: true
+    },
+    selectTag:{
+        type: String,
+        default: '0'
     }
 })
 
@@ -35,9 +41,27 @@ const alertInput = () => {
         <div class="flex flex-col w-full border-b border-gray-200 shadow">
             <table class="border-b border-gray-200 shadow">
                 <thead class="bg-gray-50">
-                    <tr class="px-6 py-2 text-xs text-gray-500">
-                        <th>Name</th>
-                        <th>Email</th>
+                    <tr class="px-6 py-2 text-xs text-gray-500 text-base">
+                        <th>#</th>
+                        <th>
+                            <div class="flex justify-between">
+                                <span>Name</span>
+                                <div class="flex space-x-2 mr-2">
+                                    <button @click="$emit('sortRow','name','asc')"><CarbonSortAscending/></button>
+                                    <button @click="$emit('sortRow','name','desc')"><CarbonSortDescending/></button>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-between">
+                                <span>Email</span>
+                                <div class="flex space-x-2">
+                                    <button @click="$emit('sortRow','email','asc')"><CarbonSortAscending/></button>
+                                    <button @click="$emit('sortRow','email','desc')"><CarbonSortDescending/></button>
+                                </div>
+                            </div>
+                        </th>
+                        <!-- <th>Email</th> -->
                         <th>Tag</th>
                         <th>Status</th>
                         <th>Add Date</th>
@@ -52,7 +76,9 @@ const alertInput = () => {
                         v-for="(row, index) in rows"
                         :key="index"
                         class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                        v-show="row.tagMembers.some(tag => tag.tagId == selectTag) || selectTag == 'all'"
                     >
+                        <td>{{index}}</td>
                         <TextCell :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!" @editText="$emit('editRow', $event, row, 'name')" />
                         <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/" alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                         <!-- <TagsCell :tags="row.tags" /> -->
@@ -88,7 +114,7 @@ const alertInput = () => {
                                 v-model="newRow.email"
                             />
                         </td>
-                        <td :colspan="4" />
+                        <td :colspan="5" />
                     </tr>
                 </tbody>
             </table>

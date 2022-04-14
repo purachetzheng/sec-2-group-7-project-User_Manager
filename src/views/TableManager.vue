@@ -1,11 +1,11 @@
 <script setup>
-import { ref, computed, reactive, nextTick, onBeforeMount,toRefs,toRef } from 'vue'
+import { ref, computed, reactive, nextTick, onBeforeMount, toRefs, toRef } from 'vue'
 import NavBar from '../components/NavBar.vue';
 import Table from '../components/Table.vue';
 import StatusDisplay from '../components/StatusDisplay.vue';
 //router
 import { useRoute, useRouter } from 'vue-router'
-const { params }= useRoute()
+const { params } = useRoute()
 const router = useRouter()
 const tableId = params.tableId
 
@@ -38,11 +38,12 @@ const createRow = async (newUser) => {
     headers: {
       'content-type': 'application/json'
     },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
       name: newUser.name,
       email: newUser.email,
       date: "11/11/2020",
-      tableId: Number(tableId)
+      tableId: Number(tableId),
+      tagMembers: []
     })
   })
   if (res.status === 201) {
@@ -50,6 +51,8 @@ const createRow = async (newUser) => {
     // table.value.rows.push(addedUser)
     rows.value.push(addedUser)
     console.log('created successfully')
+    // console.log(addedUser)
+    // console.log(rows.value)
     newUser.name = ''
     newUser.email = ''
   } else console.log('error, cannot create')
@@ -75,55 +78,62 @@ const updateRow = async (event, userP, type) => {
     headers: {
       'content-type': 'application/json'
     },
-    body: JSON.stringify({ 
-      name: type ==='name'? event.target.value : userP.name,
-      email: type ==='email'? event.target.value : userP.email,
+    body: JSON.stringify({
+      name: type === 'name' ? event.target.value : userP.name,
+      email: type === 'email' ? event.target.value : userP.email,
       date: userP.date,
-      tableId: userP.tableId
+      tableId: userP.tableId,
+      tagMembers: userP.tagMembers
     })
 
-    })
+  })
   if (res.status === 200) {
     const modifyNote = await res.json()
-    rows.value = rows.value.map((user) => 
-    // table.value.rows = table.value.rows.map((user) => 
-      user.id === modifyNote.id 
-        ? { 
-          ...user, 
+    rows.value = rows.value.map((user) =>
+      // table.value.rows = table.value.rows.map((user) => 
+      user.id === modifyNote.id
+        ? {
+          ...user,
           name: modifyNote.name,
           email: modifyNote.email,
           date: modifyNote.date,
-          tableId: modifyNote.tableId
-          } 
+          tableId: modifyNote.tableId,
+          tagMembers: modifyNote.tagMembers
+        }
         : user
     )
     console.log('edited successfully')
   } else console.log('error, cannot edit')
 }
 
-const tester = (event, id, type) => {
-  console.log(`id: ${id} value: ${event.target.value} type: ${type}`)
-  console.log(event.target)
-}
-
 
 const amountRows = computed(() => rows.value.length);
-// const amountRows = computed(() => table.value.rows.length);
-// const amountTags = computed(() => table.value.tags.length);
-const sortRowsBy = (sorter) => {
-  switch(sorter) {
-  case sorter = 'id':
-    rows.value.sort((a, b) => a.id - b.id)
-    // table.value.rows.sort((a, b) => a.id - b.id)
-    break;
-  case sorter = 'name':
-    rows.value.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
-    // table.value.rows.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
-    break;
+
+const sortRowsBy = (sorter, type = 'asc') => {
+  console.log(sorter);
+  switch (sorter) {
+    case sorter = 'id':
+      rows.value.sort((a, b) => type === 'asc' ? a.id - b.id : b.id - a.id)
+      // table.value.rows.sort((a, b) => a.id - b.id)
+      break;
+    case sorter = 'name':
+      rows.value.sort((a, b) =>  type === 'asc' ? (a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1 ):(b.name.toUpperCase() > a.name.toUpperCase() ? 1 : -1 ))
+      // table.value.rows.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
+      break;
+    case sorter = 'email':
+      rows.value.sort((a, b) =>  type === 'asc' ? (a.email.toUpperCase() > b.email.toUpperCase() ? 1 : -1 ):(b.email.toUpperCase() > a.email.toUpperCase() ? 1 : -1 ))
+      // table.value.rows.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
+      break;
   }
-  console.log(rows.value);
+  console.log(`sorted by ${sorter} with ${type}`);
   // table.value.rows.sort((a, b) => a[sorter] - b[sorter])
   // console.log(table.value.rows[0]['id']);
+}
+
+const selectedTag = ref('all')
+const selectRowByTag = (tagId) => {
+  console.log(tagId);
+  selectedTag.value = String(tagId)
 }
 
 </script>
@@ -131,20 +141,23 @@ const sortRowsBy = (sorter) => {
 <template>
   <div class="bg-gray-700 min-h-screen">
     <!-- Header -->
- 
+
     <!-- Content Table -->
     <div class="flex space-x-2">
-      <Table class="flex-none w-10/12" :rows="rows" :tableId="tableId" @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @testt="tester" />
-      <StatusDisplay class="flex-none w-2/12"  :tableId="tableId" :amountRows="amountRows" :amountTags="0" />
+      <Table class="flex-none w-10/12" :rows="rows" :selectTag="selectedTag" :tableId="tableId" @createRow="createRow"
+        @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy" />
+      <StatusDisplay class="flex-none w-2/12" :tableId="tableId" :amountRows="amountRows" :amountTags="0"
+        @selectTag="selectRowByTag" />
     </div>
-    
-    <div>
-      <button class="btn-primary" @click="sortRowsBy('name')" >Sort Name 1</button>
-      <button class="btn-primary" @click="sortRowsBy('id')" >Sort Id 1</button>
-      <button class="btn-primary" @click="getTableSort('name')" >Sort Name 2</button>
-      <button class="btn-primary" @click="getTableSort('id')" >Sort Id 2</button>
-    </div>
-    
+
+    <!-- for Test -->
+    <!-- <div> -->
+      <!-- <button class="btn-primary" @click="sortRowsBy('name', 'asc')">Sort Name asc</button> -->
+      <!-- <button class="btn-primary" @click="sortRowsBy('name', 'desc')">Sort Name desc</button> -->
+      <!-- <button class="btn-primary" @click="sortRowsBy('id')">Sort Id 1</button> -->
+      <!-- <button class="btn-primary" @click="getTableSort('name')">Sort Name 2</button> -->
+      <!-- <button class="btn-primary" @click="getTableSort('id')">Sort Id 2</button> -->
+    <!-- </div> -->
   </div>
 </template>
 
