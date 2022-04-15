@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, reactive, nextTick, onBeforeMount, onMounted } from 'vue';
-defineEmits([]);
+defineEmits(['selectTag']);
 const prop = defineProps({
     amountRows: {
         type: Number,
@@ -69,7 +69,8 @@ const amountRows = ref(computed(() => prop.amountRows));
             </div>
         </div>
         <div class="flex flex-col space-y-2">
-            <button class="bg-gray-300 text-left" v-for="(tag, index) in tags" :key="index">
+            <button class="bg-gray-300 text-left" @click="$emit('selectTag', 'all')">All</button>
+            <button class="bg-gray-300 text-left" v-for="(tag, index) in tags" :key="index" @click="$emit('selectTag', tag.id)">
                 {{ tag.name }} : {{ tag.member.length }}
             </button>
         </div>

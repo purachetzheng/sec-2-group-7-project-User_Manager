@@ -43,6 +43,7 @@ const createRow = async (newUser) => {
             email: newUser.email,
             date: '11/11/2020',
             tableId: Number(tableId),
+            tagMembers: [],
         }),
     });
     if (res.status === 201) {
@@ -50,6 +51,8 @@ const createRow = async (newUser) => {
         // table.value.rows.push(addedUser)
         rows.value.push(addedUser);
         console.log('created successfully');
+        // console.log(addedUser)
+        // console.log(rows.value)
         newUser.name = '';
         newUser.email = '';
     } else console.log('error, cannot create');
@@ -79,6 +82,7 @@ const updateRow = async (event, userP, type) => {
             email: type === 'email' ? event.target.value : userP.email,
             date: userP.date,
             tableId: userP.tableId,
+            tagMembers: userP.tagMembers,
         }),
     });
     if (res.status === 200) {
@@ -92,6 +96,7 @@ const updateRow = async (event, userP, type) => {
                       email: modifyNote.email,
                       date: modifyNote.date,
                       tableId: modifyNote.tableId,
+                      tagMembers: modifyNote.tagMembers,
                   }
                 : user
         );
@@ -99,43 +104,78 @@ const updateRow = async (event, userP, type) => {
     } else console.log('error, cannot edit');
 };
 
-const tester = (event, id, type) => {
-    console.log(`id: ${id} value: ${event.target.value} type: ${type}`);
-    console.log(event.target);
-};
-
 const amountRows = computed(() => rows.value.length);
-// const amountRows = computed(() => table.value.rows.length);
-// const amountTags = computed(() => table.value.tags.length);
-const sortRowsBy = (sorter) => {
+
+const sortRowsBy = (sorter, type = 'asc') => {
+    console.log(sorter);
     switch (sorter) {
         case (sorter = 'id'):
-            rows.value.sort((a, b) => a.id - b.id);
+            rows.value.sort((a, b) => (type === 'asc' ? a.id - b.id : b.id - a.id));
             // table.value.rows.sort((a, b) => a.id - b.id)
             break;
         case (sorter = 'name'):
-            rows.value.sort((a, b) => (a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1));
+            rows.value.sort((a, b) =>
+                type === 'asc'
+                    ? a.name.toUpperCase() > b.name.toUpperCase()
+                        ? 1
+                        : -1
+                    : b.name.toUpperCase() > a.name.toUpperCase()
+                    ? 1
+                    : -1
+            );
+            // table.value.rows.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
+            break;
+        case (sorter = 'email'):
+            rows.value.sort((a, b) =>
+                type === 'asc'
+                    ? a.email.toUpperCase() > b.email.toUpperCase()
+                        ? 1
+                        : -1
+                    : b.email.toUpperCase() > a.email.toUpperCase()
+                    ? 1
+                    : -1
+            );
             // table.value.rows.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
             break;
     }
-    console.log(rows.value);
+    console.log(`sorted by ${sorter} with ${type}`);
     // table.value.rows.sort((a, b) => a[sorter] - b[sorter])
     // console.log(table.value.rows[0]['id']);
+};
+
+const selectedTag = ref('all');
+const selectRowByTag = (tagId) => {
+    console.log(tagId);
+    selectedTag.value = String(tagId);
 };
 </script>
 
 <template>
-    <div class="min-w-full">
-        <div class="flex">
-            <Table :rows="rows" :tableId="tableId" @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @testt="tester" />
-            <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" />
+    <div class="">
+        <!-- Header -->
+
+        <!-- Content Table -->
+        <div class="flex space-x-2">
+            <Table
+                :rows="rows"
+                :selectTag="selectedTag"
+                :tableId="tableId"
+                @createRow="createRow"
+                @deleteRow="removeRow"
+                @editRow="updateRow"
+                @sortRow="sortRowsBy"
+            />
+            <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" @selectTag="selectRowByTag" />
         </div>
-        <div>
-            <button class="btn-primary" @click="sortRowsBy('name')">Sort Name 1</button>
-            <button class="btn-primary" @click="sortRowsBy('id')">Sort Id 1</button>
-            <button class="btn-primary" @click="getTableSort('name')">Sort Name 2</button>
-            <button class="btn-primary" @click="getTableSort('id')">Sort Id 2</button>
-        </div>
+
+        <!-- for Test -->
+        <!-- <div> -->
+        <!-- <button class="btn-primary" @click="sortRowsBy('name', 'asc')">Sort Name asc</button> -->
+        <!-- <button class="btn-primary" @click="sortRowsBy('name', 'desc')">Sort Name desc</button> -->
+        <!-- <button class="btn-primary" @click="sortRowsBy('id')">Sort Id 1</button> -->
+        <!-- <button class="btn-primary" @click="getTableSort('name')">Sort Name 2</button> -->
+        <!-- <button class="btn-primary" @click="getTableSort('id')">Sort Id 2</button> -->
+        <!-- </div> -->
     </div>
 </template>
 
