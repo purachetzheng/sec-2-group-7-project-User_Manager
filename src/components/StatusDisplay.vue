@@ -17,7 +17,6 @@ const prop = defineProps({
         require: true,
     },
 });
-const color = ['bg-orange-400', 'bg-lime-400'];
 // console.log(tags);
 
 // Get Tags
@@ -56,11 +55,21 @@ const amountRows = ref(computed(() => prop.amountRows));
 </script>
 
 <template>
-    <div class="bg-red-200 p-4 space-y-2">
-        <p>Amount of Users : {{ amountRows }}</p>
-        <p>Amount of Tags : {{ amountTags }}</p>
+    <div class="bg-white p-4 space-y-2 w-1/4">
+        <div class="flex gap-4">
+            <div class="flex flex-col">
+                <span class="font-bold"> Users </span>
+                <span class="text-2xl font-light"> {{ amountRows }} </span>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-bold"> Tags </span>
+                <span class="text-2xl font-light">
+                    {{ amountTags }}
+                </span>
+            </div>
+        </div>
         <div class="flex flex-col space-y-2">
-            <button :class="[color[1], 'text-xl italic']" v-for="(tag, index) in tags" :key="index">
+            <button class="bg-gray-300 text-left" v-for="(tag, index) in tags" :key="index">
                 {{ tag.name }} : {{ tag.member.length }}
             </button>
         </div>

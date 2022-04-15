@@ -25,11 +25,13 @@ const clickLink = (id) => {
 </script>
 
 <template>
-    <p class="text-xl">My Tables</p>
-    <div class="flex space-x-4">
-        <button class="bg-red-400" v-for="(table, index) in tables" :key="index" @click="clickLink(table.id)">
-            {{ table.tableName }}
-        </button>
+    <div class="p-4">
+        <p class="text-xl">User {{ params.userId }} Table</p>
+        <div class="flex space-x-4">
+            <button class="bg-red-400" v-for="(table, index) in tables" :key="index" @click="clickLink(table.id)">
+                {{ table.tableName }}
+            </button>
+        </div>
     </div>
 </template>
 

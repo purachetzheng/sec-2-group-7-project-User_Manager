@@ -125,23 +125,11 @@ const sortRowsBy = (sorter) => {
 </script>
 
 <template>
-    <div class="bg-gray-700 min-h-screen">
-        <!-- Header -->
-
-        <!-- Content Table -->
-        <div class="flex space-x-2">
-            <Table
-                class="flex-none w-10/12"
-                :rows="rows"
-                :tableId="tableId"
-                @createRow="createRow"
-                @deleteRow="removeRow"
-                @editRow="updateRow"
-                @testt="tester"
-            />
-            <StatusDisplay class="flex-none w-2/12" :tableId="tableId" :amountRows="amountRows" :amountTags="0" />
+    <div class="min-w-full">
+        <div class="flex">
+            <Table :rows="rows" :tableId="tableId" @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @testt="tester" />
+            <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" />
         </div>
-
         <div>
             <button class="btn-primary" @click="sortRowsBy('name')">Sort Name 1</button>
             <button class="btn-primary" @click="sortRowsBy('id')">Sort Id 1</button>

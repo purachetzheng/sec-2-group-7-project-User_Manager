@@ -23,11 +23,13 @@ const clickLink = (id) => {
 </script>
 
 <template>
-    <p class="text-xl">Profile</p>
-    <div class="flex space-x-4">
-        <button class="bg-red-400" v-for="(user, index) in users" :key="index" @click="clickLink(user.id)">
-            {{ user.username }}
-        </button>
+    <div class="p-4">
+        <p class="text-xl">Profile</p>
+        <div class="flex space-x-4">
+            <button class="bg-red-400" v-for="(user, index) in users" :key="index" @click="clickLink(user.id)">
+                {{ user.username }}
+            </button>
+        </div>
     </div>
 </template>
 
