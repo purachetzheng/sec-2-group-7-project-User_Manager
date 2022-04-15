@@ -23,72 +23,60 @@ const prop = defineProps({
     },
     selectTag: {
         type: String,
-        default: '0',
-    },
-});
-
-const newRow = reactive({ name: '', email: '' });
+        default: '0'
+    }
+})
+// const tableHeader = ['Name', 'Email', 'Tag', 'Status', 'Add Date', '']
+const tableHeader = [
+    { hName: 'Name', sort: true },
+    { hName: 'Email', sort: true },
+    { hName: 'Tag', sort: false },
+    { hName: 'Status', sort: false },
+    { hName: 'Add Date', sort: false },
+    { hName: '', sort: false },
+]
+const newRow = reactive({ name: '', email: '' })
 
 const alertInput = () => {
-    alert(`Please enter at least your name.`);
-};
+    alert(`Please enter at least your name.`)
+}
+
+const test = (e) => {
+    console.log(e.target.id);
+}
+
 </script>
 
 <template>
     <table class="w-full">
         <thead class="bg-gray-200 text-left">
             <tr class="h-6 text-xs text-gray-500">
-                <th class="pl-2">#</th>
-                <th>
+                <th v-for="th in tableHeader" :key="th">
                     <div class="flex justify-between">
-                        <span>Name</span>
-                        <div class="flex space-x-2 mr-2">
-                            <button @click="$emit('sortRow', 'name', 'asc')"><CarbonSortAscending /></button>
-                            <button @click="$emit('sortRow', 'name', 'desc')"><CarbonSortDescending /></button>
+                        <span>{{ th.hName }}</span>
+                        <div class="flex space-x-2 mr-2" v-if="th.sort">
+                            <button @click="$emit('sortRow', th.hName.toLowerCase(), 'asc')" @mouseenter="test($event)">
+                                <CarbonSortAscending />
+                            </button>
+                            <button @click="$emit('sortRow', th.hName.toLowerCase(), 'desc')">
+                                <CarbonSortDescending />
+                            </button>
                         </div>
                     </div>
                 </th>
-                <th>
-                    <div class="flex justify-between">
-                        <span>Email</span>
-                        <div class="flex space-x-2">
-                            <button @click="$emit('sortRow', 'email', 'asc')"><CarbonSortAscending /></button>
-                            <button @click="$emit('sortRow', 'email', 'desc')"><CarbonSortDescending /></button>
-                        </div>
-                    </div>
-                </th>
-                <!-- <th>Email</th> -->
-                <th>Tag</th>
-                <th>Status</th>
-                <th>Add Date</th>
                 <th></th>
                 <!-- <template v-for="num in 3">
-                            <th>{{num}}</th>
+                                <th>{{num}}</th>
                         </template> -->
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-300">
-            <tr
-                v-for="(row, index) in rows"
-                :key="index"
-                class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                v-show="row.tagMembers.some((tag) => tag.tagId == selectTag) || selectTag == 'all'"
-            >
-                <td class="pl-2">{{ index + 1 }}</td>
-                <TextCell
-                    :text="row.name"
-                    :index="index"
-                    :checker="/[\w(ก-ฮ)]+/"
-                    alertText="Name not null!"
-                    @editText="$emit('editRow', $event, row, 'name')"
-                />
-                <TextCell
-                    :text="row.email"
-                    :index="index"
-                    :checker="/.*@.*\..*|^$/"
-                    alertText="Please enter a valid email"
-                    @editText="$emit('editRow', $event, row, 'email')"
-                />
+            <tr v-for="(row, index) in rows" :key="index" class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                v-show="row.tagMembers.some(tag => tag.tagId == selectTag) || selectTag == 'all'">
+                <TextCell :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!"
+                    @editText="$emit('editRow', $event, row, 'name')" />
+                <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/"
+                    alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                 <!-- <TagsCell :tags="row.tags" /> -->
                 <TagsCell :rowId="row.id" :tags="row.tagMembers" :tableId="tableId" />
                 <td>Active</td>
@@ -102,10 +90,8 @@ const alertInput = () => {
                             <td>{{num}}{{num}}{{num}}{{num}}{{num}}</td>
                         </template> -->
             </tr>
-            <tr
-                class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                @keydown.enter="newRow.name.length != 0 ? $emit('createRow', newRow) : alertInput()"
-            >
+            <tr class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                @keydown.enter="newRow.name.length != 0 ? $emit('createRow', newRow) : alertInput()">
                 <td>
                     <input type="text" class="bg-gray-300" placeholder="Input Email" v-model="newRow.name" />
                 </td>
