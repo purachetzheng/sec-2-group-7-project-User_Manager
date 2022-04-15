@@ -151,7 +151,7 @@ const selectRowByTag = (tagId) => {
 </script>
 
 <template>
-    <div class="">
+    <div class="min-w-full">
         <!-- Header -->
 
         <!-- Content Table -->
@@ -167,15 +167,6 @@ const selectRowByTag = (tagId) => {
             />
             <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" @selectTag="selectRowByTag" />
         </div>
-
-        <!-- for Test -->
-        <!-- <div> -->
-        <!-- <button class="btn-primary" @click="sortRowsBy('name', 'asc')">Sort Name asc</button> -->
-        <!-- <button class="btn-primary" @click="sortRowsBy('name', 'desc')">Sort Name desc</button> -->
-        <!-- <button class="btn-primary" @click="sortRowsBy('id')">Sort Id 1</button> -->
-        <!-- <button class="btn-primary" @click="getTableSort('name')">Sort Name 2</button> -->
-        <!-- <button class="btn-primary" @click="getTableSort('id')">Sort Id 2</button> -->
-        <!-- </div> -->
     </div>
 </template>
 
