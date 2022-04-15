@@ -50,3 +50,5 @@ const arr = [
 // console.log(arr)
 arr.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
 console.log(arr)
+
+        
