@@ -62,30 +62,7 @@ const test = (e) => {
                                 </div>
                             </div>
                         </th>
-                        <!-- <th>
-                            <div class="flex justify-between">
-                                <span>Name</span>
-                                <div class="flex space-x-2 mr-2">
-                                    <button id="iii1" @click="$emit('sortRow','name','asc')" @mouseenter="test($event)" ><CarbonSortAscending/></button>
-                                    <button @click="$emit('sortRow','name','desc')"><CarbonSortDescending/></button>
-                                </div>
-                            </div>
-                        </th> -->
-                        <!-- <th>
-                            <div class="flex justify-between">
-                                <span>Email</span>
-                                <div class="flex space-x-2">
-                                    <button @click="$emit('sortRow','email','asc')"><CarbonSortAscending/></button>
-                                    <button @click="$emit('sortRow','email','desc')"><CarbonSortDescending/></button>
-                                </div>
-                            </div>
-                        </th> -->
-                        <!-- <th>Tag</th> -->
-                        <!-- <th>Status</th> -->
-                        <!-- <th>Add Date</th> -->
-                        <!-- <template v-for="num in 3">
-                                <th>{{num}}</th>
-                        </template> --><th></th> 
+                        <th></th> 
                         <!-- <template v-for="num in 3">
                                 <th>{{num}}</th>
                         </template> -->
