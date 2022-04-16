@@ -2,7 +2,7 @@
 import { computed, reactive, ref } from 'vue';
 import CarbonEdit from '../icons/CarbonEdit.vue';
 import CarbonCloseOutline from '../icons/CarbonCloseOutline.vue';
-const emit = defineEmits(['editText']);
+const emits = defineEmits(['editText']);
 const props = defineProps({
     index: {
         type: Number,
@@ -38,7 +38,7 @@ const sendEdit = (event) => {
     // checked ? hasEdit[props.index] = false : alert(props.alertText)
     checked ? setTimeout(() => (hasEdit[props.index] = false), 150) : alert(props.alertText);
     if (checked) {
-        emit('editText', event);
+        emits('editText', event);
     }
 };
 </script>

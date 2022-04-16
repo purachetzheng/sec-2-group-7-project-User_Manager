@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { ref,reactive } from 'vue';
 
 import TextCell from './table-rows/TextCell.vue';
 import TagsCell from './table-rows/TagsCell.vue';
@@ -7,7 +7,7 @@ import DateCell from './table-rows/DateCell.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
 import CarbonSortAscending from './icons/CarbonSortAscending.vue';
 import CarbonSortDescending from './icons/CarbonSortDescending.vue';
-defineEmits(['createRow', 'deleteRow', 'editRow', 'sortRow']);
+const emits = defineEmits(['createRow', 'deleteRow', 'editRow', 'sortRow']);
 const prop = defineProps({
     table: {
         type: Object,
@@ -24,9 +24,14 @@ const prop = defineProps({
     selectTag: {
         type: Number,
         default: '0'
+    },
+    tagsList:{
+        type: Array,
+        default: [],
     }
 })
-// const tableHeader = ['Name', 'Email', 'Tag', 'Status', 'Add Date', '']
+
+//hName = text in each th tag, sort = have sort?
 const tableHeader = [
     { hName: 'Name', sort: true },
     { hName: 'Email', sort: true },
@@ -35,31 +40,49 @@ const tableHeader = [
     { hName: 'Add Date', sort: false },
     { hName: '', sort: false },
 ]
+//use to send new row obj
 const newRow = reactive({ name: '', email: '' })
 
 const alertInput = () => {
     alert(`Please enter at least your name.`)
 }
 
-const test = (e) => {
-    console.log(e.target.id);
+//sort
+const sortMouseHover = ref(null)
+const sortSelected = ref(null)
+const sorting = (sortBy, type, n) => {
+    //ถ้ากด sort แบบใด ๆ ครั้งแรก
+    if(sortSelected.value === null || sortSelected.value !== n+sortBy.hName){
+        emits('sortRow', sortBy.hName.toLowerCase(), type)
+        sortSelected.value = n+sortBy.hName
+    }
+    //กดซ้ำจะทำการกลับ default sort คือ id แบบ asc
+    else{
+        emits('sortRow', 'id', 'asc')
+        sortSelected.value = null
+    }
+    
 }
-
 </script>
 
 <template>
     <table class="w-full">
         <thead class="bg-gray-200 text-left">
             <tr class="h-6 text-xs text-gray-500">
-                <th v-for="th in tableHeader" :key="th">
+                <th v-for="th in tableHeader" :key="th.hName">
                     <div class="flex justify-between">
                         <span>{{ th.hName }}</span>
                         <div class="flex space-x-2 mr-2" v-if="th.sort">
-                            <button @click="$emit('sortRow', th.hName.toLowerCase(), 'asc')" @mouseenter="test($event)">
-                                <CarbonSortAscending />
+                            <button
+                                :class="[sortMouseHover === '1'+th.hName || sortSelected === '1'+th.hName ? 'text-amber-800': '']" 
+                                @click="sorting(th, 'asc', '1')" 
+                                @mouseenter="sortMouseHover = '1'+th.hName" @mouseleave="sortMouseHover = null">
+                                <CarbonSortAscending class="text-xl"/>
                             </button>
-                            <button @click="$emit('sortRow', th.hName.toLowerCase(), 'desc')">
-                                <CarbonSortDescending />
+                            <button :class="[sortMouseHover === '2'+th.hName || sortSelected === '2'+th.hName ? 'text-amber-800': '']"
+                                @click="sorting(th, 'desc', '2')"
+                                @mouseenter="sortMouseHover = '2'+th.hName" @mouseleave="sortMouseHover = null">
+                                <CarbonSortDescending class="text-xl" />
                             </button>
                         </div>
                     </div>
@@ -78,7 +101,7 @@ const test = (e) => {
                 <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/"
                     alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                 <!-- <TagsCell :tags="row.tags" /> -->
-                <TagsCell :rowId="row.id" :tags="row.tagMembers" :tableId="tableId" />
+                <TagsCell :rowId="row.id" :rowTags="row.tagMembers" :tableId="tableId" :tagsList="tagsList" />
                 <td>Active</td>
                 <DateCell :date="row.date" />
                 <td>
@@ -93,7 +116,7 @@ const test = (e) => {
             <tr class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                 @keydown.enter="newRow.name.length != 0 ? $emit('createRow', newRow) : alertInput()">
                 <td>
-                    <input type="text" class="bg-gray-300" placeholder="Input Email" v-model="newRow.name" />
+                    <input type="text" class="bg-gray-300" placeholder="Input Name" v-model="newRow.name" />
                 </td>
                 <td>
                     <input type="text" class="bg-gray-300" placeholder="Input Email" v-model="newRow.email" />

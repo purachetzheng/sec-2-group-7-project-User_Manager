@@ -11,7 +11,6 @@ const tableId = params.tableId;
 
 //Get
 const rows = ref([]);
-// const table = ref({rows:[], tags:[]})
 const getRows = async () => {
     const res = await fetch(`http://localhost:5000/rows?tableId=${tableId}&_embed=tagMembers`);
     // const res = await fetch(`http://localhost:5000/tables/${tableId}?_embed=rows&_embed=tags`)
@@ -20,9 +19,20 @@ const getRows = async () => {
         console.log(rows.value);
     } else console.log('error, cannot get table');
 };
+// Get Tags
+const tags = ref([]);
+const getTags = async () => {
+    const res = await fetch(`http://localhost:5000/tags?tableId=${tableId}`);
+    if (res.status === 200) {
+        tags.value = await res.json();
+        // console.log(tags.value)
+        // console.log(tags.value[0].name)
+    } else console.log('error, cannot get tags');
+};
 
 onBeforeMount(async () => {
     await getRows();
+    await getTags();
 });
 //CREATE
 const createRow = async (newUser) => {
@@ -99,8 +109,7 @@ const updateRow = async (event, userP, type) => {
 
 const amountRows = computed(() => rows.value.length);
 
-const sortRowsBy = (sorter, type = 'asc') => {
-    console.log(sorter);
+const sortRowsBy = (sorter, type = 'asc') => { 
     switch (sorter) {
         case (sorter = 'id'):
             rows.value.sort((a, b) => (type === 'asc' ? a.id - b.id : b.id - a.id));
@@ -134,9 +143,9 @@ const selectRowByTag = (tag) => {
 
         <!-- Content Table -->
         <div class="flex space-x-2">
-            <Table :rows="rows" :selectTag="selectedTag" :tableId="tableId" @createRow="createRow"
+            <Table :rows="rows" :tagsList="tags" :selectTag="selectedTag" :tableId="tableId" @createRow="createRow"
                 @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy" />
-            <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" @selectTag="selectRowByTag" />
+            <StatusDisplay :tags="tags" :amountRows="amountRows" @selectTag="selectRowByTag" />
         </div>
     </div>
 </template>
