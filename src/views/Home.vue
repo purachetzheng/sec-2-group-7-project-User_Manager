@@ -1,10 +1,13 @@
 <script setup>
 import { ref, computed, reactive, nextTick, onBeforeMount, onMounted } from 'vue';
 import RiDeleteBin5Line from '../components/icons/RiDeleteBin5Line.vue'
+import IcSharpAddCircle from '../components/icons/IcSharpAddCircle.vue'
+import RegisterUser from '../components/RegisterUser.vue'
 //router
 import { useRoute, useRouter } from 'vue-router';
 const { params } = useRoute();
 const router = useRouter();
+const isShow = ref(false)
 //Get
 const users = ref([]);
 const getUsers = async () => {
@@ -22,12 +25,38 @@ const clickLink = (id) => {
     router.push({ name: 'MyTable', params: { userId: id } });
 };
 
-const registerUser = () => {
+const callRegisterUser = () => {
+    isShow.value = true;
     console.log("register working!");
-    let userName = prompt("Enter your username")
-    let passWord = prompt("Enter your password")
 }
 
+const cancelRegisterProcess = () => {
+    console.log("register cancel");
+    isShow.value = false;
+    usernameText.value = ''
+    passwordText.value = ''
+}
+
+//CREATE
+const createNewUser = async (newUsername, newPassword) => {
+    const res = await fetch('http://localhost:5000/users', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({username: newUsername, password: newPassword})
+    })
+    if(res.status === 201){
+        const addedUser = await res.json();
+        users.value.push(addedUser)
+        console.log("create account successfully");
+        alert(`User ${newUsername} has been created.`)
+        location.reload();
+    }
+    else console.log('error, cannot create account');
+}
+
+//DELETE
 const deleteUser = async () => {
     console.log("delete working!");
     let removeUserId = prompt("Enter user ID that you want to delete.")
@@ -58,9 +87,15 @@ const deleteUser = async () => {
             <button class="bg-red-400" v-for="(user, index) in users" :key="index" @click="clickLink(user.id)">
                 {{ user.username }}
             </button>
-            <button class = "bg-red-400" @click="registerUser">+</button>
             <button @click="deleteUser"><RiDeleteBin5Line/></button>
+            <button @click="callRegisterUser" :disabled = "isShow"><IcSharpAddCircle/></button>
         </div>
+    </div>
+    <div v-show = "isShow">
+                <RegisterUser
+                    @cancelRegister = "cancelRegisterProcess"
+                    @createUser = "createNewUser"
+                />
     </div>
 </template>
 
