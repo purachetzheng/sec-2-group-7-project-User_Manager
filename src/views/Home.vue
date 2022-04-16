@@ -39,21 +39,30 @@ const cancelRegisterProcess = () => {
 
 //CREATE
 const createNewUser = async (newUsername, newPassword) => {
-    const res = await fetch('http://localhost:5000/users', {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify({username: newUsername, password: newPassword})
-    })
-    if(res.status === 201){
-        const addedUser = await res.json();
-        users.value.push(addedUser)
-        console.log("create account successfully");
-        alert(`User ${newUsername} has been created.`)
-        location.reload();
+    if (usernameText.value === '' && passwordText.value === '') {
+        alert('type your username and password')
+    }else if (usernameText.value === ''){
+        alert('type your username')
     }
-    else console.log('error, cannot create account');
+    else if (passwordText.value === ''){
+        alert('type your password')
+    }else{
+        const res = await fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({username: newUsername, password: newPassword})
+        })
+        if(res.status === 201){
+            const addedUser = await res.json();
+            users.value.push(addedUser)
+            console.log("create account successfully");
+            alert(`User ${newUsername} has been created.`)
+            location.reload();
+        }
+        else console.log('error, cannot create account');
+    } 
 }
 
 //DELETE
