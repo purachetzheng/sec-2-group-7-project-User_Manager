@@ -9,6 +9,16 @@
       "id": 2,
       "username": "user2",
       "password": "fesawrf3wefwfazf"
+    },
+    {
+      "id": 3,
+      "username": "user3",
+      "password": "fesawrf3wefwfazf"
+    },
+    {
+      "id": 4,
+      "username": "user4",
+      "password": "fesawrf3wefwfazf"
     }
   ],
   "tables": [
