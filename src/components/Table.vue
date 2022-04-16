@@ -22,7 +22,7 @@ const prop = defineProps({
         require: true,
     },
     selectTag: {
-        type: String,
+        type: Number,
         default: '0'
     }
 })
@@ -72,7 +72,7 @@ const test = (e) => {
         </thead>
         <tbody class="bg-white divide-y divide-gray-300">
             <tr v-for="(row, index) in rows" :key="index" class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                v-show="row.tagMembers.some(tag => tag.tagId == selectTag) || selectTag == 'all'">
+                v-show="row.tagMembers.some(tag => tag.tagId == selectTag) || selectTag === null">
                 <TextCell :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!"
                     @editText="$emit('editRow', $event, row, 'name')" />
                 <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/"

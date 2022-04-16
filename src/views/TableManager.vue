@@ -12,7 +12,7 @@ const tableId = params.tableId;
 //Get
 const rows = ref([]);
 // const table = ref({rows:[], tags:[]})
-const getTable = async () => {
+const getRows = async () => {
     const res = await fetch(`http://localhost:5000/rows?tableId=${tableId}&_embed=tagMembers`);
     // const res = await fetch(`http://localhost:5000/tables/${tableId}?_embed=rows&_embed=tags`)
     if (res.status === 200) {
@@ -20,16 +20,9 @@ const getTable = async () => {
         console.log(rows.value);
     } else console.log('error, cannot get table');
 };
-const getTableSort = async (sortBy) => {
-    // const res = await fetch(`http://localhost:5000/rows?tableId=${tableId}&_embed=tagMembers`)
-    const res = await fetch(`http://localhost:5000/rows?tableId=${tableId}&_embed=tagMembers&_sort=${sortBy}`);
-    if (res.status === 200) {
-        rows.value = await res.json();
-        console.log(rows.value);
-    } else console.log('error, cannot get table');
-};
+
 onBeforeMount(async () => {
-    await getTable();
+    await getRows();
 });
 //CREATE
 const createRow = async (newUser) => {
@@ -91,13 +84,13 @@ const updateRow = async (event, userP, type) => {
             // table.value.rows = table.value.rows.map((user) =>
             user.id === modifyNote.id
                 ? {
-                      ...user,
-                      name: modifyNote.name,
-                      email: modifyNote.email,
-                      date: modifyNote.date,
-                      tableId: modifyNote.tableId,
-                      tagMembers: modifyNote.tagMembers,
-                  }
+                    ...user,
+                    name: modifyNote.name,
+                    email: modifyNote.email,
+                    date: modifyNote.date,
+                    tableId: modifyNote.tableId,
+                    tagMembers: modifyNote.tagMembers,
+                }
                 : user
         );
         console.log('edited successfully');
@@ -111,42 +104,27 @@ const sortRowsBy = (sorter, type = 'asc') => {
     switch (sorter) {
         case (sorter = 'id'):
             rows.value.sort((a, b) => (type === 'asc' ? a.id - b.id : b.id - a.id));
-            // table.value.rows.sort((a, b) => a.id - b.id)
             break;
         case (sorter = 'name'):
             rows.value.sort((a, b) =>
-                type === 'asc'
-                    ? a.name.toUpperCase() > b.name.toUpperCase()
-                        ? 1
-                        : -1
-                    : b.name.toUpperCase() > a.name.toUpperCase()
-                    ? 1
-                    : -1
+                type === 'asc' ? a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1
+                    : b.name.toUpperCase() > a.name.toUpperCase() ? 1 : -1
             );
-            // table.value.rows.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
             break;
         case (sorter = 'email'):
             rows.value.sort((a, b) =>
-                type === 'asc'
-                    ? a.email.toUpperCase() > b.email.toUpperCase()
-                        ? 1
-                        : -1
-                    : b.email.toUpperCase() > a.email.toUpperCase()
-                    ? 1
-                    : -1
+                type === 'asc' ? a.email.toUpperCase() > b.email.toUpperCase() ? 1 : -1
+                    : b.email.toUpperCase() > a.email.toUpperCase() ? 1 : -1
             );
-            // table.value.rows.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase()? 1:-1)
             break;
     }
     console.log(`sorted by ${sorter} with ${type}`);
-    // table.value.rows.sort((a, b) => a[sorter] - b[sorter])
-    // console.log(table.value.rows[0]['id']);
 };
 
-const selectedTag = ref('all');
-const selectRowByTag = (tagId) => {
-    console.log(tagId);
-    selectedTag.value = String(tagId);
+const selectedTag = ref(null);
+const selectRowByTag = (tag) => {
+    console.log(`selected by tag: ${tag.name}`);
+    selectedTag.value = tag.id;
 };
 </script>
 
@@ -156,15 +134,8 @@ const selectRowByTag = (tagId) => {
 
         <!-- Content Table -->
         <div class="flex space-x-2">
-            <Table
-                :rows="rows"
-                :selectTag="selectedTag"
-                :tableId="tableId"
-                @createRow="createRow"
-                @deleteRow="removeRow"
-                @editRow="updateRow"
-                @sortRow="sortRowsBy"
-            />
+            <Table :rows="rows" :selectTag="selectedTag" :tableId="tableId" @createRow="createRow"
+                @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy" />
             <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" @selectTag="selectRowByTag" />
         </div>
     </div>

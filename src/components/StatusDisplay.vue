@@ -69,8 +69,8 @@ const amountRows = ref(computed(() => prop.amountRows));
             </div>
         </div>
         <div class="flex flex-col space-y-2">
-            <button class="bg-gray-300 text-left" @click="$emit('selectTag', 'all')">All</button>
-            <button class="bg-gray-300 text-left" v-for="(tag, index) in tags" :key="index" @click="$emit('selectTag', tag.id)">
+            <button class="bg-gray-300 text-left" @click="$emit('selectTag', {id: null, name:'all'})">All</button>
+            <button class="bg-gray-300 text-left" v-for="(tag, index) in tags" :key="index" @click="$emit('selectTag', tag)">
                 {{ tag.name }} : {{ tag.member.length }}
             </button>
         </div>
