@@ -2,6 +2,7 @@
 import { ref, computed, reactive, nextTick, onBeforeMount, onMounted } from 'vue';
 import RiDeleteBin5Line from '../components/icons/RiDeleteBin5Line.vue'
 import IcSharpAddCircle from '../components/icons/IcSharpAddCircle.vue'
+import MdiTextBoxEdit from '../components/icons/MdiTextBoxEdit.vue'
 import RegisterUser from '../components/RegisterUser.vue'
 //router
 import { useRoute, useRouter } from 'vue-router';
@@ -24,18 +25,6 @@ onBeforeMount(async () => {
 const clickLink = (id) => {
     router.push({ name: 'MyTable', params: { userId: id } });
 };
-
-const callRegisterUser = () => {
-    isShow.value = true;
-    console.log("register working!");
-}
-
-const cancelRegisterProcess = () => {
-    console.log("register cancel");
-    isShow.value = false;
-    usernameText.value = ''
-    passwordText.value = ''
-}
 
 //CREATE
 const createNewUser = async (newUsername, newPassword) => {
@@ -79,13 +68,67 @@ const deleteUser = async () => {
         if(res.status===200){
             users.value = users.value.filter((user) => user.id !== removeUserId)
             console.log('delete succesfully');
-            alert(`Delete succesfully, ID number ${removeUserId} has been removed`)
+            alert(`Delete succesfully, user ID number ${removeUserId} has been removed`)
             location.reload();
         }else{
             console.log('error, cannot delete');
-            alert(`Delete unsuccessfully, ID number ${removeUserId} is not in the system.`)
+            alert(`Delete unsuccessfully, user ID number ${removeUserId} is not in the system.`)
         }
     }
+}
+
+//UPDATE
+const editingUser = ref({})
+const toEditingMode = async () => {
+    console.log('editing work!');
+    let editUser = prompt("Enter user ID that you want to edit")
+    if (editUser === null){
+        return;
+    }else{
+        const res = await fetch (`http://localhost:5000/users/${editUser}`)
+        if(res.status === 200){
+            editingUser.value = await res.json();
+            isShow.value = true
+        }else{
+            alert(`Cannot edit since user ID number ${editUser} is not in the system.`)
+        } 
+        console.log(editingUser.value); 
+    }
+}
+
+const modifyUser = async (editingUser) => {
+    const res = await fetch(`http://localhost:5000/users/${editingUser.id}`, {
+        method: 'PUT',
+        headers: {
+            'content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: editingUser.username,
+            password: editingUser.password
+        })
+    })
+    if(res.status === 200){
+        const modifyUser = await res.json()
+        users.value = users.value.map((user) => user.id === modifyUser.id
+        ? {...user, username: modifyUser.username, password: modifyUser.password}
+        : user
+        )
+        alert(`User ID number ${modifyUser.id} has been edited.`)
+        isShow.value = false
+    }
+} 
+
+const callRegisterUser = () => {
+    isShow.value = true;
+    console.log("register working!");
+}
+
+const cancelRegisterProcess = () => {
+    console.log("register cancel");
+    isShow.value = false;
+    usernameText.value = ''
+    passwordText.value = ''
+    editingUser.value = ''
 }
 </script>
 
@@ -96,15 +139,18 @@ const deleteUser = async () => {
             <button class="bg-red-400" v-for="(user, index) in users" :key="index" @click="clickLink(user.id)">
                 {{ user.username }}
             </button>
-            <button @click="deleteUser"><RiDeleteBin5Line/></button>
             <button @click="callRegisterUser" :disabled = "isShow"><IcSharpAddCircle/></button>
+            <button @click="toEditingMode" :disabled = "isShow"><MdiTextBoxEdit/></button>
+            <button @click="deleteUser"><RiDeleteBin5Line/></button>
         </div>
     </div>
     <div v-show = "isShow">
-                <RegisterUser
-                    @cancelRegister = "cancelRegisterProcess"
-                    @createUser = "createNewUser"
-                />
+        <RegisterUser
+            @cancelRegister = "cancelRegisterProcess"
+            @createUser = "createNewUser"
+            :currentUser = "editingUser"
+            @updateUser = "modifyUser"
+        />
     </div>
 </template>
 
