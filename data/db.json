@@ -14,6 +14,11 @@
             "id": 3,
             "username": "user3",
             "password": "fesawrf3wefwfazf"
+        },
+        {
+            "username": "wwwww",
+            "password": "s",
+            "id": 4
         }
     ],
     "tables": [
@@ -86,61 +91,51 @@
         {
             "id": 1,
             "tableId": 1,
-            "name": "FirstTag"
+            "name": "FirstTag",
+            "color": "#942424"
         },
         {
             "id": 2,
             "tableId": 1,
-            "name": "Tag2"
+            "name": "Tag2",
+            "color": "#23a300"
+        },
+        {
+            "name": "Test",
+            "tableId": 1,
+            "color": "#dba124",
+            "tagMembers": [],
+            "id": 3
+        },
+        {
+            "name": "aaaa",
+            "tableId": 1,
+            "color": "#daf3a5",
+            "tagMembers": [],
+            "id": 4
         }
     ],
     "tagMembers": [
         {
-            "id": 1,
-            "tagId": 1,
-            "rowId": 1,
-            "name": "FirstTag"
-        },
-        {
-            "name": "Tag2",
+            "name": "Test",
             "rowId": 2,
-            "tagId": 2,
-            "id": 2
+            "tagId": 3,
+            "color": "#dba124",
+            "id": 10
         },
         {
-            "name": "Tag2",
-            "rowId": 4,
-            "tagId": 2,
-            "id": 4
+            "name": "aaaa",
+            "rowId": 1,
+            "tagId": 4,
+            "color": "#daf3a5",
+            "id": 11
         },
         {
-            "name": {
-                "name": "A",
-                "rowId": 5,
-                "tagId": 6
-            },
-            "id": 14
-        },
-        {
-            "name": {
-                "name": "AAA",
-                "rowId": 7,
-                "tagId": 7,
-                "tagMembers": []
-            },
-            "id": 15
-        },
-        {
-            "name": "FirstTag",
-            "rowId": 5,
-            "tagId": 1,
-            "id": 17
-        },
-        {
-            "name": "Tag2",
-            "rowId": 5,
-            "tagId": 2,
-            "id": 18
+            "name": "Test",
+            "rowId": 1,
+            "tagId": 3,
+            "color": "#dba124",
+            "id": 13
         }
     ]
 }

@@ -62,18 +62,18 @@ const deleteUser = async (removeUserId) => {
     //     console.log('cancel');
     //     return;
     // } else {
-    const res = await fetch(`http://localhost:5000/users/${removeUserId}`, {
-        method: 'DELETE',
-    });
-    if (res.status === 200) {
-        users.value = users.value.filter((user) => user.id !== removeUserId);
-        console.log('delete succesfully');
-        alert(`Delete succesfully, user ID number ${removeUserId} has been removed`);
-        location.reload();
-    } else {
-        console.log('error, cannot delete');
-        alert(`Delete unsuccessfully, user ID number ${removeUserId} is not in the system.`);
-    }
+        const res = await fetch(`http://localhost:5000/users/${removeUserId}`, {
+            method: 'DELETE',
+        });
+        if (res.status === 200) {
+            users.value = users.value.filter((user) => user.id !== removeUserId);
+            console.log('delete succesfully');
+            alert(`Delete succesfully, user ID number ${removeUserId} has been removed`);
+            location.reload();
+        } else {
+            console.log('error, cannot delete');
+            alert(`Delete unsuccessfully, user ID number ${removeUserId} is not in the system.`);
+        }
     // }
 };
 
@@ -85,14 +85,14 @@ const toEditingMode = async (id) => {
     // if (editUser === null) {
     //     return;
     // } else {
-    const res = await fetch(`http://localhost:5000/users/${id}`);
-    if (res.status === 200) {
-        editingUser.value = await res.json();
-        isShow.value = true;
-    } else {
-        alert(`Cannot edit since user ID number ${id} is not in the system.`);
-    }
-    console.log(editingUser.value);
+        const res = await fetch(`http://localhost:5000/users/${id}`);
+        if (res.status === 200) {
+            editingUser.value = await res.json();
+            isShow.value = true;
+        } else {
+            alert(`Cannot edit since user ID number ${id} is not in the system.`);
+        }
+        console.log(editingUser.value);
     // }
 };
 
