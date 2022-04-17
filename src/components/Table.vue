@@ -7,7 +7,7 @@ import DateCell from './table-rows/DateCell.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
 import CarbonSortAscending from './icons/CarbonSortAscending.vue';
 import CarbonSortDescending from './icons/CarbonSortDescending.vue';
-const emits = defineEmits(['createRow', 'deleteRow', 'editRow', 'sortRow']);
+const emits = defineEmits(['createRow', 'deleteRow', 'editRow', 'sortRow', 'addTag', 'deleteTag']);
 const prop = defineProps({
     table: {
         type: Object,
@@ -101,7 +101,8 @@ const sorting = (sortBy, type, n) => {
                 <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/"
                     alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                 <!-- <TagsCell :tags="row.tags" /> -->
-                <TagsCell :rowId="row.id" :rowTags="row.tagMembers" :tableId="tableId" :tagsList="tagsList" />
+                <TagsCell :rowId="row.id" :rowTags="row.tagMembers" :tableId="tableId" :tagsList="tagsList" 
+                    @addTag="$emit('addTag', $event, row.id)" @deleteTag="$emit('deleteTag', $event)" />
                 <td>Active</td>
                 <DateCell :date="row.date" />
                 <td>

@@ -16,23 +16,28 @@ const getRows = async () => {
     // const res = await fetch(`http://localhost:5000/tables/${tableId}?_embed=rows&_embed=tags`)
     if (res.status === 200) {
         rows.value = await res.json();
+        console.log('---- Get Rows ----');
         console.log(rows.value);
+        console.log('------------------');
     } else console.log('error, cannot get table');
 };
 // Get Tags
 const tags = ref([]);
 const getTags = async () => {
-    const res = await fetch(`http://localhost:5000/tags?tableId=${tableId}`);
+    const res = await fetch(`http://localhost:5000/tags?tableId=${tableId}&_embed=tagMembers`);
     if (res.status === 200) {
         tags.value = await res.json();
-        // console.log(tags.value)
+        console.log('---- Get Tags ----');
+        console.log(tags.value)
+        console.log('------------------');
         // console.log(tags.value[0].name)
     } else console.log('error, cannot get tags');
 };
 
 onBeforeMount(async () => {
-    await getRows();
     await getTags();
+    await getRows();
+
 });
 //CREATE
 const createRow = async (newUser) => {
@@ -46,18 +51,66 @@ const createRow = async (newUser) => {
             email: newUser.email,
             date: '11/11/2020',
             tableId: Number(tableId),
+            //กันการหาไม่เจอเนื่องจากไม่ได้เรียก req get ใหม่
             tagMembers: [],
         }),
     });
     if (res.status === 201) {
-        const addedUser = await res.json();
-        // table.value.rows.push(addedUser)
-        rows.value.push(addedUser);
-        console.log('created successfully');
-        // console.log(addedUser)
-        // console.log(rows.value)
-        newUser.name = '';
-        newUser.email = '';
+        const addedUser = await res.json()
+        rows.value.push(addedUser)
+        console.log('created row successfully')
+        newUser.name = ''
+        newUser.email = ''
+    } else console.log('error, cannot create')
+};
+const createTag = async (newTagName, rowId) => {
+    const res = await fetch(`http://localhost:5000/tags`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: newTagName,
+            tableId: Number(tableId)
+        }),
+    });
+    if (res.status === 201) {
+
+        const addedTag = await res.json();
+        const tagMembers = {
+            name: newTagName,
+            rowId: rowId,
+            tagId: addedTag.id,
+            // tagMembers: []
+        }
+        //add to front ทำเพื่อลดการ req get
+        createTagMembers(tagMembers)
+        // tags.value.push(addedTag);
+        console.log(addedTag);
+        console.log('created tag successfully');
+    } else console.log('error, cannot create');
+};
+const createTagMembers = async (name, rowId, tagId) => {
+    const res = await fetch(`http://localhost:5000/tagMembers`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: name, 
+            rowId: rowId, 
+            tagId: tagId
+        }),
+    });
+    if (res.status === 201) {
+        // await getTags();
+        const addedTagMembers = await res.json()
+        rows.value[rows.value.findIndex(el => el.id === rowId)].tagMembers.push(addedTagMembers)
+        tags.value[tags.value.findIndex(el => el.id === tagId)].tagMembers.push(addedTagMembers)
+        // console.log(tags.value);
+        // tags.value.push(addedTagMembers)
+
+        console.log('created tagMember successfully');
     } else console.log('error, cannot create');
 };
 
@@ -67,8 +120,26 @@ const removeRow = async (id) => {
         method: 'DELETE',
     });
     if (res.status === 200) {
-        rows.value = rows.value.filter((user) => user.id !== id);
+        rows.value = rows.value.filter((user) => user.id !== id)
         // table.value.rows = table.value.rows.filter((user) => user.id !== id)
+        console.log('deleted successfully');
+    } else console.log('error, cannot delete');
+};
+const removeTagMembers = async (tagMember) => {
+    const id = tagMember.id
+    console.log(tagMember);
+    const res = await fetch(`http://localhost:5000/tagMembers/${id}`, {
+        method: 'DELETE',
+    });
+    if (res.status === 200) {
+        const rowIndex = rows.value.findIndex(el => el.id === tagMember.rowId)
+        const tagIndex = tags.value.findIndex(el => el.id === tagMember.tagId)
+        rows.value[rowIndex].tagMembers = rows.value[rowIndex].tagMembers.filter(tagM => tagM.id != tagMember.id)
+        tags.value[tagIndex].tagMembers = tags.value[tagIndex].tagMembers.filter((user) => user.id !== id)
+        // rows.value[rows.value.findIndex(el => el.id === tagMember.rowId)].tagMembers = 
+        //     rows.value[rows.value.findIndex(el => el.id === tagMember.rowId)].tagMembers.filter(tagM => tagM.id != tagMember.id)
+        // tags.value[tags.value.findIndex(el => el.id === tagMember.tagId)].tagMembers =
+        //     tags.value[tags.value.findIndex(el => el.id === tagMember.tagId)].tagMembers.filter((user) => user.id !== id)
         console.log('deleted successfully');
     } else console.log('error, cannot delete');
 };
@@ -109,7 +180,7 @@ const updateRow = async (event, userP, type) => {
 
 const amountRows = computed(() => rows.value.length);
 
-const sortRowsBy = (sorter, type = 'asc') => { 
+const sortRowsBy = (sorter, type = 'asc') => {
     switch (sorter) {
         case (sorter = 'id'):
             rows.value.sort((a, b) => (type === 'asc' ? a.id - b.id : b.id - a.id));
@@ -135,6 +206,14 @@ const selectRowByTag = (tag) => {
     console.log(`selected by tag: ${tag.name}`);
     selectedTag.value = tag.id;
 };
+
+const addTag = (newTagName, rowId) => {
+    // if(!props.tagsList.some(el => el.name === input)) createTag(newTagName)
+    const hasThisTag = tags.value.find(el => el.name === newTagName)
+    createTagMembers(newTagName, rowId, hasThisTag.id)
+    // hasThisTag === undefined ? createTag(newTagName, rowId) : createTagMembers(newTagName, rowId, hasThisTag.id)
+}
+
 </script>
 
 <template>
@@ -144,7 +223,8 @@ const selectRowByTag = (tag) => {
         <!-- Content Table -->
         <div class="flex space-x-2">
             <Table :rows="rows" :tagsList="tags" :selectTag="selectedTag" :tableId="tableId" @createRow="createRow"
-                @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy" />
+                @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy" @addTag="addTag"
+                @deleteTag="removeTagMembers" />
             <StatusDisplay :tags="tags" :amountRows="amountRows" @selectTag="selectRowByTag" />
         </div>
     </div>
