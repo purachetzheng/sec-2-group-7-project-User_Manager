@@ -88,9 +88,6 @@ const sorting = (sortBy, type, n) => {
                     </div>
                 </th>
                 <th></th>
-                <!-- <template v-for="num in 3">
-                                <th>{{num}}</th>
-                        </template> -->
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-300">
@@ -110,9 +107,6 @@ const sorting = (sortBy, type, n) => {
                         <CarbonTrashCan class="my-auto -mr-1 h-4 w-4 text-red-700" />
                     </button>
                 </td>
-                <!-- <template v-for="num in 3">
-                            <td>{{num}}{{num}}{{num}}{{num}}{{num}}</td>
-                        </template> -->
             </tr>
             <tr class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                 @keydown.enter="newRow.name.length != 0 ? $emit('createRow', newRow) : alertInput()">
