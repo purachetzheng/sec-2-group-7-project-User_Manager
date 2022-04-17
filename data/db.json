@@ -1,151 +1,146 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "username": "user1",
-            "password": "fesawrf3wefwfazf"
-        },
-        {
-            "id": 2,
-            "username": "user2",
-            "password": "fesawrf3wefwfazf"
-        },
-        {
-            "id": 3,
-            "username": "user3",
-            "password": "fesawrf3wefwfazf"
-        },
-        {
-            "username": "wwwww",
-            "password": "s",
-            "id": 4
-        }
-    ],
-    "tables": [
-        {
-            "id": 1,
-            "tableName": "firstTable",
-            "userId": 1
-        },
-        {
-            "id": 2,
-            "tableName": "sT",
-            "userId": 1
-        }
-    ],
-    "rows": [
-        {
-            "id": 1,
-            "name": "test1",
-            "email": "t1@t1.t",
-            "date": "10/10/2020",
-            "tableId": 1
-        },
-        {
-            "name": "test2",
-            "email": "t2@t2.t",
-            "date": "10/10/2020",
-            "tableId": 1,
-            "id": 2
-        },
-        {
-            "name": "test3",
-            "email": "",
-            "date": "11/11/2020",
-            "tableId": 1,
-            "id": 3
-        },
-        {
-            "name": "dasd",
-            "email": "",
-            "date": "11/11/2020",
-            "tableId": 1,
-            "id": 4
-        },
-        {
-            "name": "dsada",
-            "email": "",
-            "date": "11/11/2020",
-            "tableId": 1,
-            "tagMembers": [],
-            "id": 5
-        },
-        {
-            "name": "test",
-            "email": "",
-            "date": "11/11/2020",
-            "tableId": 1,
-            "tagMembers": [],
-            "id": 6
-        },
-        {
-            "name": "pu s",
-            "email": "",
-            "date": "11/11/2020",
-            "tableId": 1,
-            "tagMembers": [],
-            "id": 7
-        }
-    ],
-    "tags": [
-        {
-            "id": 1,
-            "tableId": 1,
-            "name": "FirstTag"
-        },
-        {
-            "id": 2,
-            "tableId": 1,
-            "name": "Tag2"
-        }
-    ],
-    "tagMembers": [
-        {
-            "id": 1,
-            "tagId": 1,
-            "rowId": 1,
-            "name": "FirstTag"
-        },
-        {
-            "name": "Tag2",
-            "rowId": 2,
-            "tagId": 2,
-            "id": 2
-        },
-        {
-            "name": "Tag2",
-            "rowId": 4,
-            "tagId": 2,
-            "id": 4
-        },
-        {
-            "name": {
-                "name": "A",
-                "rowId": 5,
-                "tagId": 6
-            },
-            "id": 14
-        },
-        {
-            "name": {
-                "name": "AAA",
-                "rowId": 7,
-                "tagId": 7,
-                "tagMembers": []
-            },
-            "id": 15
-        },
-        {
-            "name": "FirstTag",
-            "rowId": 5,
-            "tagId": 1,
-            "id": 17
-        },
-        {
-            "name": "Tag2",
-            "rowId": 5,
-            "tagId": 2,
-            "id": 18
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "username": "user1",
+      "password": "fesawrf3wefwfazf"
+    },
+    {
+      "id": 2,
+      "username": "user2",
+      "password": "fesawrf3wefwfazf"
+    },
+    {
+      "id": 3,
+      "username": "user3",
+      "password": "fesawrf3wefwfazf"
+    }
+  ],
+  "tables": [
+    {
+      "id": 1,
+      "tableName": "firstTable",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "tableName": "sT",
+      "userId": 1
+    }
+  ],
+  "rows": [
+    {
+      "id": 1,
+      "name": "test1",
+      "email": "t1@t1.t",
+      "date": "10/10/2020",
+      "tableId": 1
+    },
+    {
+      "name": "test2",
+      "email": "t2@t2.t",
+      "date": "10/10/2020",
+      "tableId": 1,
+      "id": 2
+    },
+    {
+      "name": "test3",
+      "email": "",
+      "date": "11/11/2020",
+      "tableId": 1,
+      "id": 3
+    },
+    {
+      "name": "dasd",
+      "email": "",
+      "date": "11/11/2020",
+      "tableId": 1,
+      "id": 4
+    },
+    {
+      "name": "dsada",
+      "email": "",
+      "date": "11/11/2020",
+      "tableId": 1,
+      "tagMembers": [],
+      "id": 5
+    },
+    {
+      "name": "test",
+      "email": "",
+      "date": "11/11/2020",
+      "tableId": 1,
+      "tagMembers": [],
+      "id": 6
+    },
+    {
+      "name": "pu s",
+      "email": "",
+      "date": "11/11/2020",
+      "tableId": 1,
+      "tagMembers": [],
+      "id": 7
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "tableId": 1,
+      "name": "FirstTag"
+    },
+    {
+      "id": 2,
+      "tableId": 1,
+      "name": "Tag2"
+    }
+  ],
+  "tagMembers": [
+    {
+      "id": 1,
+      "tagId": 1,
+      "rowId": 1,
+      "name": "FirstTag"
+    },
+    {
+      "name": "Tag2",
+      "rowId": 2,
+      "tagId": 2,
+      "id": 2
+    },
+    {
+      "name": "Tag2",
+      "rowId": 4,
+      "tagId": 2,
+      "id": 4
+    },
+    {
+      "name": {
+        "name": "A",
+        "rowId": 5,
+        "tagId": 6
+      },
+      "id": 14
+    },
+    {
+      "name": {
+        "name": "AAA",
+        "rowId": 7,
+        "tagId": 7,
+        "tagMembers": []
+      },
+      "id": 15
+    },
+    {
+      "name": "FirstTag",
+      "rowId": 5,
+      "tagId": 1,
+      "id": 17
+    },
+    {
+      "name": "Tag2",
+      "rowId": 5,
+      "tagId": 2,
+      "id": 18
+    }
+  ]
 }

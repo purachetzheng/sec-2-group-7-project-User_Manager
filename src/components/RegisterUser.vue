@@ -44,10 +44,22 @@ const newUser = computed(() => {
             <div class="flex gap-2 text-sm">
                 <button
                     v-if="newUser.id > 0"
-                    class="flex items-center gap-1 p-2 bg-gray-300 rounded-md"
+                    class="flex items-center gap-1 p-2 bg-blue-700 rounded-sm text-white"
                     @click="$emit('updateUser', newUser)"
                 >
-                    Save User
+                    <span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </span>
+                    <span>Save</span>
                 </button>
                 <button
                     v-else
@@ -66,7 +78,7 @@ const newUser = computed(() => {
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                         </svg>
                     </span>
-                    <span>Add User</span>
+                    <span>Add</span>
                 </button>
                 <button class="flex items-center p-2 gap-1 font-bold rounded-sm text-blue-700" @click="$emit('cancelRegister', $event)">
                     <span>Cancel</span>

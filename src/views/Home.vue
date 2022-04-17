@@ -138,15 +138,22 @@ const cancelRegisterProcess = () => {
                 <p class="text-xl font-bold">Profile</p>
             </div>
             <div>
-                <div class="flex space-x-4">
+                <div class="flex space-x-4 text-white">
                     <div v-for="(user, index) in users" :key="index">
-                        <button class="flex flex-col p-2 bg-gray-300 text-left hover:bg-gray-400" @click="clickLink(user.id)">
-                            <span>{{ user.username }}</span>
-                            <span>Number of table: {{ user.tables.length }}</span>
-                        </button>
-                        <div class="flex space-x-1">
-                            <button @click="toEditingMode(user.id)"><CarbonEdit class="bg-gray-100 text-xl text-blue-600" /></button>
-                            <button @click="deleteUser(user.id)"><CarbonTrashCan class="bg-gray-100 text-xl text-red-600" /></button>
+                        <div class="relative">
+                            <button
+                                class="flex flex-col w-40 p-2 bg-blue-700 text-left hover:bg-blue-800 rounded-sm relative"
+                                @click="clickLink(user.id)"
+                            >
+                                <span>{{ user.username }}</span>
+                                <span>Tables: {{ user.tables.length }}</span>
+                            </button>
+                            <button @click="toEditingMode(user.id)" class="absolute top-1.5 right-8 bg-transparent text-xl text-blue-600">
+                                <CarbonEdit />
+                            </button>
+                            <button @click="deleteUser(user.id)">
+                                <CarbonTrashCan class="absolute bg-transparent top-1.5 right-2 bg-gray-100 text-xl text-red-600" />
+                            </button>
                         </div>
                     </div>
                 </div>
