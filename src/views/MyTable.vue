@@ -2,6 +2,7 @@
 import { ref, computed, reactive, nextTick, onBeforeMount, onMounted } from 'vue';
 //router
 import { useRoute, useRouter } from 'vue-router';
+import EditTable from '../components/EditTable.vue';
 const { params } = useRoute();
 const router = useRouter();
 
@@ -22,6 +23,29 @@ onBeforeMount(async () => {
 const clickLink = (id) => {
     router.push({ name: 'TableManager', params: { tableId: id } });
 };
+
+const createNewTable = async (newTable) => {
+    if (tableNameText.value === '') {
+        alert('Please type your table name')
+    }else{
+        const res = await fetch('http://localhost:5000/tables?userId=' + params.userId, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({tableName: newTable})
+        })
+        if(res.status === 201){
+            const addedTable = await res.json();
+            tables.value.push(addedTable)
+            console.log("create account successfully");
+            alert(`User ${newTable} has been created.`)
+            location.reload();
+        }
+        else console.log('error, cannot create table');
+    } 
+}
+
 </script>
 
 <template>
@@ -31,6 +55,11 @@ const clickLink = (id) => {
             <button class="bg-red-400" v-for="(table, index) in tables" :key="index" @click="clickLink(table.id)">
                 {{ table.tableName }}
             </button>
+        </div>
+        <div>
+            <EditTable
+                @createTable = 'createNewTable'
+            />
         </div>
     </div>
 </template>
