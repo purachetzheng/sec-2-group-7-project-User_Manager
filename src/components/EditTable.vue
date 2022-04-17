@@ -9,7 +9,7 @@ const props = defineProps({
 })
 
 const newTable = computed(()=> {
-    return {id: props.table.id, tableName: props.table.tableName}
+    return {id: props.table.id, tableName: props.table.tableName, userId: props.table.userId}
 })
 </script>
  

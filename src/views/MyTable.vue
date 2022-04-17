@@ -33,12 +33,15 @@ const createNewTable = async (newTable) => {
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({tableName: newTable})
+            body: JSON.stringify({
+                tableName: newTable, 
+                userId: Number(params.userId)
+            })
         })
         if(res.status === 201){
             const addedTable = await res.json();
             tables.value.push(addedTable)
-            console.log("create account successfully");
+            console.log("create table successfully");
             alert(`User ${newTable} has been created.`)
             location.reload();
         }
