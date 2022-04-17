@@ -60,15 +60,16 @@ const createRow = async (newUser) => {
         newUser.email = '';
     } else console.log('error, cannot create');
 };
-const createTag = async (newTagName) => {
+const createTag = async (newTag) => {
     const res = await fetch(`http://localhost:5000/tags`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
         },
         body: JSON.stringify({
-            name: newTagName,
+            name: newTag.name,
             tableId: Number(tableId),
+            color: newTag.color,
             tagMembers: [],
         }),
     });
@@ -78,22 +79,23 @@ const createTag = async (newTagName) => {
         console.log('created tag successfully');
     } else console.log('error, cannot create');
 };
-const createTagMembers = async (name, rowId, tagId) => {
+const createTagMembers = async (rowId, tag) => {
     const res = await fetch(`http://localhost:5000/tagMembers`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
         },
         body: JSON.stringify({
-            name: name,
+            name: tag.name,
             rowId: rowId,
-            tagId: tagId,
+            tagId: tag.id,
+            color: tag.color
         }),
     });
     if (res.status === 201) {
         const addedTagMembers = await res.json();
         rows.value[rows.value.findIndex((el) => el.id === rowId)].tagMembers.push(addedTagMembers);
-        tags.value[tags.value.findIndex((el) => el.id === tagId)].tagMembers.push(addedTagMembers);
+        tags.value[tags.value.findIndex((el) => el.id === tag.id)].tagMembers.push(addedTagMembers);
         console.log('created tagMember successfully');
     } else console.log('error, cannot create');
 };
@@ -208,7 +210,8 @@ const selectRowByTag = (tag) => {
 
 const addTag = (newTagName, rowId) => {
     const hasThisTag = tags.value.find((el) => el.name === newTagName);
-    createTagMembers(newTagName, rowId, hasThisTag.id);
+    console.log(hasThisTag);
+    createTagMembers(rowId, hasThisTag);
 };
 </script>
 
