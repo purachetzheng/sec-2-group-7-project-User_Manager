@@ -14,37 +14,63 @@ const newUser = computed(() => {
 </script>
 
 <template>
-    <div class="absolute w-full h-full bg-gray-300 transition-all opacity-60"></div>
-    <div class="bg-red-300 absolute w-1/2 rounded-md">
-        <div class="flex flex-col p-4 w-full">
-            <div v-if="newUser.id > 0" class="">Editing User</div>
+    <div class="absolute w-full h-full bg-gray-300 transition ease-in-out opacity-60"></div>
+    <div class="bg-white absolute rounded-md shadow-xl">
+        <div class="flex flex-col p-4 space-y-2">
+            <div v-if="newUser.id > 0" class="font-bold">Editing User</div>
             <div v-else class="font-bold">Add New User</div>
-            <div>
-                <label>Username: </label>
+            <div class="grid grid-cols-4 gap-2 items-center">
+                <div class="col-span-1">Username:</div>
                 <input
                     id="usernameText"
-                    class="input border-b-2 appearance-none border-gray-400 p-1 w-1/2"
+                    class="appearance-none bg-gray-300 rounded-sm placeholder-black/30 p-1 col-span-3"
                     type="text"
-                    placeholder="type your username here..."
+                    placeholder="username"
                     v-model="newUser.username"
                 />
             </div>
-            <div>
-                <label>Password: </label>
+            <div class="grid grid-cols-4 gap-2 items-center">
+                <div class="col-span-1">
+                    <label>Password: </label>
+                </div>
                 <input
                     id="passwordText"
-                    class="input border-b-2 appearance-none border-gray-400 p-1 pl-2 pr-2 w-1/2"
+                    class="appearance-none bg-gray-300 rounded-sm placeholder-black/30 p-1 col-span-3"
                     type="password"
-                    placeholder="type your password here..."
+                    placeholder="password"
                     v-model="newUser.password"
                 />
             </div>
-            <div class="flex gap-2">
-                <button v-if="newUser.id > 0" class="p-2 bg-gray-300 rounded-sm" @click="$emit('updateUser', newUser)">SAVE</button>
-                <button v-else class="p-2 bg-gray-300 rounded-sm" @click="$emit('createUser', newUser.username, newUser.password)">
-                    ADD
+            <div class="flex gap-2 text-sm">
+                <button
+                    v-if="newUser.id > 0"
+                    class="flex items-center gap-1 p-2 bg-gray-300 rounded-md"
+                    @click="$emit('updateUser', newUser)"
+                >
+                    Save User
                 </button>
-                <button class="" @click="$emit('cancelRegister', $event)">CANCEL</button>
+                <button
+                    v-else
+                    class="flex items-center gap-1 p-2 bg-blue-700 rounded-sm text-white"
+                    @click="$emit('createUser', newUser.username, newUser.password)"
+                >
+                    <span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </span>
+                    <span>Add User</span>
+                </button>
+                <button class="flex items-center p-2 gap-1 font-bold rounded-sm text-blue-700" @click="$emit('cancelRegister', $event)">
+                    <span>Cancel</span>
+                </button>
             </div>
         </div>
     </div>

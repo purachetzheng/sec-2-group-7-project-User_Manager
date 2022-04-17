@@ -33,7 +33,7 @@ onBeforeMount(async () => {
     console.log('------------------');
     await getTags();
     console.log('---- Get Tags ----');
-    console.log(tags.value)
+    console.log(tags.value);
     console.log('------------------');
 });
 //CREATE
@@ -53,12 +53,12 @@ const createRow = async (newUser) => {
         }),
     });
     if (res.status === 201) {
-        const addedUser = await res.json()
-        rows.value.push(addedUser)
-        console.log('created row successfully')
-        newUser.name = ''
-        newUser.email = ''
-    } else console.log('error, cannot create')
+        const addedUser = await res.json();
+        rows.value.push(addedUser);
+        console.log('created row successfully');
+        newUser.name = '';
+        newUser.email = '';
+    } else console.log('error, cannot create');
 };
 const createTag = async (newTagName) => {
     const res = await fetch(`http://localhost:5000/tags`, {
@@ -69,7 +69,7 @@ const createTag = async (newTagName) => {
         body: JSON.stringify({
             name: newTagName,
             tableId: Number(tableId),
-            tagMembers: []
+            tagMembers: [],
         }),
     });
     if (res.status === 201) {
@@ -87,13 +87,13 @@ const createTagMembers = async (name, rowId, tagId) => {
         body: JSON.stringify({
             name: name,
             rowId: rowId,
-            tagId: tagId
+            tagId: tagId,
         }),
     });
     if (res.status === 201) {
-        const addedTagMembers = await res.json()
-        rows.value[rows.value.findIndex(el => el.id === rowId)].tagMembers.push(addedTagMembers)
-        tags.value[tags.value.findIndex(el => el.id === tagId)].tagMembers.push(addedTagMembers)
+        const addedTagMembers = await res.json();
+        rows.value[rows.value.findIndex((el) => el.id === rowId)].tagMembers.push(addedTagMembers);
+        tags.value[tags.value.findIndex((el) => el.id === tagId)].tagMembers.push(addedTagMembers);
         console.log('created tagMember successfully');
     } else console.log('error, cannot create');
 };
@@ -104,7 +104,7 @@ const removeRow = async (id) => {
         method: 'DELETE',
     });
     if (res.status === 200) {
-        rows.value = rows.value.filter((user) => user.id !== id)
+        rows.value = rows.value.filter((user) => user.id !== id);
         console.log('deleted successfully');
     } else console.log('error, cannot delete');
 };
@@ -113,23 +113,23 @@ const removeTag = async (id) => {
         method: 'DELETE',
     });
     if (res.status === 200) {
-        tags.value = tags.value.filter((tag) => tag.id !== id)
+        tags.value = tags.value.filter((tag) => tag.id !== id);
         //ถ้าเขียนแก้ตัวแปรต้องเขียนเยอะ
-        getRows()
+        getRows();
         console.log('deleted successfully');
     } else console.log('error, cannot delete');
 };
 const removeTagMembers = async (tagMember) => {
-    const id = tagMember.id
+    const id = tagMember.id;
     console.log(tagMember);
     const res = await fetch(`http://localhost:5000/tagMembers/${id}`, {
         method: 'DELETE',
     });
     if (res.status === 200) {
-        const rowIndex = rows.value.findIndex(el => el.id === tagMember.rowId)
-        const tagIndex = tags.value.findIndex(el => el.id === tagMember.tagId)
-        rows.value[rowIndex].tagMembers = rows.value[rowIndex].tagMembers.filter(tagM => tagM.id != tagMember.id)
-        tags.value[tagIndex].tagMembers = tags.value[tagIndex].tagMembers.filter((user) => user.id !== id)
+        const rowIndex = rows.value.findIndex((el) => el.id === tagMember.rowId);
+        const tagIndex = tags.value.findIndex((el) => el.id === tagMember.tagId);
+        rows.value[rowIndex].tagMembers = rows.value[rowIndex].tagMembers.filter((tagM) => tagM.id != tagMember.id);
+        tags.value[tagIndex].tagMembers = tags.value[tagIndex].tagMembers.filter((user) => user.id !== id);
         console.log('deleted successfully');
     } else console.log('error, cannot delete');
 };
@@ -154,13 +154,13 @@ const updateRow = async (event, userP, type) => {
         rows.value = rows.value.map((user) =>
             user.id === modifyNote.id
                 ? {
-                    ...user,
-                    name: modifyNote.name,
-                    email: modifyNote.email,
-                    date: modifyNote.date,
-                    tableId: modifyNote.tableId,
-                    tagMembers: modifyNote.tagMembers,
-                }
+                      ...user,
+                      name: modifyNote.name,
+                      email: modifyNote.email,
+                      date: modifyNote.date,
+                      tableId: modifyNote.tableId,
+                      tagMembers: modifyNote.tagMembers,
+                  }
                 : user
         );
         console.log('edited successfully');
@@ -176,14 +176,24 @@ const sortRowsBy = (sorter, type = 'asc') => {
             break;
         case (sorter = 'name'):
             rows.value.sort((a, b) =>
-                type === 'asc' ? a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1
-                    : b.name.toUpperCase() > a.name.toUpperCase() ? 1 : -1
+                type === 'asc'
+                    ? a.name.toUpperCase() > b.name.toUpperCase()
+                        ? 1
+                        : -1
+                    : b.name.toUpperCase() > a.name.toUpperCase()
+                    ? 1
+                    : -1
             );
             break;
         case (sorter = 'email'):
             rows.value.sort((a, b) =>
-                type === 'asc' ? a.email.toUpperCase() > b.email.toUpperCase() ? 1 : -1
-                    : b.email.toUpperCase() > a.email.toUpperCase() ? 1 : -1
+                type === 'asc'
+                    ? a.email.toUpperCase() > b.email.toUpperCase()
+                        ? 1
+                        : -1
+                    : b.email.toUpperCase() > a.email.toUpperCase()
+                    ? 1
+                    : -1
             );
             break;
     }
@@ -197,23 +207,40 @@ const selectRowByTag = (tag) => {
 };
 
 const addTag = (newTagName, rowId) => {
-    const hasThisTag = tags.value.find(el => el.name === newTagName)
-    createTagMembers(newTagName, rowId, hasThisTag.id)
-}
-
+    const hasThisTag = tags.value.find((el) => el.name === newTagName);
+    createTagMembers(newTagName, rowId, hasThisTag.id);
+};
 </script>
 
 <template>
-    <div class="min-w-full">
+    <div class="w-full">
         <!-- Header -->
 
         <!-- Content Table -->
-        <div class="flex space-x-2">
-            <Table :rows="rows" :tagsList="tags" :selectTag="selectedTag" :tableId="tableId" @createRow="createRow"
-                @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy" @addTag="addTag"
-                @deleteTagMem="removeTagMembers" />
-            <StatusDisplay :tags="tags" :amountRows="amountRows" @selectTag="selectRowByTag" @deleteTag="removeTag"
-                @createTag="createTag" />
+        <div class="flex">
+            <div class="w-full">
+                <Table
+                    :rows="rows"
+                    :tagsList="tags"
+                    :selectTag="selectedTag"
+                    :tableId="tableId"
+                    @createRow="createRow"
+                    @deleteRow="removeRow"
+                    @editRow="updateRow"
+                    @sortRow="sortRowsBy"
+                    @addTag="addTag"
+                    @deleteTagMem="removeTagMembers"
+                />
+            </div>
+            <div class="w-1/4">
+                <StatusDisplay
+                    :tags="tags"
+                    :amountRows="amountRows"
+                    @selectTag="selectRowByTag"
+                    @deleteTag="removeTag"
+                    @createTag="createTag"
+                />
+            </div>
         </div>
     </div>
 </template>

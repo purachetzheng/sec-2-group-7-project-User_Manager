@@ -136,11 +136,17 @@ const cancelRegisterProcess = () => {
                 <p class="text-xl font-bold">Profile</p>
             </div>
             <div>
-                <div class="flex space-x-4">
+                <div class="flex space-x-4 text-white">
                     <button v-for="(user, index) in users" :key="index" @click="clickLink(user.id)">
-                        <div class="flex flex-col p-2 bg-gray-300 text-left hover:bg-gray-400">
-                            <span> ID: {{ user.id }} </span>
-                            <span> USERNAME: {{ user.username }} </span>
+                        <div class="flex flex-col p-2 bg-blue-600 text-left hover:bg-blue-700 rounded-sm">
+                            <div>
+                                <span class="font-bold"> ID: </span>
+                                <span class=""> {{ user.id }} </span>
+                            </div>
+                            <div>
+                                <span class="font-bold"> User: </span>
+                                <span class=""> {{ user.username }} </span>
+                            </div>
                         </div>
                     </button>
                 </div>

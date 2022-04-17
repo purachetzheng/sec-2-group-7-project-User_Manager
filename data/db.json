@@ -19,6 +19,16 @@
       "id": 4,
       "username": "user4",
       "password": "fesawrf3wefwfazf"
+    },
+    {
+      "username": "user5",
+      "password": "123",
+      "id": 5
+    },
+    {
+      "username": "user6",
+      "password": "123",
+      "id": 6
     }
   ],
   "tables": [
