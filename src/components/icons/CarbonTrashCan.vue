@@ -1,11 +1,12 @@
 <template>
-    <svg width="1em" height="1em" viewBox="0 0 24 24">
-        <path fill="white" d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3H9m0 5h2v9H9V8m4 0h2v9h-2V8Z"></path>
+    <svg width="1em" height="1em" viewBox="0 0 32 32">
+        <path fill="currentColor" d="M12 12h2v12h-2zm6 0h2v12h-2z"></path>
+        <path fill="currentColor" d="M4 6v2h2v20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8h2V6zm4 22V8h16v20zm4-26h8v2h-8z"></path>
     </svg>
 </template>
 
 <script>
 export default {
-    name: 'MdiTrashCan',
+    name: 'CarbonTrashCan',
 };
 </script>

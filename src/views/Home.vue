@@ -7,7 +7,7 @@ import RegisterUser from '../components/RegisterUser.vue';
 //router
 import { useRoute, useRouter } from 'vue-router';
 import CarbonEdit from '../components/icons/CarbonEdit.vue';
-import CarbonTrashCan from '../components/icons/CarbonTrashCan.vue';
+import CarbonTrashCanProfile from '../components/icons/CarbonTrashCanProfile.vue';
 const { params } = useRoute();
 const router = useRouter();
 const isShow = ref(false);
@@ -152,7 +152,7 @@ const cancelRegisterProcess = () => {
                                 <CarbonEdit />
                             </button>
                             <button @click="deleteUser(user.id)">
-                                <CarbonTrashCan class="absolute bg-transparent top-1.5 right-2 bg-gray-100 text-xl text-red-600" />
+                                <CarbonTrashCanProfile class="absolute bg-transparent top-1.5 right-2 bg-gray-100 text-xl text-red-600" />
                             </button>
                         </div>
                     </div>
