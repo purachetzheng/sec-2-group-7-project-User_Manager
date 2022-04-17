@@ -50,7 +50,7 @@ const createRow = async (newUser) => {
         body: JSON.stringify({
             name: newUser.name,
             email: newUser.email,
-            date: '11/11/2020',
+            date: new Date().toLocaleString('th-TH'),
             tableId: Number(tableId),
             //กันการหาไม่เจอเนื่องจากไม่ได้เรียก req get ใหม่
             tagMembers: [],
@@ -110,6 +110,7 @@ const removeRow = async (id) => {
         method: 'DELETE',
     });
     if (res.status === 200) {
+        getTags();
         rows.value = rows.value.filter((user) => user.id !== id);
         console.log('deleted successfully');
     } else console.log('error, cannot delete');
