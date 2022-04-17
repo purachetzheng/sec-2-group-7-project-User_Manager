@@ -36,7 +36,6 @@ const tableHeader = [
     { hName: 'Name', sort: true },
     { hName: 'Email', sort: true },
     { hName: 'Tag', sort: false },
-    { hName: 'Status', sort: false },
     { hName: 'Add Date', sort: false },
     { hName: '', sort: false },
 ];
@@ -125,7 +124,6 @@ const sorting = (sortBy, type, n) => {
                     @addTag="$emit('addTag', $event, row.id)"
                     @deleteTagMem="$emit('deleteTagMem', $event)"
                 />
-                <td>Active</td>
                 <DateCell :date="row.date" />
                 <td>
                     <button class @click="$emit('deleteRow', row.id)">
