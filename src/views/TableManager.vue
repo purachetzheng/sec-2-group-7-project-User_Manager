@@ -9,6 +9,10 @@ const { params } = useRoute();
 const router = useRouter();
 const tableId = params.tableId;
 
+//Search by Name
+const keywords = ref('');
+const filterUser = computed(() => rows.value.filter(user => user.name.includes(keywords.value)));
+
 //Get
 const rows = ref([]);
 // const table = ref({rows:[], tags:[]})
@@ -153,11 +157,12 @@ const selectRowByTag = (tagId) => {
 <template>
     <div class="min-w-full">
         <!-- Header -->
-
+        Search by Name:
+  <input type="text" v-model="keywords"/>
         <!-- Content Table -->
         <div class="flex space-x-2">
             <Table
-                :rows="rows"
+                :rows="filterUser"
                 :selectTag="selectedTag"
                 :tableId="tableId"
                 @createRow="createRow"
@@ -167,6 +172,19 @@ const selectRowByTag = (tagId) => {
             />
             <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" @selectTag="selectRowByTag" />
         </div>
+
+        <!-- <div class="flex space-x-2">
+            <Table
+                :rows="obj"
+                :selectTag="selectedTag"
+                :tableId="tableId"
+                @createRow="createRow"
+                @deleteRow="removeRow"
+                @editRow="updateRow"
+                @sortRow="sortRowsBy"
+            />
+            <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" @selectTag="selectRowByTag" />
+        </div> -->
     </div>
 </template>
 
