@@ -1,7 +1,8 @@
 <script setup>
-import { ref, computed, reactive, nextTick, onBeforeMount, toRefs, toRef, onBeforeUpdate } from 'vue';
+import CarbonTrashCan from '../icons/CarbonTrashCan.vue';
+const emits = defineEmits(['addTag', 'deleteTagMem']);
 const props = defineProps({
-    tags: {
+    rowTags: {
         type: Array,
         default: ['all', 2],
     },
@@ -13,43 +14,34 @@ const props = defineProps({
         type: String,
         require: true,
     },
+    tagsList: {
+        type: Array,
+        default: [],
+    }
 });
 
-//Get
-// const rows = ref([])
-// const getRows = async () => {
-//   const res = await fetch(`http://localhost:5000/tagMembers?rowId=${props.rowId}&_expand=tag`)
-//   if (res.status === 200) {
-//     rows.value = await res.json()
-//     // console.log(rows.value)
-//     // console.log(rows.value.length)
-//   } else console.log('error, cannot get table')
-// }
-// onBeforeMount(async () => {
-//   await getRows()
-// })
-// onBeforeUpdate(async () => {
-//   await getRows()
-// })
-
-// Get
-// const tagName = ref([])
-// const getRows = async () => {
-//   const res = await fetch(`http://localhost:5000/tags?tableId=${props.tableId}`)
-//   if (res.status === 200) {
-//     tagName.value = await res.json()
-//     console.log(tagName.value)
-//     // console.log(rows.value.length)
-//   } else console.log('error, cannot get table')
-// }
-// onBeforeMount(async () => {
-//   await getRows()
-// })
+const addingTag = (e) => {
+    const input = e.target.value
+    emits('addTag', input)
+}
 </script>
 
 <template>
     <td>
-        <!-- <span v-for="(row, index) in rows" :key="index">[{{ row.tag.name }}]</span> -->
-        <span v-for="(tag, index) in tags" :key="index">[{{ tag.name }}]</span>
+        <div class="flex space-x-2">
+            <div v-for="(tagMember, index) in rowTags" :key="index">
+                <span>[{{ tagMember.name }}] </span>
+                <button @click="$emit('deleteTagMem', tagMember)">
+                    <CarbonTrashCan class="flex-none my-auto -mr-1 h-4 w-4 text-red-700" />
+                </button>
+            </div>
+            <select class="bg-gray-100" @change="addingTag($event)">
+                <option disabled selected>add tag</option>
+                <option v-for="tag in tagsList" :value="tag.name" 
+                    v-show="!rowTags.some(rowTag => rowTag.name === tag.name)">{{tag.name}}</option>
+            </select>
+        </div>
+
+
     </td>
 </template>

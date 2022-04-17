@@ -1,8 +1,8 @@
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import CarbonEdit from '../icons/CarbonEdit.vue';
 import CarbonCloseOutline from '../icons/CarbonCloseOutline.vue';
-const emit = defineEmits(['editText']);
+const emits = defineEmits(['editText']);
 const props = defineProps({
     index: {
         type: Number,
@@ -21,24 +21,16 @@ const props = defineProps({
         default: 'error',
     },
 });
-const newText = ref(props.text);
 const hasEdit = reactive([]);
 const hasMouseEnter = reactive([]);
-const checking = (event) => {
-    const checked = props.checker.test(event.target.value);
-    checked ? (hasEdit[props.index] = false) : alert(props.alertText);
-    return checked;
-};
 const cancelEdit = (index) => {
     hasEdit[index] = 0;
-    // newText.value = props.text
 };
 const sendEdit = (event) => {
     const checked = props.checker.test(event.target.value);
-    // checked ? hasEdit[props.index] = false : alert(props.alertText)
     checked ? setTimeout(() => (hasEdit[props.index] = false), 150) : alert(props.alertText);
     if (checked) {
-        emit('editText', event);
+        emits('editText', event);
     }
 };
 </script>
@@ -52,13 +44,6 @@ const sendEdit = (event) => {
             </button>
         </div>
         <div v-else>
-            <!-- <input
-                type="text"
-                class="Name bg-gray-300 float-left"
-                placeholder="Input Name"
-                v-model="newText"
-                @keyup.enter="checking($event) ? $emit('editText', $event) : ''"
-            /> -->
             <input type="text" class="Name bg-gray-300 float-left" placeholder="Input Name" :value="text" @keyup.enter="sendEdit($event)" />
             <button class="float-right">
                 <CarbonCloseOutline class="h-5 w-5" @click="cancelEdit(index)" />
