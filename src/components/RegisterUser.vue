@@ -14,7 +14,7 @@ const newUser = computed(() => {
 </script>
 
 <template>
-    <div class="absolute w-full h-full bg-gray-300 transition ease-in-out opacity-60"></div>
+    <div class="absolute w-full h-full bg-gray-500 transition ease-in-out opacity-60"></div>
     <div class="bg-white absolute rounded-md shadow-xl">
         <div class="flex flex-col p-4 space-y-2">
             <div v-if="newUser.id > 0" class="font-bold">Editing User</div>

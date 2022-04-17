@@ -134,8 +134,9 @@ const cancelRegisterProcess = () => {
 <template>
     <div class="flex flex-col container p-4">
         <div class="flex flex-col space-y-4">
-            <div>
-                <p class="text-xl font-bold">Profile</p>
+            <div class="flex items-center">
+                <div class="text-xl font-bold mr-2">Profile</div>
+                <button @click="callRegisterUser" :disabled="isShow"><IcSharpAddCircle /></button>
             </div>
             <div>
                 <div class="flex space-x-4 text-white">
@@ -151,28 +152,24 @@ const cancelRegisterProcess = () => {
                             <button @click="toEditingMode(user.id)" class="absolute top-1.5 right-8 bg-transparent text-xl text-blue-600">
                                 <CarbonEdit />
                             </button>
-                            <button @click="deleteUser(user.id)">
-                                <CarbonTrashCanProfile class="absolute bg-transparent top-1.5 right-2 bg-gray-100 text-xl text-red-600" />
+                            <button
+                                @click="deleteUser(user.id)"
+                                class="absolute bg-transparent top-1.5 right-2 bg-gray-100 text-xl text-red-600"
+                            >
+                                <CarbonTrashCanProfile />
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="mt-4">
-            <div class="flex gap-2">
-                <button @click="callRegisterUser" :disabled="isShow"><IcSharpAddCircle /></button>
-                <!-- <button @click="toEditingMode" :disabled="isShow"><MdiTextBoxEdit /></button>
-                <button @click="deleteUser"><RiDeleteBin5Line /></button> -->
-            </div>
-            <div v-show="isShow" class="absolute min-h-screen top-0 left-0 w-full h-full flex justify-center items-center">
-                <RegisterUser
-                    @cancelRegister="cancelRegisterProcess"
-                    @createUser="createNewUser"
-                    :currentUser="editingUser"
-                    @updateUser="modifyUser"
-                />
-            </div>
+        <div v-show="isShow" class="absolute min-h-screen top-0 left-0 w-full h-full flex justify-center items-center z-99">
+            <RegisterUser
+                @cancelRegister="cancelRegisterProcess"
+                @createUser="createNewUser"
+                :currentUser="editingUser"
+                @updateUser="modifyUser"
+            />
         </div>
     </div>
 </template>
