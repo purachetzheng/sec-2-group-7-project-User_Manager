@@ -16,9 +16,6 @@ const getRows = async () => {
     // const res = await fetch(`http://localhost:5000/tables/${tableId}?_embed=rows&_embed=tags`)
     if (res.status === 200) {
         rows.value = await res.json();
-        console.log('---- Get Rows ----');
-        console.log(rows.value);
-        console.log('------------------');
     } else console.log('error, cannot get table');
 };
 // Get Tags
@@ -27,16 +24,20 @@ const getTags = async () => {
     const res = await fetch(`http://localhost:5000/tags?tableId=${tableId}&_embed=tagMembers`);
     if (res.status === 200) {
         tags.value = await res.json();
-        console.log('---- Get Tags ----');
-        console.log(tags.value)
-        console.log('------------------');
         // console.log(tags.value[0].name)
     } else console.log('error, cannot get tags');
 };
 
 onBeforeMount(async () => {
-    await getTags();
+
     await getRows();
+    console.log('---- Get Rows ----');
+    console.log(rows.value);
+    console.log('------------------');
+    await getTags();
+    console.log('---- Get Tags ----');
+    console.log(tags.value)
+    console.log('------------------');
 
 });
 //CREATE
@@ -63,7 +64,7 @@ const createRow = async (newUser) => {
         newUser.email = ''
     } else console.log('error, cannot create')
 };
-const createTag = async (newTagName, rowId) => {
+const createTag = async (newTagName) => {
     const res = await fetch(`http://localhost:5000/tags`, {
         method: 'POST',
         headers: {
@@ -71,22 +72,14 @@ const createTag = async (newTagName, rowId) => {
         },
         body: JSON.stringify({
             name: newTagName,
-            tableId: Number(tableId)
+            tableId: Number(tableId),
+            tagMembers: []
         }),
     });
     if (res.status === 201) {
 
         const addedTag = await res.json();
-        const tagMembers = {
-            name: newTagName,
-            rowId: rowId,
-            tagId: addedTag.id,
-            // tagMembers: []
-        }
-        //add to front ทำเพื่อลดการ req get
-        createTagMembers(tagMembers)
-        // tags.value.push(addedTag);
-        console.log(addedTag);
+        tags.value.push(addedTag);
         console.log('created tag successfully');
     } else console.log('error, cannot create');
 };
@@ -97,8 +90,8 @@ const createTagMembers = async (name, rowId, tagId) => {
             'content-type': 'application/json',
         },
         body: JSON.stringify({
-            name: name, 
-            rowId: rowId, 
+            name: name,
+            rowId: rowId,
             tagId: tagId
         }),
     });
@@ -122,6 +115,17 @@ const removeRow = async (id) => {
     if (res.status === 200) {
         rows.value = rows.value.filter((user) => user.id !== id)
         // table.value.rows = table.value.rows.filter((user) => user.id !== id)
+        console.log('deleted successfully');
+    } else console.log('error, cannot delete');
+};
+const removeTag = async (id) => {
+    const res = await fetch(`http://localhost:5000/tags/${id}`, {
+        method: 'DELETE',
+    });
+    if (res.status === 200) {
+        tags.value = tags.value.filter((tag) => tag.id !== id)
+        //ถ้าเขียนแก้ตัวแปรต้องเขียนเยอะ
+        getRows()
         console.log('deleted successfully');
     } else console.log('error, cannot delete');
 };
@@ -224,8 +228,9 @@ const addTag = (newTagName, rowId) => {
         <div class="flex space-x-2">
             <Table :rows="rows" :tagsList="tags" :selectTag="selectedTag" :tableId="tableId" @createRow="createRow"
                 @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy" @addTag="addTag"
-                @deleteTag="removeTagMembers" />
-            <StatusDisplay :tags="tags" :amountRows="amountRows" @selectTag="selectRowByTag" />
+                @deleteTagMem="removeTagMembers" />
+            <StatusDisplay :tags="tags" :amountRows="amountRows" @selectTag="selectRowByTag" @deleteTag="removeTag"
+                @createTag="createTag" />
         </div>
     </div>
 </template>

@@ -87,31 +87,6 @@
       "id": 2,
       "tableId": 1,
       "name": "Tag2"
-    },
-    {
-      "name": "test 3",
-      "tableId": 1,
-      "id": 3
-    },
-    {
-      "name": "O",
-      "tableId": 1,
-      "id": 4
-    },
-    {
-      "name": "B",
-      "tableId": 1,
-      "id": 5
-    },
-    {
-      "name": "A",
-      "tableId": 1,
-      "id": 6
-    },
-    {
-      "name": "AAA",
-      "tableId": 1,
-      "id": 7
     }
   ],
   "tagMembers": [
@@ -134,18 +109,6 @@
       "id": 4
     },
     {
-      "name": "O",
-      "rowId": 7,
-      "tagId": 4,
-      "id": 7
-    },
-    {
-      "name": "B",
-      "rowId": 3,
-      "tagId": 5,
-      "id": 13
-    },
-    {
       "name": {
         "name": "A",
         "rowId": 5,
@@ -163,28 +126,16 @@
       "id": 15
     },
     {
-      "name": "A",
-      "rowId": 3,
-      "tagId": 6,
-      "id": 16
-    },
-    {
-      "name": "A",
-      "rowId": 7,
-      "tagId": 6,
+      "name": "FirstTag",
+      "rowId": 5,
+      "tagId": 1,
       "id": 17
     },
     {
-      "name": "B",
-      "rowId": 7,
-      "tagId": 5,
+      "name": "Tag2",
+      "rowId": 5,
+      "tagId": 2,
       "id": 18
-    },
-    {
-      "name": "test 3",
-      "rowId": 7,
-      "tagId": 3,
-      "id": 19
     }
   ]
 }

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, reactive, nextTick, onBeforeMount, toRefs, toRef, onBeforeUpdate } from 'vue';
 import CarbonTrashCan from '../icons/CarbonTrashCan.vue';
-const emits = defineEmits(['addTag', 'deleteTag']);
+const emits = defineEmits(['addTag', 'deleteTagMem']);
 const props = defineProps({
     rowTags: {
         type: Array,
@@ -20,10 +20,9 @@ const props = defineProps({
         default: [],
     }
 });
-console.log('$$$$');
-console.log(props.rowTags);
-console.log(props.tagsList);
-console.log('$$$$');
+// console.log('$$$$');
+// console.log(props.rowTags);
+// console.log(props.tagsList);
 const addingTag = (e) => {
     const input = e.target.value
     // if(!props.tagsList.some(el => el.name === input)) 
@@ -37,7 +36,7 @@ const addingTag = (e) => {
         <div class="flex space-x-2">
             <div v-for="(tagMember, index) in rowTags" :key="index">
                 <span>[{{ tagMember.name }}] </span>
-                <button @click="$emit('deleteTag', tagMember)">
+                <button @click="$emit('deleteTagMem', tagMember)">
                     <CarbonTrashCan class="flex-none my-auto -mr-1 h-4 w-4 text-red-700" />
                 </button>
             </div>
