@@ -62,18 +62,18 @@ const deleteUser = async (removeUserId) => {
     //     console.log('cancel');
     //     return;
     // } else {
-        const res = await fetch(`http://localhost:5000/users/${removeUserId}`, {
-            method: 'DELETE',
-        });
-        if (res.status === 200) {
-            users.value = users.value.filter((user) => user.id !== removeUserId);
-            console.log('delete succesfully');
-            alert(`Delete succesfully, user ID number ${removeUserId} has been removed`);
-            location.reload();
-        } else {
-            console.log('error, cannot delete');
-            alert(`Delete unsuccessfully, user ID number ${removeUserId} is not in the system.`);
-        }
+    const res = await fetch(`http://localhost:5000/users/${removeUserId}`, {
+        method: 'DELETE',
+    });
+    if (res.status === 200) {
+        users.value = users.value.filter((user) => user.id !== removeUserId);
+        console.log('delete succesfully');
+        alert(`Delete succesfully, user ID number ${removeUserId} has been removed`);
+        location.reload();
+    } else {
+        console.log('error, cannot delete');
+        alert(`Delete unsuccessfully, user ID number ${removeUserId} is not in the system.`);
+    }
     // }
 };
 
@@ -85,14 +85,14 @@ const toEditingMode = async (id) => {
     // if (editUser === null) {
     //     return;
     // } else {
-        const res = await fetch(`http://localhost:5000/users/${id}`);
-        if (res.status === 200) {
-            editingUser.value = await res.json();
-            isShow.value = true;
-        } else {
-            alert(`Cannot edit since user ID number ${id} is not in the system.`);
-        }
-        console.log(editingUser.value);
+    const res = await fetch(`http://localhost:5000/users/${id}`);
+    if (res.status === 200) {
+        editingUser.value = await res.json();
+        isShow.value = true;
+    } else {
+        alert(`Cannot edit since user ID number ${id} is not in the system.`);
+    }
+    console.log(editingUser.value);
     // }
 };
 
@@ -138,19 +138,6 @@ const cancelRegisterProcess = () => {
                 <p class="text-xl font-bold">Profile</p>
             </div>
             <div>
-<<<<<<< HEAD
-                <div class="flex space-x-4 text-white">
-                    <button v-for="(user, index) in users" :key="index" @click="clickLink(user.id)">
-                        <div class="flex flex-col p-2 bg-blue-600 text-left hover:bg-blue-700 rounded-sm">
-                            <div>
-                                <span class="font-bold"> ID: </span>
-                                <span class=""> {{ user.id }} </span>
-                            </div>
-                            <div>
-                                <span class="font-bold"> User: </span>
-                                <span class=""> {{ user.username }} </span>
-                            </div>
-=======
                 <div class="flex space-x-4">
                     <div v-for="(user, index) in users" :key="index">
                         <button class="flex flex-col p-2 bg-gray-300 text-left hover:bg-gray-400" @click="clickLink(user.id)">
@@ -160,7 +147,6 @@ const cancelRegisterProcess = () => {
                         <div class="flex space-x-1">
                             <button @click="toEditingMode(user.id)"><CarbonEdit class="bg-gray-100 text-xl text-blue-600" /></button>
                             <button @click="deleteUser(user.id)"><CarbonTrashCan class="bg-gray-100 text-xl text-red-600" /></button>
->>>>>>> dev-big
                         </div>
                     </div>
                 </div>
