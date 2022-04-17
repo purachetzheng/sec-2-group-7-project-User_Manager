@@ -62,6 +62,7 @@ const sorting = (sortBy, type, n) => {
         sortSelected.value = null;
     }
 };
+
 </script>
 
 <template>
