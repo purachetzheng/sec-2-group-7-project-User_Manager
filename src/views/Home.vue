@@ -6,13 +6,15 @@ import MdiTextBoxEdit from '../components/icons/MdiTextBoxEdit.vue';
 import RegisterUser from '../components/RegisterUser.vue';
 //router
 import { useRoute, useRouter } from 'vue-router';
+import CarbonEdit from '../components/icons/CarbonEdit.vue';
+import CarbonTrashCan from '../components/icons/CarbonTrashCan.vue';
 const { params } = useRoute();
 const router = useRouter();
 const isShow = ref(false);
 //Get
 const users = ref([]);
 const getUsers = async () => {
-    const res = await fetch('http://localhost:5000/users');
+    const res = await fetch('http://localhost:5000/users?_embed=tables');
     if (res.status === 200) {
         users.value = await res.json();
         console.log(users.value);
@@ -53,13 +55,13 @@ const createNewUser = async (newUsername, newPassword) => {
 };
 
 //DELETE
-const deleteUser = async () => {
-    console.log('delete working!');
-    let removeUserId = prompt('Enter user ID that you want to delete.');
-    if (removeUserId === null) {
-        console.log('cancel');
-        return;
-    } else {
+const deleteUser = async (removeUserId) => {
+    // console.log('delete working!');
+    // let removeUserId = prompt('Enter user ID that you want to delete.');
+    // if (removeUserId === null) {
+    //     console.log('cancel');
+    //     return;
+    // } else {
         const res = await fetch(`http://localhost:5000/users/${removeUserId}`, {
             method: 'DELETE',
         });
@@ -72,26 +74,26 @@ const deleteUser = async () => {
             console.log('error, cannot delete');
             alert(`Delete unsuccessfully, user ID number ${removeUserId} is not in the system.`);
         }
-    }
+    // }
 };
 
 //UPDATE
 const editingUser = ref({});
-const toEditingMode = async () => {
-    console.log('editing work!');
-    let editUser = prompt('Enter user ID that you want to edit');
-    if (editUser === null) {
-        return;
-    } else {
-        const res = await fetch(`http://localhost:5000/users/${editUser}`);
+const toEditingMode = async (id) => {
+    // console.log('editing work!');
+    // let editUser = prompt('Enter user ID that you want to edit');
+    // if (editUser === null) {
+    //     return;
+    // } else {
+        const res = await fetch(`http://localhost:5000/users/${id}`);
         if (res.status === 200) {
             editingUser.value = await res.json();
             isShow.value = true;
         } else {
-            alert(`Cannot edit since user ID number ${editUser} is not in the system.`);
+            alert(`Cannot edit since user ID number ${id} is not in the system.`);
         }
         console.log(editingUser.value);
-    }
+    // }
 };
 
 const modifyUser = async (editingUser) => {
@@ -136,6 +138,7 @@ const cancelRegisterProcess = () => {
                 <p class="text-xl font-bold">Profile</p>
             </div>
             <div>
+<<<<<<< HEAD
                 <div class="flex space-x-4 text-white">
                     <button v-for="(user, index) in users" :key="index" @click="clickLink(user.id)">
                         <div class="flex flex-col p-2 bg-blue-600 text-left hover:bg-blue-700 rounded-sm">
@@ -147,16 +150,27 @@ const cancelRegisterProcess = () => {
                                 <span class="font-bold"> User: </span>
                                 <span class=""> {{ user.username }} </span>
                             </div>
+=======
+                <div class="flex space-x-4">
+                    <div v-for="(user, index) in users" :key="index">
+                        <button class="flex flex-col p-2 bg-gray-300 text-left hover:bg-gray-400" @click="clickLink(user.id)">
+                            <span>{{ user.username }}</span>
+                            <span>Number of table: {{ user.tables.length }}</span>
+                        </button>
+                        <div class="flex space-x-1">
+                            <button @click="toEditingMode(user.id)"><CarbonEdit class="bg-gray-100 text-xl text-blue-600" /></button>
+                            <button @click="deleteUser(user.id)"><CarbonTrashCan class="bg-gray-100 text-xl text-red-600" /></button>
+>>>>>>> dev-big
                         </div>
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="mt-4">
             <div class="flex gap-2">
                 <button @click="callRegisterUser" :disabled="isShow"><IcSharpAddCircle /></button>
-                <button @click="toEditingMode" :disabled="isShow"><MdiTextBoxEdit /></button>
-                <button @click="deleteUser"><RiDeleteBin5Line /></button>
+                <!-- <button @click="toEditingMode" :disabled="isShow"><MdiTextBoxEdit /></button>
+                <button @click="deleteUser"><RiDeleteBin5Line /></button> -->
             </div>
             <div v-show="isShow" class="absolute min-h-screen top-0 left-0 w-full h-full flex justify-center items-center">
                 <RegisterUser
