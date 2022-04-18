@@ -1,13 +1,14 @@
 # User Manager (ระบบจัดการ User)
 ### Features
-- เพิ่ม/ลบ User 
-- แก้ไขข้อมูล User ได้
+- เพิ่ม/ลบ User, Table, Row
+- แก้ไขข้อมูล Row ใน Table ได้
 - เพิ่ม Tag แต่ละวิชาให้แต่ละ User
-- นับจำนวน User ทั้งหมด
-- ตรวจสอบ status การเติมข้อมูลถ้ามีแค่ชื่อจะมีสถานะเป็น Incomplete ถ้าหากครบจะเป็น Active
-- Add Date จะ update ตามวันที่ได้ add user
+- นับจำนวน Row, Tag ทั้งหมด
+- Add Date จะ update ตามวันที่ได้ add row
+- Search by name
 - ระบบ Tag เลือก Tag ได้
 - Sorting
+
 
 ## How To 
 1. สร้างหรือเลือก user
