@@ -32,7 +32,8 @@
 - สร้างลบ tag ได้ สามารถเลือกสีได้
 - ส่ง selecting ออกไปว่าเลือกตัวไหน
 ### RegisterUser.vue
-
+- สลับโหมดระหว่างสร้าง user เเละ edit user
+- input สำหรับใส่ username เเละ password เพื่อรับค่าเข้า json-server
 ## Group Member
 - 067 นฤบดินทร์ อะมีนี 
 - 083 ปุรเชษฐ์ เจิ้น
