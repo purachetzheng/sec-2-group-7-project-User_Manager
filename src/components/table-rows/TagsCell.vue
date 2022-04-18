@@ -38,7 +38,7 @@ const deletingTagMem = (tagMember) => {
                 </button>
             </div>
             <select class="bg-gray-100" @change="addingTagMem($event)">
-                <option ref="s" disabled selected value="0">add tag</option>
+                <option ref="s" disabled selected >add tag</option>
                 <option :style="{'background-color': tag.color}" v-for="tag in tagsList" :value="tag.name" 
                     v-show="!rowTags.some(rowTag => rowTag.name === tag.name)">{{tag.name}}</option>
             </select>

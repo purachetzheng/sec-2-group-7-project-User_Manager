@@ -246,7 +246,7 @@ const addTag = (newTagName, rowId) => {
                 </div>
                 <Table :rows="filterUser" :tagsList="tags" :selectTag="selectedTag" :tableId="tableId"
                     @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy"
-                    @addTag="addTag" @deleteTagMem="removeTagMembers" />
+                    @addTagMem="addTag" @deleteTagMem="removeTagMembers" />
             </div>
         </div>
     </div>

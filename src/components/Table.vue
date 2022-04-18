@@ -7,7 +7,7 @@ import DateCell from './table-rows/DateCell.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
 import CarbonSortAscending from './icons/CarbonSortAscending.vue';
 import CarbonSortDescending from './icons/CarbonSortDescending.vue';
-const emits = defineEmits(['createRow', 'deleteRow', 'editRow', 'sortRow', 'addTag', 'deleteTagMem']);
+const emits = defineEmits(['createRow', 'deleteRow', 'editRow', 'sortRow', 'addTagMem', 'deleteTagMem']);
 const props = defineProps({
     table: {
         type: Object,
@@ -100,7 +100,7 @@ const tableHeader = [
                     <TextCellBase :text="row.email" :index="index" :checker="/.*@.*\..*|^$/"
                         alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                     <TagsCell :rowId="row.id" :rowTags="row.tagMembers" :tableId="tableId" :tagsList="tagsList"
-                        @addTag="$emit('addTagMem', $event, row.id)" @deleteTagMem="$emit('deleteTagMem', $event)" />
+                        @addTagMem="$emit('addTagMem', $event, row.id)" @deleteTagMem="$emit('deleteTagMem', $event)" />
                     <DateCell :date="row.date" />
                     <td>
                         <button class="hover:text-red-700 text-red-500" @click="$emit('deleteRow', row.id)">
