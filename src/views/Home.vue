@@ -56,12 +56,6 @@ const createNewUser = async (newUsername, newPassword) => {
 
 //DELETE
 const deleteUser = async (removeUserId) => {
-    // console.log('delete working!');
-    // let removeUserId = prompt('Enter user ID that you want to delete.');
-    // if (removeUserId === null) {
-    //     console.log('cancel');
-    //     return;
-    // } else {
     const res = await fetch(`http://localhost:5000/users/${removeUserId}`, {
         method: 'DELETE',
     });
@@ -74,17 +68,11 @@ const deleteUser = async (removeUserId) => {
         console.log('error, cannot delete');
         alert(`Delete unsuccessfully, user ID number ${removeUserId} is not in the system.`);
     }
-    // }
 };
 
 //UPDATE
-const editingUser = ref({});
+const editingUser = ref({id:0,username: '', password: ''});
 const toEditingMode = async (id) => {
-    // console.log('editing work!');
-    // let editUser = prompt('Enter user ID that you want to edit');
-    // if (editUser === null) {
-    //     return;
-    // } else {
     const res = await fetch(`http://localhost:5000/users/${id}`);
     if (res.status === 200) {
         editingUser.value = await res.json();
@@ -93,7 +81,6 @@ const toEditingMode = async (id) => {
         alert(`Cannot edit since user ID number ${id} is not in the system.`);
     }
     console.log(editingUser.value);
-    // }
 };
 
 const modifyUser = async (editingUser) => {
@@ -129,6 +116,10 @@ const cancelRegisterProcess = () => {
     passwordText.value = '';
     editingUser.value = '';
 };
+
+const deleteMid = (user) => {
+    confirm(`Want to delete this User?: ${user.username}`)? deleteUser(user.id):''
+}
 </script>
 
 <template>
@@ -152,7 +143,7 @@ const cancelRegisterProcess = () => {
                             <button @click="toEditingMode(user.id)" class="absolute top-1.5 right-8 bg-transparent text-xl text-blue-600">
                                 <CarbonEdit />
                             </button>
-                            <button @click="deleteUser(user.id)" class="absolute bg-transparent top-1.5 right-2 text-xl text-red-600">
+                            <button @click="deleteMid(user)" class="absolute bg-transparent top-1.5 right-2 text-xl text-red-600">
                                 <CarbonTrashCanProfile />
                             </button>
                         </div>
