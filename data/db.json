@@ -131,13 +131,6 @@
     },
     {
       "name": "FirstTag",
-      "rowId": 4,
-      "tagId": 1,
-      "color": "#942424",
-      "id": 8
-    },
-    {
-      "name": "FirstTag",
       "rowId": 7,
       "tagId": 1,
       "color": "#942424",
@@ -163,6 +156,20 @@
       "tagId": 2,
       "color": "#23a300",
       "id": 12
+    },
+    {
+      "name": "Tag2",
+      "rowId": 5,
+      "tagId": 2,
+      "color": "#23a300",
+      "id": 13
+    },
+    {
+      "name": "FirstTag",
+      "rowId": 4,
+      "tagId": 1,
+      "color": "#942424",
+      "id": 14
     }
   ]
 }
