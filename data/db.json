@@ -23,124 +23,66 @@
   ],
   "tables": [
     {
-      "id": 1,
       "tableName": "firstTable",
-      "userId": 1
+      "userId": 1,
+      "id": 1
     },
     {
-      "id": 2,
       "tableName": "sT",
-      "userId": 1
-    },
-    {
-      "tableName": "asdada",
-      "userId": 2,
-      "id": 3
+      "userId": 1,
+      "id": 2
     }
   ],
   "rows": [
     {
-      "id": 1,
-      "name": "test1",
-      "email": "t1@t1.t",
-      "date": "10/10/2020",
-      "tableId": 1
+      "name": "teast",
+      "email": "saada@gmail.com",
+      "date": "11/11/2020",
+      "tableId": 2,
+      "tagMembers": [],
+      "id": 1
     },
     {
-      "name": "test2",
-      "email": "t2@t2.t",
-      "date": "10/10/2020",
+      "name": "t1",
+      "email": "t1@gmai.com",
+      "date": "11/11/2020",
       "tableId": 1,
+      "tagMembers": [],
       "id": 2
     },
     {
-      "name": "test3",
-      "email": "",
+      "name": "adada",
+      "email": "asda@gmail.com",
       "date": "11/11/2020",
       "tableId": 1,
+      "tagMembers": [],
       "id": 3
     },
     {
-      "name": "dasd",
-      "email": "",
+      "name": "t2",
+      "email": "t2@gmail.com",
       "date": "11/11/2020",
       "tableId": 1,
+      "tagMembers": [],
       "id": 4
     },
     {
-      "name": "dsada",
-      "email": "",
+      "name": "nabin",
+      "email": "nabin@gmail.com",
       "date": "11/11/2020",
       "tableId": 1,
       "tagMembers": [],
       "id": 5
     },
     {
-      "name": "test",
-      "email": "",
+      "name": "test00",
+      "email": "test00@gmail.com",
       "date": "11/11/2020",
       "tableId": 1,
       "tagMembers": [],
       "id": 6
-    },
-    {
-      "name": "pu s",
-      "email": "",
-      "date": "11/11/2020",
-      "tableId": 1,
-      "tagMembers": [],
-      "id": 7
     }
   ],
-  "tags": [
-    {
-      "id": 1,
-      "tableId": 1,
-      "name": "FirstTag",
-      "color": "#942424"
-    },
-    {
-      "id": 2,
-      "tableId": 1,
-      "name": "Tag2",
-      "color": "#23a300"
-    },
-    {
-      "name": "Test",
-      "tableId": 1,
-      "color": "#dba124",
-      "tagMembers": [],
-      "id": 3
-    },
-    {
-      "name": "aaaa",
-      "tableId": 1,
-      "color": "#daf3a5",
-      "tagMembers": [],
-      "id": 4
-    }
-  ],
-  "tagMembers": [
-    {
-      "name": "Test",
-      "rowId": 2,
-      "tagId": 3,
-      "color": "#dba124",
-      "id": 10
-    },
-    {
-      "name": "aaaa",
-      "rowId": 1,
-      "tagId": 4,
-      "color": "#daf3a5",
-      "id": 11
-    },
-    {
-      "name": "Test",
-      "rowId": 1,
-      "tagId": 3,
-      "color": "#dba124",
-      "id": 13
-    }
-  ]
+  "tags": [],
+  "tagMembers": []
 }

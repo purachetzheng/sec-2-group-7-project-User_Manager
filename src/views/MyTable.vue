@@ -10,6 +10,7 @@ import {
 import EditTable from "../components/EditTable.vue";
 //router
 import { useRoute, useRouter } from "vue-router";
+import CarbonTrashCanProfile from "../components/icons/CarbonTrashCanProfile.vue";
 const { params } = useRoute();
 const router = useRouter();
 
@@ -59,23 +60,17 @@ const createNewTable = async (newTable) => {
 };
 
 //DELETE
-const removeTable = async () => {
+const removeTable = async (deleteTableId) => {
   console.log("remove successed !");
-  let deleteTableId = prompt("Enter table ID");
-  if (deleteTableId === null) {
-    console.log("Cancel delete");
-    return;
-  } else {
     const res = await fetch(`http://localhost:5000/tables/${deleteTableId}`, {
       method: "DELETE",
     });
     if (res.status === 200) {
-      tables.value = tables.value.filter((table) => table.tableName !== deleteTableId);
+      tables.value = tables.value.filter((table) => table.id !== deleteTableId);
       console.log("deleted successfully");
       location.reload();
     } else console.log("error, cannot delete");
-  }
-};
+}
 </script>
 
 <template>
@@ -84,17 +79,22 @@ const removeTable = async () => {
             <p class="text-xl font-bold">User {{ params.userId }} Table</p>
             <div class="flex space-x-4 text-white">
                 <div v-for="(table, index) in tables" :key="index">
-                    <button
+                    <div class="relative">
+                        <button
                         class="flex flex-col w-40 p-2 bg-blue-700 text-left hover:bg-blue-800 rounded-sm relative"
                         @click="clickLink(table.id)"
-                    >
-                        {{ table.tableName }}
-                    </button>
+                        >
+                            <span>{{ table.tableName }}</span>
+                        </button>
+                        <button @click="removeTable(table.id)"
+                        class="absolute bg-transparent top-1.5 right-2 bg-gray-100 text-xl text-red-600"> 
+                            <CarbonTrashCanProfile/>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div>
                 <EditTable @createTable="createNewTable" />
-                <button @click="removeTable">Delete</button>
             </div>
         </div>
     </div>
