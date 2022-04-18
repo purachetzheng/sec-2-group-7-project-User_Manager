@@ -79,23 +79,25 @@ const removeTable = async () => {
 </script>
 
 <template>
-  <div class="p-4">
-    <p class="text-xl">User {{ params.userId }} Table</p>
-    <div class="flex space-x-4">
-      <button
-        class="bg-red-400"
-        v-for="(table, index) in tables"
-        :key="index"
-        @click="clickLink(table.id)"
-      >
-        {{ table.tableName }}
-      </button>
+    <div class="flex flex-col container p-4">
+        <div class="flex flex-col space-y-4">
+            <p class="text-xl font-bold">User {{ params.userId }} Table</p>
+            <div class="flex space-x-4 text-white">
+                <div v-for="(table, index) in tables" :key="index">
+                    <button
+                        class="flex flex-col w-40 p-2 bg-blue-700 text-left hover:bg-blue-800 rounded-sm relative"
+                        @click="clickLink(table.id)"
+                    >
+                        {{ table.tableName }}
+                    </button>
+                </div>
+            </div>
+            <div>
+                <EditTable @createTable="createNewTable" />
+                <button @click="removeTable">Delete</button>
+            </div>
+        </div>
     </div>
-    <div>
-      <EditTable @createTable="createNewTable" />
-      <button @click="removeTable">Delete</button>
-    </div>
-  </div>
 </template>
 
 <style></style>
