@@ -21,21 +21,6 @@
       "id": 2,
       "tableName": "sT",
       "userId": 1
-    },
-    {
-      "tableName": "aaaa",
-      "userId": 1,
-      "id": 7
-    },
-    {
-      "tableName": "adadada",
-      "userId": 1,
-      "id": 8
-    },
-    {
-      "tableName": "adada",
-      "userId": 2,
-      "id": 9
     }
   ],
   "rows": [
@@ -117,22 +102,6 @@
       "tableId": 1,
       "tagMembers": [],
       "id": 15
-    },
-    {
-      "name": "asdadadada",
-      "email": "nabin.ameen@gmail.com",
-      "date": "11/11/2020",
-      "tableId": 8,
-      "tagMembers": [],
-      "id": 16
-    },
-    {
-      "name": "Abcd",
-      "email": "aadada@gmail.com",
-      "date": "11/11/2020",
-      "tableId": 7,
-      "tagMembers": [],
-      "id": 17
     }
   ],
   "tags": [
