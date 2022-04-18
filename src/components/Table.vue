@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 
-import TextCell from './table-rows/TextCell.vue';
+import TextCellBase from './table-rows/TextCellBase.vue';
 import TagsCell from './table-rows/TagsCell.vue';
 import DateCell from './table-rows/DateCell.vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
@@ -43,7 +43,7 @@ const tableHeader = [
 const newRow = reactive({ name: '', email: '' });
 
 const alertInput = () => {
-    alert(`Please enter at least your name.`);
+    alert(`Please enter at least your name or enter valid email.`);
 };
 
 //sort
@@ -101,14 +101,14 @@ const sorting = (sortBy, type, n) => {
                 class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                 v-show="row.tagMembers.some((tag) => tag.tagId == selectTag) || selectTag === null"
             >
-                <TextCell
+                <TextCellBase
                     :text="row.name"
                     :index="index"
                     :checker="/[\w(ก-ฮ)]+/"
                     alertText="Name not null!"
                     @editText="$emit('editRow', $event, row, 'name')"
                 />
-                <TextCell
+                <TextCellBase
                     :text="row.email"
                     :index="index"
                     :checker="/.*@.*\..*|^$/"
@@ -133,7 +133,7 @@ const sorting = (sortBy, type, n) => {
             </tr>
             <tr
                 class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                @keydown.enter="newRow.name.length != 0 ? $emit('createRow', newRow) : alertInput()"
+                @keydown.enter="newRow.name.length != 0 && /.*@.*\..*|^$/.test(newRow.email) ? $emit('createRow', newRow) : alertInput()"
             >
                 <td>
                     <input type="text" class="bg-gray-300" placeholder="Input Name" v-model="newRow.name" />
