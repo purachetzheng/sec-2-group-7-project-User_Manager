@@ -6,7 +6,7 @@ import MdiTextBoxEdit from '../components/icons/MdiTextBoxEdit.vue';
 import RegisterUser from '../components/RegisterUser.vue';
 //router
 import { useRoute, useRouter } from 'vue-router';
-import CarbonEdit from '../components/icons/CarbonEdit.vue';
+import CarbonEditProfile from '../components/icons/CarbonEditProfile.vue';
 import CarbonTrashCanProfile from '../components/icons/CarbonTrashCanProfile.vue';
 const { params } = useRoute();
 const router = useRouter();
@@ -136,7 +136,9 @@ const cancelRegisterProcess = () => {
         <div class="flex flex-col space-y-4">
             <div class="flex items-center">
                 <div class="text-xl font-bold mr-2">Profile</div>
-                <button @click="callRegisterUser" :disabled="isShow"><IcSharpAddCircle /></button>
+                <button @click="callRegisterUser" :disabled="isShow">
+                    <IcSharpAddCircle />
+                </button>
             </div>
             <div>
                 <div class="flex space-x-4 text-white">
@@ -144,15 +146,16 @@ const cancelRegisterProcess = () => {
                         <div class="relative">
                             <button
                                 class="flex flex-col w-40 p-2 bg-blue-700 text-left hover:bg-blue-800 rounded-sm relative"
-                                @click="clickLink(user.id, user.username)"
-                            >
+                                @click="clickLink(user.id, user.username)">
                                 <span>{{ user.username }}</span>
                                 <span>Tables: {{ user.tables.length }}</span>
                             </button>
-                            <button @click="toEditingMode(user.id)" class="absolute top-1.5 right-8 bg-transparent text-xl text-blue-600">
-                                <CarbonEdit />
+                            <button @click="toEditingMode(user.id)"
+                                class="absolute top-1.5 right-8 bg-transparent text-xl text-blue-600">
+                                <CarbonEditProfile />
                             </button>
-                            <button @click="deleteUser(user.id)" class="absolute bg-transparent top-1.5 right-2 text-xl text-red-600">
+                            <button @click="deleteUser(user.id)"
+                                class="absolute bg-transparent top-1.5 right-2 text-xl text-red-600">
                                 <CarbonTrashCanProfile />
                             </button>
                         </div>
@@ -160,15 +163,13 @@ const cancelRegisterProcess = () => {
                 </div>
             </div>
         </div>
-        <div v-show="isShow" class="absolute min-h-screen top-0 left-0 w-full h-full flex justify-center items-center z-99">
-            <RegisterUser
-                @cancelRegister="cancelRegisterProcess"
-                @createUser="createNewUser"
-                :currentUser="editingUser"
-                @updateUser="modifyUser"
-            />
+        <div v-show="isShow"
+            class="absolute min-h-screen top-0 left-0 w-full h-full flex justify-center items-center z-99">
+            <RegisterUser @cancelRegister="cancelRegisterProcess" @createUser="createNewUser" :currentUser="editingUser"
+                @updateUser="modifyUser" />
         </div>
     </div>
 </template>
 
-<style></style>
+<style>
+</style>

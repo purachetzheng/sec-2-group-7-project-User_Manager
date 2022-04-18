@@ -37,15 +37,16 @@ const sendEdit = (event) => {
 
 <template>
     <td class @mouseenter="hasMouseEnter[index] = true" @mouseleave="hasMouseEnter[index] = false">
-        <div v-if="!hasEdit[index]">
-            <span class="float-left">{{ text }}</span>
-            <button class="float-right" v-show="hasMouseEnter[index]">
+        <div v-if="!hasEdit[index]" class="flex items-center justify-between">
+            <span>{{ text }}</span>
+            <button v-show="hasMouseEnter[index]">
                 <CarbonEdit class="h-5 w-5" @click="hasEdit[index] = 1" />
             </button>
         </div>
-        <div v-else>
-            <input type="text" class="Name bg-gray-300 float-left" placeholder="Input Name" :value="text" @keyup.enter="sendEdit($event)" />
-            <button class="float-right">
+        <div v-else class="flex items-center justify-between">
+            <input type="text" class="bg-gray-300" placeholder="Input Name" :value="text"
+                @keyup.enter="sendEdit($event)" />
+            <button>
                 <CarbonCloseOutline class="h-5 w-5" @click="cancelEdit(index)" />
             </button>
         </div>

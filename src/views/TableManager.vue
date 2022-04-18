@@ -233,9 +233,9 @@ const addTag = (newTagName, rowId) => {
 </script>
 
 <template>
-    <div class="w-full ">
+    <div class="w-full">
         <div class="flex h-full">
-            <div class="w-1/4 bg-white h-full">
+            <div class="w-72 bg-white h-full">
                 <StatusDisplay :tags="tags" :amountRows="amountRows" @selectTag="selectRowByTag" @deleteTag="removeTag"
                     @createTag="createTag" />
             </div>

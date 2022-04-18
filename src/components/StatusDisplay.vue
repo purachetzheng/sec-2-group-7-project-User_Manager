@@ -23,34 +23,57 @@ const newTag = ref({ name: null, color: '#ff0000' });
 <template>
     <div class="p-4 space-y-2">
         <div class="flex gap-4">
-            <div class="flex flex-col bg-rose-400">
+            <div class="flex flex-col">
                 <span class="font-bold"> Users </span>
-                <span class="text-2xl font-light"> {{ amountRows }} </span>
+                <span class="text-2xl font-light  "> {{ amountRows }} </span>
             </div>
-            <div class="flex flex-col bg-sky-400">
+            <div class="flex flex-col">
                 <span class="font-bold"> Tags </span>
-                <span class="text-2xl font-light">
+                <span class="text-2xl font-light ">
                     {{ amountTags }}
                 </span>
             </div>
         </div>
+        <div class="border-b border-gray-300"></div>
         <div class="flex flex-col space-y-2">
-            <button class="bg-gray-200 text-left" @click="$emit('selectTag', { id: null, name: 'all' })">
-                All Tags
-            </button>
+            <div class="text-left flex mr-2">
+                <button class="flex items-center" @click="$emit('selectTag', { id: null, name: 'all' })">
+                    <div class="rounded-full p-2 bg-gradient-to-r from-green-400 to-blue-700"></div>
+                    <div class="flex px-2 mr-2 hover:underline">
+                        All Tags
+                    </div>
+                </button>
+            </div>
             <div class="text-left flex justify-between mr-2" v-for="(tag, index) in tags" :key="index">
                 <button class="flex items-center" @click="$emit('selectTag', tag)">
                     <div class="rounded-full p-2" :style="{ 'background-color': tag.color }"></div>
-                    <div class="flex px-2 mr-2">{{ tag.name }} : {{ tag.tagMembers.length }}</div>
+                    <div class="flex px-2 mr-2 hover:underline">{{ tag.name }} : {{ tag.tagMembers.length }}</div>
                 </button>
                 <button class @click="$emit('deleteTag', tag.id)">
                     <CarbonTrashCan class="my-auto -mr-1 h-4 w-4 text-red-700" />
                 </button>
             </div>
-            <div class="flex items-center">
-                <input class="bg-gray-200 p-1" type="text" placeholder="Input New Tag" v-model="newTag.name"
+        </div>
+        <div class="border-b border-gray-300"></div>
+        <div class="text-xs text-blue-700 flex items-center">
+            <span class="mr-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </span>
+            <span>Create New Tags </span>
+        </div>
+        <div class="flex items-center">
+            <div>
+                <input
+                    class="text-sm placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-l-md py-2 pl-2 pr-3 shadow-sm focus:outline-none"
+                    type="text" placeholder="Input New Tag" v-model="newTag.name"
                     @keyup.enter="$emit('createTag', newTag)" />
-                <input type="color" v-model="newTag.color" />
+            </div>
+            <div class="p-1 bg-gray-800 rounded-r-md overflow-hidden shadow-sm">
+                <input type="color" class="bg-gray-800 scale-[3]" v-model="newTag.color" />
             </div>
         </div>
     </div>

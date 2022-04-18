@@ -92,13 +92,12 @@ const sorting = (sortBy, type, n) => {
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-300">
-                <tr v-for="(row, index) in rows" :key="index" class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                <tr v-for="(row, index) in rows" :key="index" class=" px-6 py-4 text-sm text-gray-500"
                     v-show="row.tagMembers.some((tag) => tag.tagId == selectTag) || selectTag === null">
                     <TextCellBase :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!"
                         @editText="$emit('editRow', $event, row, 'name')" />
                     <TextCellBase :text="row.email" :index="index" :checker="/.*@.*\..*|^$/"
                         alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
-                    <!-- <TagsCell :tags="row.tags" /> -->
                     <TagsCell :rowId="row.id" :rowTags="row.tagMembers" :tableId="tableId" :tagsList="tagsList"
                         @addTag="$emit('addTag', $event, row.id)" @deleteTagMem="$emit('deleteTagMem', $event)" />
                     <DateCell :date="row.date" />
