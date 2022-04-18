@@ -34,6 +34,20 @@
 ### RegisterUser.vue
 - สลับโหมดระหว่างสร้าง user เเละ edit user
 - input สำหรับใส่ username เเละ password เพื่อรับค่าเข้า json-server
+### TextCellBase.vue
+- Cell ตารางใช้กับ Name, Email
+- ส่งการแก้ไขออกมาได้
+- สามารถส่งรูปแบบข้อมูลได้
+- สามารถ alert เมื่อรูปแบบข้อมูลตอนแก้ไขไม่ถูกต้อง
+
+### TagsCell.vue
+- นำ tag ของแต่ละ row มาวนแสดง
+- ส่งการเพิ่มลบ tag ใน row ได้
+
+### DateCell.vue
+- แสดง Date
+- หากเป็นวันเดียวกันแสดงเวลา คนละวันแสดงวันที่
+
 ## Group Member
 - 067 นฤบดินทร์ อะมีนี 
 - 083 ปุรเชษฐ์ เจิ้น
