@@ -19,8 +19,6 @@ const props = defineProps({
         default: [],
     }
 });
-console.log(props.rowTags);
-setTimeout(()=> console.log(props.tagsList), 1000)
 const addingTag = (e) => {
     const input = e.target.value
     emits('addTag', input)
