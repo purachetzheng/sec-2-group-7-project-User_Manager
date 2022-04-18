@@ -70,8 +70,7 @@ const removeTable = async () => {
       method: "DELETE",
     });
     if (res.status === 200) {
-      tables.value = tables.value.filter((table) => table.id !== deleteTableId);
-      // table.value.rows = table.value.rows.filter((user) => user.id !== id)
+      tables.value = tables.value.filter((table) => table.tableName !== deleteTableId);
       console.log("deleted successfully");
       location.reload();
     } else console.log("error, cannot delete");
