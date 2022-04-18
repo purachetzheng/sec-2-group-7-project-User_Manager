@@ -27,6 +27,11 @@
 - สามารถแก้ไขข้อมูลต่าง ๆ แต่ละ Row ได้
 - ส่งคำสั่ง sorting selecting ออกมาให้ TableManager
 - ส่งข้อมูล row ออกมาให้ TableManager เพื่อสร้าง row ใหม่ได้
+### StatusDisplay.vue
+- จัดการกับ tag
+- สร้างลบ tag ได้ สามารถเลือกสีได้
+- ส่ง selecting ออกไปว่าเลือกตัวไหน
+### RegisterUser.vue
 
 ## Group Member
 - 067 นฤบดินทร์ อะมีนี 
