@@ -9,7 +9,7 @@ const props = defineProps({
 })
 
 const newTable = computed(()=> {
-    return {id: props.table.id, tableName: props.table.tableName, userId: props.table.userId}
+    return {id: props.table.id, tableName: props.table.tableName}
 })
 </script>
  
@@ -20,7 +20,9 @@ const newTable = computed(()=> {
         <input id = "tableNameText" type="text" v-model="newTable.tableName">
     </div>
     <div>
-        <button @click="$emit('createTable', newTable.tableName)">Create</button>
+        <button @click="$emit('createTable', newTable.tableName)">
+            Create
+        </button>
     </div>
 </div>
 </template>
