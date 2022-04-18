@@ -1,33 +1,32 @@
 <script setup>
-import { ref, computed, reactive, nextTick, onBeforeMount, onMounted } from 'vue';
+import { ref, computed, reactive, nextTick, onBeforeMount } from 'vue';
 //router
 import { useRoute, useRouter } from 'vue-router';
 const { params } = useRoute();
 const router = useRouter();
 
-console.log(params.userId);
 //Get
 const tables = ref({});
 const getTables = async () => {
-    console.log(params.userId);
-    const res = await fetch('http://localhost:5000/tables?userId=' + params.userId);
+    const res = await fetch(`http://localhost:5000/tables?userId=` + params.userId);
     if (res.status === 200) {
         tables.value = await res.json();
-        console.log(tables.value);
     } else console.log('error, cannot get table');
 };
+
 onBeforeMount(async () => {
     await getTables();
 });
+
 const clickLink = (id) => {
     router.push({ name: 'TableManager', params: { tableId: id } });
 };
 </script>
 
 <template>
-    <div class="flex flex-col container p-4">
+    <div class="flex flex-col container p-4" v-cloak>
         <div class="flex flex-col space-y-4">
-            <p class="text-xl font-bold">User {{ params.userId }} Table</p>
+            <div class="text-xl font-bold">{{ params.username }} Table</div>
             <div class="flex space-x-4 text-white">
                 <div v-for="(table, index) in tables" :key="index">
                     <button
@@ -42,4 +41,8 @@ const clickLink = (id) => {
     </div>
 </template>
 
-<style></style>
+<style>
+[v-cloak] {
+    display: none;
+}
+</style>
