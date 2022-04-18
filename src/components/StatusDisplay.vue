@@ -23,7 +23,7 @@ const creatingTag = () => {
     props.tags.some(el => el.name === newTag.value.name) ? alert('have the same name tag') : emits('createTag', newTag.value)
 }
 const deletingTag = (tag) => {
-    confirm(`Want to delete this tag: ${tag.name}?`) ? emits('deleteTag', tag.id) : ''
+    confirm(`Are you sure to delete : ${tag.name} ?`) ? emits('deleteTag', tag.id) : ''
 }
 </script>
 

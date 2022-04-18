@@ -71,7 +71,7 @@ const deleteUser = async (removeUserId) => {
 };
 
 //UPDATE
-const editingUser = ref({ id: 0, username: '', password: '' });
+const editingUser = ref({});
 const toEditingMode = async (id) => {
     const res = await fetch(`http://localhost:5000/users/${id}`);
     if (res.status === 200) {
@@ -112,13 +112,13 @@ const callRegisterUser = () => {
 const cancelRegisterProcess = () => {
     console.log('register cancel');
     isShow.value = false;
-    usernameText.value = '';
-    passwordText.value = '';
-    editingUser.value = '';
+    usernameText.value = {};
+    passwordText.value = {};
+    editingUser.value = {};
 };
 
 const deleteMid = (user) => {
-    confirm(`Want to delete this User?: ${user.username}`) ? deleteUser(user.id) : ''
+    confirm(`Are you sure to delete : ${user.username} ?`) ? deleteUser(user.id) : ''
 }
 </script>
 

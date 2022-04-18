@@ -1,14 +1,14 @@
 {
   "users": [
     {
-      "id": 1,
       "username": "user1",
-      "password": "fesawrf3wefwfazf"
+      "password": "fesawrf3wefwfazf",
+      "id": 1
     },
     {
-      "id": 2,
       "username": "user2",
-      "password": "fesawrf3wefwfazf"
+      "password": "asdfsadfasdf",
+      "id": 2
     },
     {
       "username": "user31",
