@@ -93,7 +93,7 @@ const createTagMembers = async (rowId, tag) => {
             name: tag.name,
             rowId: rowId,
             tagId: tag.id,
-            color: tag.color
+            color: tag.color,
         }),
     });
     if (res.status === 201) {
@@ -161,13 +161,13 @@ const updateRow = async (event, userP, type) => {
         rows.value = rows.value.map((user) =>
             user.id === modifyNote.id
                 ? {
-                      ...user,
-                      name: modifyNote.name,
-                      email: modifyNote.email,
-                      date: modifyNote.date,
-                      tableId: modifyNote.tableId,
-                      tagMembers: modifyNote.tagMembers,
-                  }
+                    ...user,
+                    name: modifyNote.name,
+                    email: modifyNote.email,
+                    date: modifyNote.date,
+                    tableId: modifyNote.tableId,
+                    tagMembers: modifyNote.tagMembers,
+                }
                 : user
         );
         console.log('edited successfully');
@@ -188,8 +188,8 @@ const sortRowsBy = (sorter, type = 'asc') => {
                         ? 1
                         : -1
                     : b.name.toUpperCase() > a.name.toUpperCase()
-                    ? 1
-                    : -1
+                        ? 1
+                        : -1
             );
             break;
         case (sorter = 'email'):
@@ -199,8 +199,8 @@ const sortRowsBy = (sorter, type = 'asc') => {
                         ? 1
                         : -1
                     : b.email.toUpperCase() > a.email.toUpperCase()
-                    ? 1
-                    : -1
+                        ? 1
+                        : -1
             );
             break;
     }
@@ -221,49 +221,22 @@ const addTag = (newTagName, rowId) => {
 </script>
 
 <template>
-    <div class="w-full">
-        <!-- Header -->
-        Search by Name:
-        <input type="text" v-model="keywords" />
-        <!-- Content Table -->
-        <div class="flex">
-            <div class="w-full">
-                <Table
-                    :rows="filterUser"
-                    :tagsList="tags"
-                    :selectTag="selectedTag"
-                    :tableId="tableId"
-                    @createRow="createRow"
-                    @deleteRow="removeRow"
-                    @editRow="updateRow"
-                    @sortRow="sortRowsBy"
-                    @addTag="addTag"
-                    @deleteTagMem="removeTagMembers"
-                />
+    <div class="w-full ">
+        <div class="flex h-full">
+            <div class="w-1/4 bg-white h-full">
+                <StatusDisplay :tags="tags" :amountRows="amountRows" @selectTag="selectRowByTag" @deleteTag="removeTag"
+                    @createTag="createTag" />
             </div>
-            <div class="w-1/4">
-                <StatusDisplay
-                    :tags="tags"
-                    :amountRows="amountRows"
-                    @selectTag="selectRowByTag"
-                    @deleteTag="removeTag"
-                    @createTag="createTag"
-                />
+            <div class="w-full bg-gray-200">
+                <div class="m-2">
+                    <span> Search by Name: </span>
+                    <input type="text" v-model="keywords" class="appearance-none" />
+                </div>
+                <Table :rows="filterUser" :tagsList="tags" :selectTag="selectedTag" :tableId="tableId"
+                    @createRow="createRow" @deleteRow="removeRow" @editRow="updateRow" @sortRow="sortRowsBy"
+                    @addTag="addTag" @deleteTagMem="removeTagMembers" />
             </div>
         </div>
-
-        <!-- <div class="flex space-x-2">
-            <Table
-                :rows="obj"
-                :selectTag="selectedTag"
-                :tableId="tableId"
-                @createRow="createRow"
-                @deleteRow="removeRow"
-                @editRow="updateRow"
-                @sortRow="sortRowsBy"
-            />
-            <StatusDisplay :tableId="tableId" :amountRows="amountRows" :amountTags="0" @selectTag="selectRowByTag" />
-        </div> -->
     </div>
 </template>
 

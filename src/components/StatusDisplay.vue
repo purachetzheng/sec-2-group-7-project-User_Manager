@@ -17,12 +17,11 @@ const props = defineProps({
 const amountRows = ref(computed(() => props.amountRows));
 const amountTags = ref(computed(() => props.tags.length));
 
-const newTag = ref({name: null, color: '#ff0000'})
-
+const newTag = ref({ name: null, color: '#ff0000' });
 </script>
 
 <template>
-    <div class="bg-white p-4 space-y-2">
+    <div class="p-4 space-y-2">
         <div class="flex gap-4">
             <div class="flex flex-col">
                 <span class="font-bold"> Users </span>
@@ -36,23 +35,23 @@ const newTag = ref({name: null, color: '#ff0000'})
             </div>
         </div>
         <div class="flex flex-col space-y-2">
-            <button class="bg-gray-200 text-left" @click="$emit('selectTag', { id: null, name: 'all' })">All</button>
-            <div class="text-left flex " v-for="(tag, index) in tags" :key="index">
-                <button class="flex" @click="$emit('selectTag', tag)">
-                    <div :style="{ 'background-color': tag.color }">&ensp;&ensp;</div>
-                    <div class="flex px-4 mr-2 bg-gray-200">{{ tag.name }} : {{ tag.tagMembers.length }}</div>
+            <button class="bg-gray-200 text-left" @click="$emit('selectTag', { id: null, name: 'all' })">
+                All Tags
+            </button>
+            <div class="text-left flex justify-between mr-2" v-for="(tag, index) in tags" :key="index">
+                <button class="flex items-center" @click="$emit('selectTag', tag)">
+                    <div class="rounded-full p-2" :style="{ 'background-color': tag.color }"></div>
+                    <div class="flex px-2 mr-2">{{ tag.name }} : {{ tag.tagMembers.length }}</div>
                 </button>
                 <button class @click="$emit('deleteTag', tag.id)">
                     <CarbonTrashCan class="my-auto -mr-1 h-4 w-4 text-red-700" />
                 </button>
             </div>
-            <div>
-                <input class="bg-gray-200" type="text" placeholder="Input tag" v-model="newTag.name"
+            <div class="flex items-center">
+                <input class="bg-gray-200 p-1" type="text" placeholder="Input New Tag" v-model="newTag.name"
                     @keyup.enter="$emit('createTag', newTag)" />
-                <input type="color" v-model="newTag.color">
+                <input type="color" v-model="newTag.color" />
             </div>
-
-
         </div>
     </div>
 </template>

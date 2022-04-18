@@ -3,9 +3,8 @@
 <template>
     <div class="flex flex-col flex-wrap min-h-screen">
         <nav
-            class="min-w-full bg-white flex flex-col md:flex-row items-center md:justify-between px-6 py-4 border-b border-b-gray-60 shadow-sm max-w-screen-2xl mx-auto"
-        >
-            <div class="rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900">
+            class="min-w-full bg-gray-800 flex flex-col md:flex-row items-center md:justify-between px-6 py-4 border-b border-b-gray-60 shadow-sm max-w-screen-2xl mx-auto">
+            <div class="rounded-lg px-3 py-2 text-gray-400 font-medium hover:text-white">
                 <router-link :to="{ name: 'Home' }">Home</router-link>
             </div>
         </nav>
@@ -19,6 +18,6 @@
 
 <style>
 .router-link-active {
-    color: rgb(29 78 216);
+    color: white;
 }
 </style>

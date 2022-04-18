@@ -66,26 +66,22 @@ const sorting = (sortBy, type, n) => {
 
 <template>
     <table class="w-full">
-        <thead class="bg-gray-200 text-left">
-            <tr class="h-6 text-xs text-gray-500">
+        <thead class="bg-gray-300 text-left">
+            <tr class="h-6 text-xs text-gray-500 align-center">
                 <th v-for="th in tableHeader" :key="th.hName">
                     <div class="flex justify-between">
                         <span>{{ th.hName }}</span>
                         <div class="flex space-x-2 mr-2" v-if="th.sort">
                             <button
                                 :class="[sortMouseHover === '1' + th.hName || sortSelected === '1' + th.hName ? 'text-blue-700' : '']"
-                                @click="sorting(th, 'asc', '1')"
-                                @mouseenter="sortMouseHover = '1' + th.hName"
-                                @mouseleave="sortMouseHover = null"
-                            >
+                                @click="sorting(th, 'asc', '1')" @mouseenter="sortMouseHover = '1' + th.hName"
+                                @mouseleave="sortMouseHover = null">
                                 <CarbonSortAscending class="text-xl" />
                             </button>
                             <button
                                 :class="[sortMouseHover === '2' + th.hName || sortSelected === '2' + th.hName ? 'text-blue-700' : '']"
-                                @click="sorting(th, 'desc', '2')"
-                                @mouseenter="sortMouseHover = '2' + th.hName"
-                                @mouseleave="sortMouseHover = null"
-                            >
+                                @click="sorting(th, 'desc', '2')" @mouseenter="sortMouseHover = '2' + th.hName"
+                                @mouseleave="sortMouseHover = null">
                                 <CarbonSortDescending class="text-xl" />
                             </button>
                         </div>
@@ -95,35 +91,15 @@ const sorting = (sortBy, type, n) => {
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-300">
-            <tr
-                v-for="(row, index) in rows"
-                :key="index"
-                class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                v-show="row.tagMembers.some((tag) => tag.tagId == selectTag) || selectTag === null"
-            >
-                <TextCell
-                    :text="row.name"
-                    :index="index"
-                    :checker="/[\w(ก-ฮ)]+/"
-                    alertText="Name not null!"
-                    @editText="$emit('editRow', $event, row, 'name')"
-                />
-                <TextCell
-                    :text="row.email"
-                    :index="index"
-                    :checker="/.*@.*\..*|^$/"
-                    alertText="Please enter a valid email"
-                    @editText="$emit('editRow', $event, row, 'email')"
-                />
+            <tr v-for="(row, index) in rows" :key="index" class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                v-show="row.tagMembers.some((tag) => tag.tagId == selectTag) || selectTag === null">
+                <TextCell :text="row.name" :index="index" :checker="/[\w(ก-ฮ)]+/" alertText="Name not null!"
+                    @editText="$emit('editRow', $event, row, 'name')" />
+                <TextCell :text="row.email" :index="index" :checker="/.*@.*\..*|^$/"
+                    alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                 <!-- <TagsCell :tags="row.tags" /> -->
-                <TagsCell
-                    :rowId="row.id"
-                    :rowTags="row.tagMembers"
-                    :tableId="tableId"
-                    :tagsList="tagsList"
-                    @addTag="$emit('addTag', $event, row.id)"
-                    @deleteTagMem="$emit('deleteTagMem', $event)"
-                />
+                <TagsCell :rowId="row.id" :rowTags="row.tagMembers" :tableId="tableId" :tagsList="tagsList"
+                    @addTag="$emit('addTag', $event, row.id)" @deleteTagMem="$emit('deleteTagMem', $event)" />
                 <DateCell :date="row.date" />
                 <td>
                     <button class @click="$emit('deleteRow', row.id)">
@@ -131,10 +107,8 @@ const sorting = (sortBy, type, n) => {
                     </button>
                 </td>
             </tr>
-            <tr
-                class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
-                @keydown.enter="newRow.name.length != 0 ? $emit('createRow', newRow) : alertInput()"
-            >
+            <tr class="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                @keydown.enter="newRow.name.length != 0 ? $emit('createRow', newRow) : alertInput()">
                 <td>
                     <input type="text" class="bg-gray-300" placeholder="Input Name" v-model="newRow.name" />
                 </td>
