@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, reactive, nextTick, onBeforeMount, onMounted } from 'vue';
 import CarbonTrashCan from './icons/CarbonTrashCan.vue';
-defineEmits(['selectTag', 'deleteTag', 'createTag']);
+const emits = defineEmits(['selectTag', 'deleteTag', 'createTag']);
 const props = defineProps({
     amountRows: {
         type: Number,
@@ -16,8 +16,15 @@ const props = defineProps({
 // setTimeout(() => console.log(props.tags), 1000)
 const amountRows = ref(computed(() => props.amountRows));
 const amountTags = ref(computed(() => props.tags.length));
-
+const tagList = ref(props.tags)
 const newTag = ref({ name: null, color: '#ff0000' });
+
+const creatingTag = () => {
+    props.tags.some(el => el.name === newTag.value.name) ? alert('have the same name tag') : emits('createTag', newTag.value)
+}
+const deletingTag = (tag) => {
+    confirm(`Want to delete this tag: ${tag.name}?`) ? emits('deleteTag', tag.id) : ''
+}
 </script>
 
 <template>
@@ -49,7 +56,8 @@ const newTag = ref({ name: null, color: '#ff0000' });
                     <div class="rounded-full p-2" :style="{ 'background-color': tag.color }"></div>
                     <div class="flex px-2 mr-2 hover:underline">{{ tag.name }} : {{ tag.tagMembers.length }}</div>
                 </button>
-                <button class @click="$emit('deleteTag', tag.id)">
+                <!-- delete tag -->
+                <button class @click="deletingTag(tag)">
                     <CarbonTrashCan class="my-auto -mr-1 h-4 w-4 text-red-700" />
                 </button>
             </div>
@@ -69,8 +77,7 @@ const newTag = ref({ name: null, color: '#ff0000' });
             <div>
                 <input
                     class="text-sm placeholder:text-slate-400 bg-white w-full border border-slate-300 rounded-l-md py-2 pl-2 pr-3 shadow-sm focus:outline-none"
-                    type="text" placeholder="Input New Tag" v-model="newTag.name"
-                    @keyup.enter="$emit('createTag', newTag)" />
+                    type="text" placeholder="Input New Tag" v-model="newTag.name" @keyup.enter="creatingTag()" />
             </div>
             <div class="p-1 bg-gray-800 rounded-r-md overflow-hidden shadow-sm">
                 <input type="color" class="bg-gray-800 scale-[3]" v-model="newTag.color" />

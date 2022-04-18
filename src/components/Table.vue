@@ -30,14 +30,7 @@ const props = defineProps({
         default: [],
     },
 });
-//hName = text in each th tag, sort = have sort?
-const tableHeader = [
-    { hName: 'Name', sort: true },
-    { hName: 'Email', sort: true },
-    { hName: 'Tag', sort: false },
-    { hName: 'Add Date', sort: false },
-    { hName: '', sort: false },
-];
+
 //use to send new row obj
 const newRow = reactive({ name: '', email: '' });
 
@@ -60,16 +53,24 @@ const sorting = (sortBy, type, n) => {
         sortSelected.value = null;
     }
 };
+//hName = text in each th tag, sort = have sort?
+const tableHeader = [
+    { hName: 'Name', sort: true, width: 'w-3/12' },
+    { hName: 'Email', sort: true, width: 'w-3/12' },
+    { hName: 'Tag', sort: false, width: 'w-4/12' },
+    { hName: 'Add Date', sort: false, width: 'w-1/12' },
+    { hName: '', sort: false, width: 'w-1/12' },
+];
 
 </script>
 
 <template>
     <div>
 
-        <table class="w-full">
+        <table class="w-full ">
             <thead class="bg-gray-300 text-left">
                 <tr class="h-6 text-xs text-gray-500 align-center">
-                    <th v-for="th in tableHeader" :key="th.hName">
+                    <th scope="col" :class="th.width" v-for="th in tableHeader" :key="th.hName">
                         <div class="flex justify-between">
                             <span>{{ th.hName }}</span>
                             <div class="flex space-x-2 mr-2" v-if="th.sort">
@@ -88,7 +89,7 @@ const sorting = (sortBy, type, n) => {
                             </div>
                         </div>
                     </th>
-                    <th></th>
+
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-300">
@@ -99,7 +100,7 @@ const sorting = (sortBy, type, n) => {
                     <TextCellBase :text="row.email" :index="index" :checker="/.*@.*\..*|^$/"
                         alertText="Please enter a valid email" @editText="$emit('editRow', $event, row, 'email')" />
                     <TagsCell :rowId="row.id" :rowTags="row.tagMembers" :tableId="tableId" :tagsList="tagsList"
-                        @addTag="$emit('addTag', $event, row.id)" @deleteTagMem="$emit('deleteTagMem', $event)" />
+                        @addTag="$emit('addTagMem', $event, row.id)" @deleteTagMem="$emit('deleteTagMem', $event)" />
                     <DateCell :date="row.date" />
                     <td>
                         <button class="hover:text-red-700 text-red-500" @click="$emit('deleteRow', row.id)">
@@ -115,7 +116,7 @@ const sorting = (sortBy, type, n) => {
                     <td>
                         <input type="text" class="bg-gray-300" placeholder="Input Email" v-model="newRow.email" />
                     </td>
-                    <td :colspan="5" />
+                    <td :colspan="3" />
                 </tr>
             </tbody>
         </table>
