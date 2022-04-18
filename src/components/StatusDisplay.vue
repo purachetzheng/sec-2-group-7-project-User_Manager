@@ -24,11 +24,11 @@ const newTag = ref({name: null, color: '#ff0000'})
 <template>
     <div class="bg-white p-4 space-y-2">
         <div class="flex gap-4">
-            <div class="flex flex-col">
+            <div class="flex flex-col bg-rose-400">
                 <span class="font-bold"> Users </span>
                 <span class="text-2xl font-light"> {{ amountRows }} </span>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col bg-sky-400">
                 <span class="font-bold"> Tags </span>
                 <span class="text-2xl font-light">
                     {{ amountTags }}
