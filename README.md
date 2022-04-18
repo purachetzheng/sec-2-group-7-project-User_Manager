@@ -21,6 +21,13 @@
 - MyTable: จัดการกับ Table ของ user
 - TableManager: จัดการกับตาราง
 
+## Component
+### Table.vue
+- เป็นหน้าตารางทั้งหมด
+- สามารถแก้ไขข้อมูลต่าง ๆ แต่ละ Row ได้
+- ส่งคำสั่ง sorting selecting ออกมาให้ TableManager
+- ส่งข้อมูล row ออกมาให้ TableManager เพื่อสร้าง row ใหม่ได้
+
 ## Group Member
 - 067 นฤบดินทร์ อะมีนี 
 - 083 ปุรเชษฐ์ เจิ้น
