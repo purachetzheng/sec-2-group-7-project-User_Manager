@@ -1,11 +1,10 @@
 <script setup>
 import { ref, computed, reactive, nextTick, onBeforeMount, onMounted } from 'vue';
-import RiDeleteBin5Line from '../components/icons/RiDeleteBin5Line.vue';
-import IcSharpAddCircle from '../components/icons/IcSharpAddCircle.vue';
-import MdiTextBoxEdit from '../components/icons/MdiTextBoxEdit.vue';
+
 import RegisterUser from '../components/RegisterUser.vue';
 //router
 import { useRoute, useRouter } from 'vue-router';
+import IcSharpAddCircle from '../components/icons/IcSharpAddCircle.vue';
 import CarbonEditProfile from '../components/icons/CarbonEditProfile.vue';
 import CarbonTrashCanProfile from '../components/icons/CarbonTrashCanProfile.vue';
 const { params } = useRoute();
